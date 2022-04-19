@@ -4,7 +4,7 @@ import {routeTab} from '../../dummy-tab/index'
 const Tab = () => {
     return (
         <div className='w-[23%] p-[1rem] '>
-            <div className='w-full  X border-[1px] p-[1rem] drop-shadow-sm border-gray-200 rounded-lg bg-white'>
+            <div className='w-full border-[1px] p-[1rem] drop-shadow-sm border-gray-200 rounded-lg bg-white'>
             <p className='font-bold text-[18px] leading-[30px] tracking-wide'>
                 <Link to="/"><span className='auth-link mr-1 text-[20px]'>DEV Community</span></Link>
                 is a community of 834,300 amazing developers

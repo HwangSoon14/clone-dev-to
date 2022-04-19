@@ -1,3 +1,5 @@
+import image from '../assest/1.webp'
+import avatar from '../assest/avatar.jfif'
 export const routeTab = [
     {
         name: 'Home',
@@ -51,3 +53,27 @@ export const routeTab = [
     },
 ]
 
+
+
+export const dummyPost = [
+    {
+        image: image,
+        avatar: avatar,
+        date: "Apr 19",
+        username: "Sm0ke",
+        title: "AppSeed - New Version",
+        tabList: ["appseed", "generator","startup","story"],
+        reactions: 22,
+        comments: 10,
+    },
+    {   
+        image: null,
+        avatar: avatar,
+        date: "Apr 19",
+        username: "Chris Bongers",
+        title: "AppSeed - New Version",
+        tabList: ["appseed", "generator","startup","story"],
+        reactions: 22,
+        comments: 10,
+    }
+]
