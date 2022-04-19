@@ -1,14 +1,6 @@
 const Users = require("../models/userModel");
 
 const userCtrl = {
-	getUser: async (req, res, next) => {
-		try {
-			const data = await Users.find({ _id: req.userId }, {password: 0});
-			res.status(200).json(data);
-		} catch (error) {
-			next(error);
-		}
-	},
 	getUserById: async (req, res, next) => {
 		try {
 			const {id} = req.params
