@@ -1,0 +1,7 @@
+<<<<<<< HEAD
+*.vscode
+=======
+node_modules
+/client/node_modules
+.env
+>>>>>>> bafc7c6a7c333b081988129b27fcb059713e13a8

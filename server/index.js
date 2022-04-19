@@ -4,17 +4,23 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
 const cookieParser = require('cookie-parser');
-const userRouter = require('./routes/userRoute');
-const uploadRouter = require('./routes/uploadRoute');
+const ErrorHandling = require('./Utils/ErrorHandling');
+const ParentRoute = require('./routes/ParentRoute');
 
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
 
-//ROUTES
-app.use('/api/auth', userRouter);
-app.use('/api/upload', uploadRouter);
+//Route configuration
+ParentRoute(app);
 
+//ERROR HANDLING
+app.use(ErrorHandling);
+
+//404 NOT FOUND
+app.use('*', (req, res) => {
+	res.status(404).json({ mess: '404 Not Found' });
+});
 
 //CONNECT TO MONGODB
 const URI = process.env.MONGO_URL;
