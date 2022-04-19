@@ -5,8 +5,10 @@ const decodeToken = require('../middleware/decodeToken');
 
 router.get('/:id', userController.getUserById);
 
+//Middle Authentication
 router.use(auth);
 router.use(decodeToken);
+
 //Update User
-router.route('/').put(userController.editUser).get(userController.getUser);
+router.route('/').put(userController.editUser);
 module.exports = router;
