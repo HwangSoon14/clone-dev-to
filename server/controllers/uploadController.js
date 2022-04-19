@@ -17,22 +17,17 @@ const uploadCtrl = {
 	},
 	multiple: async (req, res) => {
 		try {
-			const arrPromise = req.files.map((file) => {
-				return new Promise((resolve) => {
-					cloudinary.uploader
-						.upload(file.path, {
-							folder: 'images',
-						})
-						.then((result) =>
-							resolve({
-								nameImage: file.originalname.split('.')[0],
-								urlImage: result.url,
-								idImage: result.id,
-							}),
-						);
+			const arrPromise = req.files.map(async (file) => {
+				const result = await cloudinary.uploader.upload(file.path, {
+					folder: 'images',
 				});
+				fs.unlinkSync(file.path);
+				return {
+					nameImage: file.originalname.split('.')[0],
+					urlImage: result.url,
+					idImage: result.id,
+				};
 			});
-			console.log('arrPromise', arrPromise);
 			const data = await Promise.all(arrPromise);
 			res.json(data);
 		} catch (error) {}
