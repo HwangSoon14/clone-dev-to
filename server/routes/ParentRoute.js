@@ -9,5 +9,5 @@ module.exports = function (app) {
 	Router.use('/user', userRoute);
 	Router.use('/post', postRoute);
 	Router.use('/upload', uploadRoute);
-	app.use('/api', Router);
+	app.use('/api/v1', Router);
 };

@@ -1,9 +1,28 @@
 const postModel = require('../models/PostModel');
+const QueryMethod = require('../Utils/QueryMethod');
 
 const postController = {
-	getPost: async (req, res, next) => {
+	getAllPost: async (req, res, next) => {
+		try {
+			const queryMethod = new QueryMethod(req.query, postModel.find({})).pagination().sort()
+			const data = await queryMethod.method;
+			res.status(200).json(data);
+		} catch (error) {
+			next(error);
+		}
+	},
+	getMyPost: async (req, res, next) => {
 		try {
 			const data = await postModel.find({ userId: req.userId });
+			res.status(200).json(data);
+		} catch (error) {
+			next(error);
+		}
+	},
+	getPostById: async (req, res, next) => {
+		try {
+			const { id } = req.params;
+			const data = await postModel.find({ _id: id });
 			res.status(200).json(data);
 		} catch (error) {
 			next(error);
@@ -25,7 +44,7 @@ const postController = {
 			const { id } = req.params;
 			const { userId, ...value } = req.body;
 			await postModel.findOneAndUpdate({ _id: id, userId: req.userId }, value);
-			res.status(201).json({ mess: 'update post success!' });
+			res.status(200).json({ mess: 'update post success!' });
 		} catch (error) {
 			next(error);
 		}
@@ -34,7 +53,7 @@ const postController = {
 		try {
 			const { id } = req.params;
 			await postModel.findOneAndDelete({ _id: id, userId: req.userId });
-			res.status(200).json({ mess: 'delete post success!' });
+			res.status(204).json({ mess: 'delete post success!' });
 		} catch (error) {
 			next(error);
 		}

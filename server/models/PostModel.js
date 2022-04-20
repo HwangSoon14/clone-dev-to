@@ -6,7 +6,7 @@ const postSchema = new mongoose.Schema(
 		title: { type: String , default: "đây là tiêu đề"},
 		content: { type: String , default: "đây là nội dung"},
 		tags: { type: Array, default: ["nodejs", "reactjs"]},
-		slug: {type: String, unique: true, required: true}
+		slug: {type: String, unique: true, require: true},
 	},
 	{
 		timestamps: true,

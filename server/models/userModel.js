@@ -40,7 +40,7 @@ const userSchema = mongoose.Schema(
 
 		location: {
 			type: String,
-		},
+		}
 	},
 	{
 		timestamps: true,
