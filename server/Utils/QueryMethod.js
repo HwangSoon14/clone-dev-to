@@ -20,3 +20,4 @@ class QueryMethod {
     }
 }
 module.exports = QueryMethod;
+ 
