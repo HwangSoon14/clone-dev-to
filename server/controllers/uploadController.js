@@ -17,9 +17,15 @@ const uploadCtrl = {
 			next(error)
 		}
 	},
+<<<<<<< HEAD
 	multiple: async (req, res) => {
 		try {
 			const arrPromise = req.files.map(async (a) => {
+=======
+	multiple: async (req, res,next) => {
+		try {
+			const arrPromise = req.files.map(async (file) => {
+>>>>>>> 32c490a2e50be894e09e424f471c9642338122a4
 				const result = await cloudinary.uploader.upload(file.path, {
 					folder: 'images',
 				});
