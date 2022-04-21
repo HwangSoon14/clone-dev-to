@@ -40,7 +40,11 @@ const userSchema = mongoose.Schema(
 
 		location: {
 			type: String,
+<<<<<<< HEAD
+		},
+=======
 		}
+>>>>>>> 32c490a2e50be894e09e424f471c9642338122a4
 	},
 	{
 		timestamps: true,
