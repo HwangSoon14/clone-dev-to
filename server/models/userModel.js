@@ -21,7 +21,7 @@ const userSchema = mongoose.Schema(
 		},
 		description: {
 			type: String,
-			default: 'không có mô tả',
+			default: '404 bio not found',
 		},
 		avatar: {
 			type: String,
@@ -40,11 +40,17 @@ const userSchema = mongoose.Schema(
 
 		location: {
 			type: String,
-		}
+		},
+		postSaved: [
+			{
+				type: mongoose.Types.ObjectId,
+				ref: 'Posts',
+			},
+		],
 	},
 	{
 		timestamps: true,
 	},
 );
 
-module.exports = mongoose.model('Users', userSchema);
+module.exports =  mongoose.model('Users', userSchema);

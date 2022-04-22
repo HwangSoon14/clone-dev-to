@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const uploadController = require('../controllers/uploadController');
+const uploadController = require('../controllers/UploadController');
 const upload = require('../Utils/MulterStorage');
 
 //Single File

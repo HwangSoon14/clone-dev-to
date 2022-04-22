@@ -1,12 +1,12 @@
 const router = require('express').Router();
 const postController = require('../controllers/PostController');
-const auth = require('../middleware/auth');
-const decodeToken = require('../middleware/decodeToken');
+const auth = require('../middleware/Auth');
+const decodeToken = require('../middleware/DecodeToken');
 
 router.use(auth);
 router.use(decodeToken);
-
-router.get('/my', postController.getMyPost);
+router.post('/like/:postId', postController.likePost)
+router.post('/unlike/:postId', postController.unlikePost)
 router.route('/').get(postController.getAllPost).post(postController.addPost);
 router.route('/:id').put(postController.editPost).delete(postController.deletePost).get(postController.getPostById);
 
