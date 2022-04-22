@@ -1,18 +1,26 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import authApi from "../api/authApi";
 import Logo from '../assest/logo.png'
 import LoginForm from "../components/Auth/LoginForm";
+import Loading from "../components/Loading/Loading";
 const Login = () => {
 
+  let navigate = useNavigate();
+  const [isLoading , setIsLoading] = useState(false);
 
-  const handleSubmitForm = async (data) => {
-    try {
-        const res = await authApi.login(data);
-    } catch (error) {
-      
-    }
-  }
+    const handleSubmitForm = async (data) => {
+        try {
+          setIsLoading(true);
+            const res = await authApi.login(data);
+            console.log(res);
+            navigate("/");
+            setIsLoading(false);
+        } catch (error) {
+          setIsLoading(false);
+        }
+      }
+  
 
   return (
     <div className="container mx-auto md:px-16 py-8 flex min-w-[100vw] justify-center bg-white-smoke text-black min-h-[90vh]">
@@ -47,6 +55,8 @@ const Login = () => {
           <LoginForm onSubmit={handleSubmitForm}/>
         <p className="pb-6 ">Don't have an account ? <Link to="/sign-up"><span className="auth-link">Sign up</span></Link></p>
         </div>
+        {isLoading && <Loading />}
+
     </div>
   );
 };

@@ -1,7 +1,6 @@
 import React from 'react';
-import PostSkeletonList from '../components/Post/PostSkeletonList';
+import PostList from '../components/Post/PostList';
 import TabSide from '../components/Tab/TabSide';
-import PostList from '../components/Post/PostList'
 
 const Home = () => {
     return (

@@ -5,7 +5,7 @@ const Users = require('../models/UserModel');
 const authCtrl = {
 	register: async (req, res,next) => {
 		try {
-			const { username, email, password } = req.body;
+			const { userName, email, password } = req.body;
 			const user = await Users.findOne({ email: email });
 			if (user) {
 				return res.status(400).json({ message: 'This email already exists' });
@@ -16,12 +16,12 @@ const authCtrl = {
 			const salt = await bcrypt.genSalt(10);
 			const passwordHash = await bcrypt.hash(password, salt);
 			const newUser = await new Users({
-				userName: username,
+				userName: userName,
 				email: email,
 				password: passwordHash,
 			});
-			await newUser.save();
-			res.json({ message: 'Register success' });
+			newUser.save();
+			res.json({ message: 'Register success', user: newUser});
 		} catch (error) {
 			next(error)
 		}
