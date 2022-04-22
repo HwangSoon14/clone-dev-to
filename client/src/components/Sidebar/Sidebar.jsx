@@ -5,7 +5,7 @@ import TabList from "../Tab/TabList";
 const Sidebar = (props) => {
   return (
     <div
-      className={`top-0 left-0 w-[320px] bg-white border-r-[2px] border-gray-300 px-4 py-6 drop-shadow-lg text-black fixed h-full z-40  ease-in-out duration-300 ${
+      className={`top-0 left-0 w-[320px] bg-white border-r-[2px] border-gray-300 px-4 py-6 drop-shadow-lg text-black fixed h-full z-40 overflow-y-scroll ease-in-out duration-300 ${
         props.showSidebar ? "translate-x-0 " : "translate-x-[-100%]"
       }`}
     >
