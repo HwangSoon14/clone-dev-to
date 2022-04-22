@@ -76,7 +76,7 @@ const authCtrl = {
 		const refresh_token = req.cookies.refresh_token;
 		//Send error if token is not valid
 		if (!refresh_token) return res.status(401).json("You're not authenticated");
-		jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY, (err, user) => {
+		jwt.verify(refresh_token, process.env.JWT_REFRESH_KEY, (err, user) => {
 			if (err) {
 				res.status(500).json({ message: err.message });
 			}

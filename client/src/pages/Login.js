@@ -1,12 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import authApi from "../api/authApi";
 import Logo from '../assest/logo.png'
 import LoginForm from "../components/Auth/LoginForm";
 const Login = () => {
 
 
-  const handleSubmitForm = (data) => {
-    console.log("Submit form data:",data);
+  const handleSubmitForm = async (data) => {
+    try {
+        const res = await authApi.login(data);
+    } catch (error) {
+      
+    }
   }
 
   return (
