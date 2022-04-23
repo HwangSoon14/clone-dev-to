@@ -1,19 +1,26 @@
+import { unwrapResult } from "@reduxjs/toolkit";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import authApi from "../api/authApi";
+import { login } from "../app/authSlice";
 import Logo from '../assest/logo.png'
 import LoginForm from "../components/Auth/LoginForm";
+import Footer from "../components/Footer/Footer";
 import Loading from "../components/Loading/Loading";
 const Login = () => {
 
   let navigate = useNavigate();
   const [isLoading , setIsLoading] = useState(false);
+  const dispatch = useDispatch();
 
     const handleSubmitForm = async (data) => {
+      setIsLoading(true);
         try {
-          setIsLoading(true);
-            const res = await authApi.login(data);
-            console.log(res);
+          const action = login(data);
+          const resultAction = await dispatch(action);
+          unwrapResult(resultAction);
+            console.log(resultAction);
             navigate("/");
             setIsLoading(false);
         } catch (error) {
@@ -23,7 +30,8 @@ const Login = () => {
   
 
   return (
-    <div className="container mx-auto md:px-16 py-8 flex min-w-[100vw] justify-center bg-white-smoke text-black min-h-[90vh]">
+    <>
+    <div className="container  mx-auto md:px-16 flex min-w-[100vw] justify-center bg-white-smoke text-black min-h-[90vh]">
          <div className="flex items-center justify-center w-full md:w-[700px] border-2 border-gray-200 drop-shadow-md rounded-md bg-white h-full px-6 flex-col">
         <span className="block font-bold text-[1.3rem] mt-4 mb-2 lg:text-[28px] lg:mt-10">
           Welcome to DEV Community
@@ -58,6 +66,10 @@ const Login = () => {
         {isLoading && <Loading />}
 
     </div>
+    
+    <Footer />
+
+    </>
   );
 };
 

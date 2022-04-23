@@ -9,7 +9,7 @@ const Navbar = () => {
   };
   return (
     <>
-      <div className="mx-auto p-2 max-w-screen-2xl bg-white border-b-2 border-gray-200 md:px-8 lg:px-28 ">
+      <div className="mx-auto top-0 left-0 right-0 drop-shadow-sm p-2 max-w-screen-2xl bg-white border-b-2 border-gray-200 md:px-8 lg:px-28 ">
         <div className="w-full h-full flex items-center container">
           {/* menu-button */}
           <div className="flex items-center justify-center md:hidden">

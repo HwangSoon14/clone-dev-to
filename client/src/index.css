@@ -43,8 +43,6 @@ code {
 }
 
 .fade-loading {
-	width: 4rem;
-	height: 4rem;
 	background-color: #7e57ff;
 	border-radius: 5rem;
 	margin: 2rem auto;
@@ -60,12 +58,12 @@ code {
 	height: 100%;
 	border-radius: inherit;
 	background-color: inherit;
-	animation: fade 1s forwards infinite linear;
+	animation: fade 0.8s forwards infinite ease;
 }
 
 @keyframes fade {
 	to {
 		transform: scale(2);
-		opacity: 0;
+		opacity: 0.2;
 	}
 }
