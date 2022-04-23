@@ -15,7 +15,7 @@ const postSchema = new mongoose.Schema(
 		tags: { type: Array, default: ['nodejs', 'reactjs'] },
 		slug: { type: String, slug: 'title', slug_padding_size: 3, unique: true },
 		likes: [{ type: mongoose.Types.ObjectId, default: [] }],
-		comments: [{ type: mongoose.Types.ObjectId, default: ["dsdsds"] }],
+		comments: [{ type: mongoose.Types.ObjectId, default: [] }],
 	},
 	{
 		timestamps: true,
