@@ -75,6 +75,34 @@ export const dummyPost = [
         tabList: ["appseed", "generator","startup","story"],
         reactions: 22,
         comments: 10,
+    },{   
+        image: null,
+        avatar: avatar,
+        date: "Apr 19",
+        username: "Chris Bongers",
+        title: "AppSeed - New Version",
+        tabList: ["appseed", "generator","startup","story"],
+        reactions: 22,
+        comments: 10,
+    }
+    ,{   
+        image: null,
+        avatar: avatar,
+        date: "Apr 19",
+        username: "Chris Bongers",
+        title: "AppSeed - New Version",
+        tabList: ["appseed", "generator","startup","story"],
+        reactions: 22,
+        comments: 10,
+    },{   
+        image: null,
+        avatar: avatar,
+        date: "Apr 19",
+        username: "Chris Bongers",
+        title: "AppSeed - New Version",
+        tabList: ["appseed", "generator","startup","story"],
+        reactions: 22,
+        comments: 10,
     }
 ]
 
