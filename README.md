@@ -1,5 +1,9 @@
 /api/v1
 
+---auth
+/login đăng nhập 
+/register đăng ký tài khoản
+/forgotpassword gửi mật khẩu về mail
 ---user 
 
 GET 

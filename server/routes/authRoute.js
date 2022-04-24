@@ -34,6 +34,7 @@ router.get('/logout', (req, res) => {
 
 //Register Router
 router.post('/register', authController.register);
+router.get('/forgotpassword', authController.forgotPassword);
 
 //Login Router
 router.post('/login', authController.login);

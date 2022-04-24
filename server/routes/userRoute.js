@@ -11,13 +11,14 @@ router.get('/:userId/posts', userController.getUserPosts);
 router.use(auth);
 router.use(decodeToken);
 
-// router.get('/posts/saved', userController.getUserPosts);
+router.get('/posts/saved', userController.savedPost);
+
 // POST
 router.post("/posts", userController.addPost)
-// router.post("/posts/:id/save", userController.savePost)
+router.post("/posts/:id/save", userController.savePost)
 
 // DELETE
-// router.delete("/posts/:id/unsave", userController.unsavePost)
+router.delete("/posts/:id/unsave", userController.unsavePost)
 router.delete("/posts/:id", userController.deletePost)
 
 //PUT
