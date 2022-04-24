@@ -1,6 +1,7 @@
 import React from 'react';
 import PostList from '../components/Post/PostList';
 import TabSide from '../components/Tab/TabSide';
+import TagSide from '../components/TagSide/TagSide';
 
 const Home = () => {
     return (
@@ -8,7 +9,7 @@ const Home = () => {
             <div className="w-full h-full flex flex-col md:flex-row">
                 <TabSide />
                 <PostList />
-                {/* <PostSkeletonList /> */}
+                <TagSide />
             </div>
         </div>
     );

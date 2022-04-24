@@ -22,7 +22,7 @@ const Navbar = () => {
 	};
 
 	const renderAuth = () => (
-		<div className="flex items-center justify-center ">
+		<div className="flex items-center justify-center">
 			<div className="w-[35px] h-[35px] md:w-[40px] md:h-[40px] border-2 border-gray-300  rounded-full overflow-hidden">
 				<button onClick={toggleAuthMenu}>
 					<img src={user.avatar} alt="avatar" className="w-full h-full object-contain  rounded-full"></img>

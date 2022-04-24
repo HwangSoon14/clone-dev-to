@@ -1,5 +1,6 @@
 import axios from "axios";
-
+import jwt_decode from 'jwt-decode'
+import authApi from "./authApi";
 const axiosClient = axios.create({
     baseURL: 'http://localhost:5000',
     headers: {
@@ -10,18 +11,35 @@ const axiosClient = axios.create({
 
 //Interceptors
 // Add a request interceptor
-axios.interceptors.request.use(function (config) {
-    // Do something before request is sent
+axiosClient.interceptors.request.use(async function (config) {
+
+// Do something before request is sent
+    if(config.url.indexOf('/login') >= 0 || config.url.indexOf('/refresh') >= 0 ||  config.url.indexOf('/register')) {
+      return config;
+    }
+    else {
+      let date = new Date();
+    const user = JSON.parse(localStorage.getItem("current_user"));
+    const decodedToken = jwt_decode(user.access_token);
+    if (decodedToken.exp < date.getTime() / 1000 || !decodedToken) {
+        const user = JSON.parse(localStorage.getItem("current_user"))
+        const data = await authApi.refresh_token();
+        const access_token = data.access_token;
+        console.log("here is running")
+      localStorage.setItem("current_user",  JSON.stringify({...user,access_token}))
+    }
     return config;
+    }
   }, function (error) {
     // Do something with request error
     return Promise.reject(error);
   });
 
 // Add a response interceptor
-axios.interceptors.response.use(function (response) {
+axiosClient.interceptors.response.use(function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
+    
     return response.data;
   }, 
     function (error) {

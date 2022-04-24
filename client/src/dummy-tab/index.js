@@ -107,3 +107,39 @@ export const dummyPost = [
 ]
 
 
+export const dummy_tags = [
+    {
+        tag: "help",
+        postList: [
+            {
+                title: "Is there any effect learning two programming language at the same time ?",
+                comments: 6
+            },
+            {
+                title: " Should I start learning React or is it too late ???",
+                comments: 32
+            },
+            {
+                title: "TypeScript is wasting my time",
+                comments: 30
+            },
+            {
+                title: "Github New : View your contributions in 3D, VR and IRL!",
+                comments: 3
+            },
+            {
+                title: "How do I implement a plagiarism detector completely from scratch and it has to be fast as well?",
+                comments: 8
+            },
+        ]
+    },
+    {
+        tag: "explainlikeimfive", 
+        postList: [
+            {
+                title: "What's the difference between Front-end and Back-end development?",
+                comments: 27
+            }
+        ]
+      }
+]
