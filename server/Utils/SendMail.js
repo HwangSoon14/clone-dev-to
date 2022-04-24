@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const formMail = require('./FormMail');
 
 const SendMail = (mail, username, code) => {
 	//configure mail sending protocol
@@ -18,10 +19,7 @@ const SendMail = (mail, username, code) => {
 		from: '"DEV.TO Clone" <daylataikhoantest.dev@gmail.com>',
 		to: `${mail}`,
 		subject: '[DEV.TO Clone] Quên mật khẩu',
-		html: ` <div>
-        Nhấn link vào link để xác thực mật khẩu mới: 
-        <a href=${link} target="_blank" style="color: red;">Xác nhận</a>
-        </div>  `,
+		html: formMail(code,username)
 	});
 };
 
