@@ -134,7 +134,7 @@ const SignUpForm = (props) => {
                 >
                   <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                   </span>
-                  Sign in
+                  Register
                 </button>
               </div>
             </form>

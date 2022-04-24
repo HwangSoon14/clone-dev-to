@@ -10,6 +10,9 @@ const userSchema = mongoose.Schema(
 		fullName: {
 			type: String,
 		},
+		socialId: {
+			type: String,
+		},
 		email: {
 			type: String,
 			required: true,
@@ -21,7 +24,7 @@ const userSchema = mongoose.Schema(
 		},
 		description: {
 			type: String,
-			default: 'không có mô tả',
+			default: '404 bio not found',
 		},
 		avatar: {
 			type: String,
@@ -40,15 +43,17 @@ const userSchema = mongoose.Schema(
 
 		location: {
 			type: String,
-<<<<<<< HEAD
 		},
-=======
-		}
->>>>>>> 32c490a2e50be894e09e424f471c9642338122a4
+		postSaved: [
+			{
+				type: mongoose.Types.ObjectId,
+				ref: 'Posts',
+			},
+		],
 	},
 	{
 		timestamps: true,
 	},
 );
 
-module.exports = mongoose.model('Users', userSchema);
+module.exports =  mongoose.model('Users', userSchema);
