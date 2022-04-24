@@ -3,13 +3,11 @@ const authRoute = require('./authRoute');
 const uploadRoute = require('./UploadRoute');
 const postRoute = require('./PostRoute');
 const userRoute = require('./UserRoute');
-const commentRoute = require('./CommentRoute');
 
 module.exports = function (app) {
 	Router.use('/auth', authRoute);
-	Router.use('/user', userRoute);
-	Router.use('/post', postRoute);
-	Router.use('/comment', commentRoute);
-	Router.use('/upload', uploadRoute);
+	Router.use('/users', userRoute);
+	Router.use('/posts', postRoute);
+	Router.use('/uploads', uploadRoute);
 	app.use('/api/v1', Router);
 };

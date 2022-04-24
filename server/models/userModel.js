@@ -6,6 +6,7 @@ const userSchema = mongoose.Schema(
 			type: String,
 			required: true,
 			trim: true,
+			unique: true
 		},
 		fullName: {
 			type: String,
@@ -44,15 +45,11 @@ const userSchema = mongoose.Schema(
 		location: {
 			type: String,
 		},
-		postSaved: [
-			{
-				type: mongoose.Types.ObjectId,
-				ref: 'Posts',
-			},
-		],
+		postsSaved: [{ type: mongoose.Types.ObjectId, ref: 'Posts'}]
 	},
 	{
 		timestamps: true,
+		versionKey: false
 	},
 );
 

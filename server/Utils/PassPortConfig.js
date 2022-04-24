@@ -9,18 +9,15 @@ passport.use(
 			callbackURL: 'http://localhost:5000/api/v1/auth/github/callback',
 		},
 		function (accessToken, refreshToken, profile, done) {
-			console.log("1")
 			done(null, profile);
 		},
 	),
 );
 
 passport.serializeUser((user, done) => {
-	console.log("2")
-	return done(null,user);
+	return done(null, user);
 });
 
 passport.deserializeUser((user, done) => {
-	console.log("3")
-	return done(null,{name: "tuyenbeat"});
+	return done(null, user);
 });
