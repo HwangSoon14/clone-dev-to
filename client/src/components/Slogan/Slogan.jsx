@@ -1,7 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import {useSelector} from 'react-redux'
 const Slogan = () => {
+
+    const user = useSelector(state => state.auth.current_user);
+    if(Object.keys(user).length >=0) return null;
+
     return (
         <div className="w-full border-[1px] p-[1rem] drop-shadow-sm border-gray-200 rounded-lg bg-white">
         <p className="font-bold text-[18px] leading-[30px] tracking-wide">

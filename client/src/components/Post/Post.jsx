@@ -1,7 +1,6 @@
 import React from "react";
 
 const Post = ({ post }) => {
-  console.log(post);
   return (
     <div className="w-full pb-4 drop-shadow-sm flex flex-col bg-white border-2 border-gray-200 rounded-lg">
       {post.image && (

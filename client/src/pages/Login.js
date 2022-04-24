@@ -20,7 +20,6 @@ const Login = () => {
           const action = login(data);
           const resultAction = await dispatch(action);
           unwrapResult(resultAction);
-            console.log(resultAction);
             navigate("/");
             setIsLoading(false);
         } catch (error) {
