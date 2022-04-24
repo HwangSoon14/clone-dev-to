@@ -31,7 +31,7 @@ const Login = () => {
 
   return (
     <>
-    <div className="container  mx-auto md:px-16 flex min-w-[100vw] justify-center bg-white-smoke text-black min-h-[90vh]">
+    <div className="container mt-16 mx-auto md:px-16 flex min-w-[100vw] justify-center bg-white-smoke text-black min-h-[90vh]">
          <div className="flex items-center justify-center w-full md:w-[700px] border-2 border-gray-200 drop-shadow-md rounded-md bg-white h-full px-6 flex-col">
         <span className="block font-bold text-[1.3rem] mt-4 mb-2 lg:text-[28px] lg:mt-10">
           Welcome to DEV Community

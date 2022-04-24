@@ -24,7 +24,7 @@ const Profile = () => {
 	return (
 		<>
 
-		<div className="container max-w-screen-2xl min-h-screen bg-white-smoke relative pb-8 md:pb-20 lg:pb-24">
+		<div className="container mt-14 max-w-screen-2xl min-h-screen bg-white-smoke relative pb-8 md:pb-20 lg:pb-24">
 			<div className="absolute w-full h-[40px] md:h-[120px] bg-black top-0 left-0 right-0 z-0"></div>
 			<div className="relative top-[40px] md:top-[80px] md:mx-auto  max-w-[1000px] lg:border-gray-200 lg:border-2 md:pb-8 md:w-[98%] border-b-2 rounded-md border-gray-300 pb-4 w-full h-full mx-auto px-3 md:p-2 md:px-1 lg:px-28 bg-white  text-black">
 				<div className="w-[55px] h-[55px] md:w-[130px] md:h-[130px] md:mx-auto  translate-y-[-50%] border-4 md:border-8 border-black rounded-full ml-2 bg-black">
