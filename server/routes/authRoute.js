@@ -22,15 +22,14 @@ router.use(passport.initialize());
 router.get('/github', passport.authenticate('github'));
 
 router.get('/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), (req, res) => {
-	console.log("4")
 	res.redirect('http://localhost:5000/api/v1/auth/data');
 }),
-router.get('/data', (req, res) => {
-    res.json(req.user);
-});
+	router.get('/data', (req, res) => {
+		res.json(req.user);
+	});
 router.get('/logout', (req, res) => {
-    req.logout()
-    res.json("logout thành công")
+	req.logout();
+	res.json('logout thành công');
 });
 
 //Register Router

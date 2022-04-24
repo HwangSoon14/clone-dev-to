@@ -1,13 +1,29 @@
 const router = require('express').Router();
-const postController = require('../controllers/PostController');
+const postCtrl = require('../controllers/PostController');
 const auth = require('../middleware/Auth');
 const decodeToken = require('../middleware/DecodeToken');
 
+// GET
+router.get('/all', postCtrl.getAllPost);
+router.get('/:id/comments', postCtrl.getCommentsByPostId);
+router.get('/tags', postCtrl.getTags);
+router.get('/:slug', postCtrl.getPostBySlug);
+
+// Middleware Check Permissions
 router.use(auth);
+
+//Token Decryption Middleware
 router.use(decodeToken);
-router.post('/like/:postId', postController.likePost)
-router.post('/unlike/:postId', postController.unlikePost)
-router.route('/').get(postController.getAllPost).post(postController.addPost);
-router.route('/:id').put(postController.editPost).delete(postController.deletePost).get(postController.getPostById);
+
+// POST
+router.post('/:id/like', postCtrl.likePost);
+router.post('/:id/unlike', postCtrl.unlikePost);
+router.post('/:id/comments', postCtrl.addComment);
+
+//PUT
+router.put('/comments/:id', postCtrl.editComment);
+
+//DELETE
+router.delete('/:id/comments/:idc', postCtrl.deleteComment);
 
 module.exports = router;

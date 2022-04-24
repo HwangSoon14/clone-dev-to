@@ -1,26 +1,54 @@
 const UserModel = require('../models/UserModel');
 const PostModel = require('../models/PostModel');
 const userCtrl = {
-	getUserById: async (req, res, next) => {
+	getUserInfo: async (req, res, next) => {
 		try {
-			const { id } = req.params;
-			const data = await UserModel.find({ _id: id }, { email: 0, password: 0 });
+			const { userName } = req.params;
+			const data = await UserModel.find({ userName}, { email: 0, password: 0 });
 			res.status(200).json(data);
 		} catch (error) {
 			next(error);
 		}
 	},
-	getPostsByUser: async (req, res, next) => {
+	getUserPosts: async (req, res, next) => {
 		try {
 			const { userId } = req.params;
-			const data = await PostModel.find({ userId }, { updatedAt: 0, content: 0, __v: 0}).populate(
+			const data = await PostModel.find({ userId }, { content: 0}).populate(
 				{
 					path: "userId",
 					select: ["userName", "avatar"],
-
 				}
 			);
 			res.status(200).json(data);
+		} catch (error) {
+			next(error);
+		}
+	},
+	addPost: async (req, res, next) => {
+		try {
+			const {title, content, tags} = req.body
+			
+			const data = await PostModel.create({title, content, tags, userId: req.userId})
+			res.status(201).json(data);
+		} catch (error) {
+			next(error);
+		}
+	},
+	editPost: async (req, res, next) => {
+		try {
+			const {id} = req.params
+			const {title, content, tags} = req.body
+			await PostModel.updateOne({userId: req.userId, _id: id},{title, content, tags})
+			res.status(201).json({mess: "sửa post"});
+		} catch (error) {
+			next(error);
+		}
+	},
+	deletePost: async (req, res, next) => {
+		try {
+			const {id} = req.params
+			await PostModel.deleteOne({userId: req.userId, _id: id})
+			res.status(201).json({mess: "xóa post"});
 		} catch (error) {
 			next(error);
 		}

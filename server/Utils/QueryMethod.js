@@ -17,6 +17,13 @@ class QueryMethod {
         this.method = this.method.sort({createdAt: type})
         return this;
     }
+	populate(path, select){
+		this.method = this.method.populate({
+			path,
+			select
+		})
+		return this;
+	}
 }
 module.exports = QueryMethod;
  
