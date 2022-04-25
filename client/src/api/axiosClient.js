@@ -29,7 +29,8 @@ axiosClient.interceptors.request.use(async function (config) {
       localStorage.setItem("current_user",  JSON.stringify({...user,access_token}))
     }
     return config;
-    }
+  }
+
   }, function (error) {
     // Do something with request error
     return Promise.reject(error);

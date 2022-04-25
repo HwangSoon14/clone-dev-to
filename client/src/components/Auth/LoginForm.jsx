@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-
+import { AppRoutes } from '../../routing/AppRoutes';
 
 const schema = yup.object().shape({
     email: yup
@@ -20,7 +20,7 @@ const LoginForm = (props) => {
         resolver: yupResolver(schema),
         mode: 'onBlur',
       });
-
+      
       const onSubmitForm = (data) => {
           if(!onSubmit) return;
           onSubmit(data);
@@ -69,7 +69,7 @@ const LoginForm = (props) => {
 
                 <div className="text-sm flex justify-end">
                   <Link
-                    to="#"
+                    to={AppRoutes.FORGOT_PASSWORD}
                     className="font-medium text-indigo-600 hover:text-indigo-500"
                   >
                     Forgot your password?

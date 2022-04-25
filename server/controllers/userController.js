@@ -4,7 +4,7 @@ const userCtrl = {
 	getUserInfo: async (req, res, next) => {
 		try {
 			const { userName } = req.params;
-			const data = await UserModel.find({ userName }, { email: 0, password: 0 });
+			const data = await UserModel.findOne({ userName }, { email: 0, password: 0 });
 			res.status(200).json(data);
 		} catch (error) {
 			next(error);

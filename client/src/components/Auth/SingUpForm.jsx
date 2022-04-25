@@ -1,21 +1,13 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
+import React from 'react';
+import { useForm } from "react-hook-form";
 import * as yup from "yup";
-
 
 const schema = yup.object().shape({
   userName: yup
     .string()
     .required("Please enter your name")
-    .test(
-      "Please enter as least as 2 word",
-      "Please enter as least as 2 word",
-      (value) => {
-        return value.split(" ").length >= 2;
-      }
-    ),
+    .min(4, "Please enter name as least as 4 letter"),
   email: yup
     .string()
     .required("Please enter your email")
@@ -117,15 +109,6 @@ const SignUpForm = (props) => {
                 </div>
 
 
-                <div className="text-sm flex justify-end">
-                  <Link
-                    to="#"
-                    className="font-medium text-indigo-600 hover:text-indigo-500"
-                  >
-                    Forgot your password?
-                  </Link>
-                </div>
-              
 
               <div>
                 <button

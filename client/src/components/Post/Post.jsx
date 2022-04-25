@@ -1,44 +1,55 @@
 import React from "react";
-
+import dayjs from "dayjs";
+import { Link } from "react-router-dom";
 const Post = ({ post }) => {
+
+
   return (
-    <div className="w-full pb-4 drop-shadow-sm flex flex-col bg-white border-2 border-gray-200 rounded-lg">
-      {post.image && (
+  
+
+
+
+    <div className="w-full pb-4 drop-shadow-sm flex flex-col bg-white  border-2 border-gray-200 rounded-lg  ">
+      {post.content?.image && (
         <div className="w-full h-[275px]">
           {/* <img src={post?.image} alt="img post" className='w-full h-full object-cover'></img> */}
           <img
-            src={post.image}
+            src={post.userId.avatar}
             alt="img post"
             className="w-full h-full object-cover bg-center"
           ></img>
         </div>
       )}
-      <div className="flex flex-1 px-5 pt-7 pb-2">
-        <div className="flex items-center justify-center">
+      <div className="">
+      <Link to={`/profile/${post.userId.userName}`} className="flex flex-1 px-5 pt-7 pb-2 ">
+      <div className="flex items-center justify-center">
           <img
             className="inline-block border-2 border-gray-300 w-[35px] h-[35px] object-cover rounded-[50%]"
-            src={post.avatar}
+            src={post.userId.avatar}
             alt="avatar"
           />
         </div>
         <div className="ml-2">
-          <span className="block font-bold text-[14px] text-gray-700">
-            {post.username}
+          <span className="block  font-bold text-[14px]  text-gray-700 hover:bg-gray-100 px-2 rounded-md">
+            {post.userId.userName}
           </span>
-          <span className="block text-[12px] font-thin text-gray-500">
-            {post.date}
+          <span className="block text-[12px] font-thin text-gray-500 px-2">
+          {dayjs(post.createdAt).format('DD-MM YYYY')}
           </span>
+          
         </div>
+      </Link>
+        
       </div>
       <div className="mx-2 px-3 md:mx-8 md:px-8">
-        <h1 className="font-bold text-xl  md:text-2xl">{post.title}</h1>
+        <h1 className="font-bold text-xl  md:text-2xl hover:text-purple-900 cursor-pointer">{post.title}</h1>
         <div className="flex items-center  gap-x-2 md:gap-x-4 my-2">
-          {post.tabList.map((tag, idx) => (
+          {post.tags.map((tag, idx) => (
             <div
               key={idx}
-              className="flex items-center justify-center font-thin text-[12px] md:text-[14px] hover:bg-purple-100 rounded-lg py-1 md:px-[6px] border-[1.6px] border-white hover:border-purple-300"
+              className="flex items-center justify-center font-thin text-[12px] cursor-pointer md:text-[14px] hover:bg-purple-100 rounded-lg py-1 md:px-[6px] border-[1.6px] border-white hover:border-purple-300"
             >
-              <span className="inline-block text-blue-500 text-[10px]">#</span>
+              <span className="inline-block text-blue-500 text-[10px] ">#</span>
               {tag}
             </div>
           ))}
@@ -63,8 +74,8 @@ const Post = ({ post }) => {
                 ></path>
               </svg>
             </div>
-            <span className="inline-block ml-2 text-gray-500">
-              {post.reactions} <span className="hidden md:inline-block">reactions</span>
+            <span className="inline-block ml-2 text-gray-500 cursor-pointer">
+              {post.likes.length} <span className="hidden md:inline-block">reactions</span>
             </span>
           </div>
 
@@ -86,8 +97,8 @@ const Post = ({ post }) => {
                 ></path>
               </svg>
             </div>
-            <span className="inline-block ml-2 text-gray-500">
-              {post.comments} <span className="hidden md:inline-block">comments</span>
+            <span className="inline-block ml-2 text-gray-500 cursor-pointer">
+              {post.comments.length} <span className="hidden md:inline-block">comments</span>
             </span>
           </div>
 
@@ -97,6 +108,11 @@ const Post = ({ post }) => {
           </div>
         </div>
     </div>
+
+    
+
+    
+
   );
 };
 
