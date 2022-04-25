@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { logout } from '../../app/authSlice';
 import Logo from '../../assest/logo.png';
 import Sidebar from '../Sidebar/Sidebar';
-
+import { AppRoutes } from '../../routing/AppRoutes';
 const Navbar = () => {
 	const [showSidebar, setShowSidebar] = useState(false);
 	const [isShowAuthMenu, setIsShowNavMenu] = useState(false);
@@ -34,7 +34,7 @@ const Navbar = () => {
 					<div className="w-[96%] h-full px-2 animate-scrollDown gay-y-2 bg-white  mx-auto border-2 rounded-lg border-gray-200">
 						<div className="w-full pl-4 py-3 border-b-2 my-2 border-gray-200 hover:bg-purple-100 rounded-md hover:underline">
 							<span className="block font-bold">{user.userName}</span>
-							<span className="block text-gray-500 text-sm">@hwangsoon14</span>
+							<span className="block text-gray-500 text-sm">@{user.userName}</span>
 						</div>
 						<div className="auth-menu-link">
 							<Link to="/dashboard">Dashboard</Link>

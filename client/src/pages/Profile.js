@@ -1,24 +1,54 @@
-import React, {  useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, {  useState , useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import userApi from '../api/userApi';
 import Footer from '../components/Footer/Footer';
 import Post from '../components/Post/Post';
 import ReadMore from '../components/Profile/ReadMore';
 import {dummyPost} from '../dummy-tab/index'
-
+import dayjs from 'dayjs';
 
 const Profile = () => {
 	const [isReadMore, setIsReadMore] = useState(false);
+	const [user , setUser] = useState({});
+	const [userPosts , setUserPosts] = useState([]);
     const [textMore , setTextMore ] = useState({
-        post: '1 post published',
-        comment: '0 comments written',
-        tag: '6 tags followed'
+        postLength: 0,
+        commentLength: 0,
+        tagLength: 0
     })
-
+	const userNameParams = useParams().username;
+	
 	const handleShowReadMore = () => {
 		setIsReadMore(true);
 	};
+	
+  useEffect(() => {
+	const fetchData = async () => {
+		try {
+			const userInfo = await userApi.getUserInfo(userNameParams);
+			const postsUser = await userApi.getPostsByUserId(userInfo._id);
+			const totalComments = postsUser.reduce(
+				(previousValue, currentPost) => previousValue + currentPost.comments.length,
+				0
+			  );
+			setTextMore({
+				...textMore,
+				postLength: postsUser.length,
+				commentLength: totalComments,
+				tagLength: 0,
+			})
+			console.log(postsUser);
+			setUser(userInfo);
+			setUserPosts(postsUser);
 
-  
+		} catch (error) {
+			console.log(error.message);
+		}
+
+
+	}
+	fetchData();
+  } , [])
 
 
 	return (
@@ -29,7 +59,7 @@ const Profile = () => {
 			<div className="relative top-[40px] md:top-[80px] md:mx-auto  max-w-[1000px] lg:border-gray-200 lg:border-2 md:pb-8 md:w-[98%] border-b-2 rounded-md border-gray-300 pb-4 w-full h-full mx-auto px-3 md:p-2 md:px-1 lg:px-28 bg-white  text-black">
 				<div className="w-[55px] h-[55px] md:w-[130px] md:h-[130px] md:mx-auto  translate-y-[-50%] border-4 md:border-8 border-black rounded-full ml-2 bg-black">
 					<img
-						src="https://res.cloudinary.com/practicaldev/image/fetch/s--lG8lYKyX--/c_fill,f_auto,fl_progressive,h_320,q_auto,w_320/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/834510/c6c51cda-675c-4fe1-a7fa-5ff355603228.jpeg"
+						src={user.avatar}
 						alt="avatar"
 						className="w-full h-full object-cover rounded-full"
 					/>
@@ -39,12 +69,12 @@ const Profile = () => {
 						<button className="main-btn">Edit Profile</button>
 					</Link>
 				</div>
-				<h1 className="font-bold text-2xl md:text-center">Hoafng Son</h1>
-				<p className="my-2 font-normal md:text-center">404 bio not found</p>
+				<h1 className="font-bold text-2xl md:text-center">{user.userName}</h1>
+				<p className="my-2 font-normal md:text-center">{user.description}</p>
 				<div className="flex items-center gap-x-3 px-2 md:justify-center">
 					<div>
 						<svg
-							class="w-6 h-6"
+							className="w-6 h-6"
 							fill="none"
 							stroke="currentColor"
 							viewBox="0 0 24 24"
@@ -58,7 +88,7 @@ const Profile = () => {
 							></path>
 						</svg>
 					</div>
-					<span className="inline-block font-light text-sm text-gray-500">Joined on 22 thg 3, 2022</span>
+					<span className="inline-block font-light text-sm text-gray-500">Joined on {dayjs(user.createdAt).format('DD-MM YYYY')}</span>
 					<div>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +109,7 @@ const Profile = () => {
 						<button
 							onClick={handleShowReadMore}
 							className="flex md:hidden w-full p-2 items-center justify-center border-[2px] border-gray-300 rounded-md text-sm font-bold">
-							More info about @hwangsoon14
+							More info about @{user.userName}
 						</button>
 					</div>}   
                 
@@ -88,12 +118,17 @@ const Profile = () => {
 			</div>
             
             <div className='flex flex-col md:flex-row mx-2 max-w-[1000px] lg:mx-auto lg:mt-4'>
-            {isReadMore && <ReadMore data={textMore} />}
-            <div className='relative pb-4 top-[40px] md:top-[80px] flex flex-1 flex-col gap-y-2 md:p-1 lg:p-2'>
-                {dummyPost.map((post, idx) => (
-                    <Post post={post} key={idx}/>
-                ))}
-            </div>
+			{
+				<div className={`${isReadMore ? 'block' : 'hidden'} relative md:top-[40px] mx-auto pt-1  md:block w-full md:w-[240px] lg:w-[320px]`}>
+				 <ReadMore data={textMore} />
+				</div>
+			}	
+
+             <div className='relative pb-4 top-[40px] md:top-[80px] flex flex-1 flex-col gap-y-2 md:p-1 lg:p-2'>
+                {userPosts?.map((item, idx) => (
+					<Post post={item} key={idx}></Post>
+				))}
+            </div> 
             </div>
 
             

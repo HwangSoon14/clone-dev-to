@@ -1,10 +1,9 @@
 import React from 'react';
 
 const ReadMore = (props) => {
-	const { post, comment, tag } = props.data;
-    console.log(props);
+	const { postLength, commentLength, tagLength } = props.data;
 	return (
-		<div className="relative md-w-[20%] lg:w-[320px] md:border-2 border-b-2 border-t-2 bg-[#fafafa] flex flex-col gap-y-6 border-gray-200 py-4 my-4 md:my-1 w-full h-full mx-auto px-3 md:p-2 md:px-1 lg:p-2 top-[40px] md:top-[80px] text-black">
+		<div className="relative   bg-[#fafafa] border-2 border-gray-200 rounded-sm flex flex-col gap-y-6  py-4 my-4 md:my-1 w-full   px-3 md:p-2 md:px-1 lg:p-2 top-[40px]  text-black">
 			<div className="w-full flex items-center text-gray-500">
 				<div className='mr-3'>
 					<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -16,7 +15,7 @@ const ReadMore = (props) => {
 						></path>
 					</svg>
 				</div>
-				<span className="inline-block text-md font-medium">{post}</span>
+				<span className="inline-block text-md font-medium">{postLength} post published</span>
 			</div>
 
 			<div className="w-full flex items-center text-gray-500">
@@ -30,7 +29,7 @@ const ReadMore = (props) => {
 						></path>
 					</svg>
 				</div>
-				<span className="inline-block text-md font-medium">{comment}</span>
+				<span className="inline-block text-md font-medium">{commentLength} comments written</span>
 			</div>
 
 			<div className="w-full flex items-center text-gray-500">
@@ -44,7 +43,7 @@ const ReadMore = (props) => {
 						></path>
 					</svg>
 				</div>
-				<span className="inline-block text-md font-medium">{tag}</span>
+				<span className="inline-block text-md font-medium">{tagLength} tags followed</span>
 			</div>
 		</div>
 	);
