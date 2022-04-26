@@ -12,8 +12,6 @@ export const SendMail = (mail, username, code) => {
 			pass: process.env.PASS_MAIL,
 		},
 	});
-	const link = `http://localhost:3000/user/forgotpass?username=${username}&key=${code}`;
-
 	//return promise
 	return transporter.sendMail({
 		from: '"DEV.TO Clone" <daylataikhoantest.dev@gmail.com>',

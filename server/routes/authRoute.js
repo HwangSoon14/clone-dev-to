@@ -35,9 +35,11 @@ router.get('/logout', (req, res) => {
 
 //Register Router
 router.post('/register', authController.register);
-router.get('/forgotpassword', authController.forgotPassword);
 
 //Login Router
+router.post('/password/require', authController.sendMail);
+router.post('/password/confirm', authController.confirmOtp);
+router.post('/password/new', authController.newPassword);
 router.post('/login', authController.login);
 
 // //Refresh token
