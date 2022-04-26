@@ -134,7 +134,7 @@ const Navbar = () => {
 
 					{Object.keys(user).length > 0 ? (
 						<>
-							<div className="ml-auto sm:hidden md:block">
+							<div className="hidden ml-auto md:block">
 								<Link to="/new">
 									<button className="main-btn">Create Post</button>
 								</Link>

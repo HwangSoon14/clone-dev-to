@@ -84,15 +84,17 @@ const userCtrl = {
 	savedPost: async (req, res, next) => {
 		try {
 			const data = await UserModel.find({_id: req.userId}, {postsSaved: 1}).populate({
-				path: "postsSaved",
+			path: "postsSaved",
 				select: ["title", "updatedAt", "tags"],
 				populate: {
 					path: "userId",
-					select: "fullName, avatar"
+					select: ["userName" , "avatar" , "fullName"]
 				}
 			})
+			console.log(data[0].postsSaved)
 			res.status(201).json(data[0].postsSaved);
 		} catch (error) {
+			
 			next(error);
 		}
 	},
