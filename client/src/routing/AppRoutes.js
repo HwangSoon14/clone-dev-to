@@ -5,4 +5,5 @@ export const AppRoutes = {
     RESET_PASSWORD: '/reset-password',
     REGISTER: '/sign-up',
     PROFILE: '/profile/:username',
+    READING_LIST: '/readinglist'
   };

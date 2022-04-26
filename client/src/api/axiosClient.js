@@ -14,25 +14,37 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use(async function (config) {
 
 // Do something before request is sent
-    if(config.url.indexOf('/login') >= 0 || config.url.indexOf('/refresh') >= 0 ||  config.url.indexOf('/register')) {
-      return config;
-    }
-    else {
-      let date = new Date();
-    const user = JSON.parse(localStorage.getItem("current_user"));
-    const decodedToken = jwt_decode(user.access_token);
-    if (decodedToken.exp < date.getTime() / 1000 || !decodedToken) {
-        const user = JSON.parse(localStorage.getItem("current_user"))
+  if(config.url.indexOf('/login') >= 0 || config.url.indexOf('/refresh') >= 0 ||  config.url.indexOf('/register')  >= 0) {
+    return config;
+  }
+  let date = new Date();
+  const user = JSON.parse(localStorage.getItem("current_user"));
+  const decodedToken = jwt_decode(user.access_token);
+  if(user.access_token) {
+    config.headers.Authorization = user.access_token;
+    return config;
+  }
+  else if (decodedToken.exp < date.getTime() / 1000 || !user.access_token)
+   {
         const data = await authApi.refresh_token();
         const access_token = data.access_token;
         console.log("here is running")
       localStorage.setItem("current_user",  JSON.stringify({...user,access_token}))
-    }
-    return config;
+      config.headers.Authorization = access_token;
+      return config;
   }
+
+  
+
+    
+   
+    
+    // }
+    return config;
 
   }, function (error) {
     // Do something with request error
+    console.log(error)
     return Promise.reject(error);
   });
 
