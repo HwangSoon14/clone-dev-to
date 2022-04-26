@@ -5,7 +5,6 @@ import cors from 'cors';
 const app = express();
 import cookieParser from 'cookie-parser';
 import { ErrorHandling } from './Utils/ErrorHandling.js';
-
 import ParentRoute from './routes/ParentRoute.js';
 
 app.use(express.json());

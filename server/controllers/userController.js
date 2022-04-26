@@ -85,7 +85,7 @@ const userCtrl = {
 		try {
 			const data = await UserModel.find({_id: req.userId}, {postsSaved: 1}).populate({
 				path: "postsSaved",
-				select: "title, updatedAt, tags",
+				select: ["title", "updatedAt", "tags"],
 				populate: {
 					path: "userId",
 					select: "fullName, avatar"
