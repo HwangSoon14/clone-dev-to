@@ -1,5 +1,5 @@
-const cloudinary = require('../Utils/UploadCloudinary');
-const fs = require('fs');
+import {cloudinary} from '../Utils/UploadCloudinary.js';
+import fs from 'fs';
 
 const uploadCtrl = {
 	single: async (req, res, next) => {
@@ -37,4 +37,4 @@ const uploadCtrl = {
 		}
 	},
 };
-module.exports = uploadCtrl;
+export default uploadCtrl;

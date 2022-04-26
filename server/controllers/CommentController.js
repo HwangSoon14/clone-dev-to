@@ -1,4 +1,4 @@
-const commentModel = require('../models/CommentModel');
+import commentModel from '../models/commentModel.js';
 
 const commentController = {
 	addComment: async (req, res, next) => {

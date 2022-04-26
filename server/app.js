@@ -1,11 +1,11 @@
-require('dotenv').config();
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
+import 'dotenv/config';
+import express from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
 const app = express();
-const cookieParser = require('cookie-parser');
-const ErrorHandling = require('./Utils/ErrorHandling');
-const ParentRoute = require('./routes/ParentRoute');
+import cookieParser from 'cookie-parser';
+import { ErrorHandling } from './Utils/ErrorHandling.js';
+import ParentRoute from './routes/ParentRoute.js';
 
 app.use(express.json());
 app.use(cors());

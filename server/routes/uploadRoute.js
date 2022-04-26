@@ -1,13 +1,14 @@
-const router = require('express').Router();
-const uploadController = require('../controllers/UploadController');
-const upload = require('../Utils/MulterStorage');
+import express from 'express';
+const router = express.Router();
+import uploadController from '../controllers/uploadController.js';
+import {upload} from '../Utils/MulterStorage.js';
 
 //Single File
-router.post('/single',upload.single("image"), uploadController.single);
+router.post('/single', upload.single('image'), uploadController.single);
 
 //Multiple
-router.post('/multiple',upload.any(), uploadController.multiple);
+router.post('/multiple', upload.any(), uploadController.multiple);
 
-//Resize Image 
+//Resize Image
 
-module.exports = router;
+export default router;

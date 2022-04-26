@@ -1,5 +1,6 @@
-const passport = require('passport');
-const GitHubStrategy = require('passport-github2').Strategy;
+import passport from 'passport';
+import GitHub from 'passport-github2';
+const GitHubStrategy = GitHub.Strategy;
 
 passport.use(
 	new GitHubStrategy(

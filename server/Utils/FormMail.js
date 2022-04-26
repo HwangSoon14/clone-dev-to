@@ -1,4 +1,4 @@
-module.exports = function(code, username) { 
+export function FormMail(code, username) { 
     return `
     <div
   style="

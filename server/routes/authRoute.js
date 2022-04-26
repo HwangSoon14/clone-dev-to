@@ -1,8 +1,9 @@
-const router = require('express').Router();
-const authController = require('../controllers/AuthController');
-const session = require('express-session');
-const passport = require('passport');
-require('../Utils/PassPortConfig');
+import express from 'express';
+const router = express.Router();
+import authController from '../controllers/authController.js';
+import session from 'express-session';
+import passport from  'passport';
+import "../Utils/PassPortConfig.js"
 
 router.use(
 	session({
@@ -42,4 +43,4 @@ router.post('/login', authController.login);
 // //Refresh token
 router.post('/refresh', authController.requestRefreshToken);
 
-module.exports = router;
+export default router;

@@ -1,6 +1,6 @@
-const QueryMethod = require('../Utils/QueryMethod');
-const postModel = require('../models/PostModel');
-const commentModel = require('../models/commentModel');
+import {QueryMethod} from '../Utils/QueryMethod.js';
+import postModel from '../models/PostModel.js';
+import commentModel from '../models/commentModel.js';
 
 const postController = {
 
@@ -113,4 +113,4 @@ const postController = {
 	},
 };
 
-module.exports = postController;
+export default postController;

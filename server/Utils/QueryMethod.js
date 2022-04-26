@@ -1,4 +1,4 @@
-class QueryMethod {
+export class QueryMethod {
 	query = {};
 	method = null;
 	constructor(query, method) {
@@ -9,21 +9,19 @@ class QueryMethod {
 		const limit = this.query.limit || 0;
 		const page = this.query.page || 0;
 		const skip = (page - 1) * limit;
-        this.method = this.method.skip(skip).limit(limit)
+		this.method = this.method.skip(skip).limit(limit);
 		return this;
 	}
-    sort(){
-        const type = this.query.sort || "";
-        this.method = this.method.sort({createdAt: type})
-        return this;
-    }
-	populate(path, select){
+	sort() {
+		const type = this.query.sort || '';
+		this.method = this.method.sort({ createdAt: type });
+		return this;
+	}
+	populate(path, select) {
 		this.method = this.method.populate({
 			path,
-			select
-		})
+			select,
+		});
 		return this;
 	}
 }
-module.exports = QueryMethod;
- 
