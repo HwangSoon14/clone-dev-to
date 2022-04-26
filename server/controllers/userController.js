@@ -1,5 +1,5 @@
-const UserModel = require('../models/UserModel');
-const PostModel = require('../models/PostModel');
+import UserModel from '../models/userModel.js';
+import PostModel from '../models/PostModel.js';
 const userCtrl = {
 	getUserInfo: async (req, res, next) => {
 		try {
@@ -97,4 +97,4 @@ const userCtrl = {
 		}
 	},
 };
-module.exports = userCtrl;
+export default userCtrl;

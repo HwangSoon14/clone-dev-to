@@ -1,7 +1,7 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const Users = require('../models/UserModel');
-const sendMail = require("../Utils/SendMail")
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import Users from '../models/userModel.js';
+import {SendMail} from "../Utils/SendMail.js"
 const authCtrl = {
 	register: async (req, res,next) => {
 		try {
@@ -95,8 +95,8 @@ const authCtrl = {
 		});
 	},
 	forgotPassword: async (req, res) => {
-		await sendMail("tuyen197.it@gmail.com", "tuyenbeat", "112233")
+		await SendMail("tuyen197.it@gmail.com", "tuyenbeat", "112233")
 		res.json({mess: "check mail"})
 	}
 };
-module.exports = authCtrl;
+export default authCtrl;

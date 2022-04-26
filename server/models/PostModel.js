@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const slug = require('mongoose-slug-generator');
+import mongoose from 'mongoose';
+import slug from 'mongoose-slug-generator';
 const options = {
 	separator: '-',
 	lang: 'en',
@@ -16,12 +16,12 @@ const postSchema = new mongoose.Schema(
 		slug: { type: String, slug: 'title', slug_padding_size: 3, unique: true },
 		likes: [{ type: mongoose.Types.ObjectId, default: [] }],
 		comments: [{ type: mongoose.Types.ObjectId, default: [] }],
-		saver: [{ type: mongoose.Types.ObjectId, default: []}]
+		saver: [{ type: mongoose.Types.ObjectId, default: [] }],
 	},
 	{
 		timestamps: true,
-		versionKey: false
+		versionKey: false,
 	},
 );
-
-module.exports = mongoose.model('Posts', postSchema);
+const Posts = mongoose.model('Posts', postSchema);
+export default Posts;

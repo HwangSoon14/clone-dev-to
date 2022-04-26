@@ -1,6 +1,6 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
-module.exports = function (req, res, next) {
+export default function DecodeToken (req, res, next) {
     const {userId} = jwt.decode(req.header("Authorization"), process.env.GENERATE_AC_TOKEN)
     req.userId = userId
     next()

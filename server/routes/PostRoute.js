@@ -1,7 +1,8 @@
-const router = require('express').Router();
-const postCtrl = require('../controllers/PostController');
-const auth = require('../middleware/Auth');
-const decodeToken = require('../middleware/DecodeToken');
+import express from 'express';
+const router = express.Router();
+import postCtrl from '../controllers/PostController.js';
+import auth from '../middleware/Auth.js';
+import decodeToken from '../middleware/DecodeToken.js';
 
 // GET
 router.get('/all', postCtrl.getAllPost);
@@ -26,4 +27,4 @@ router.put('/comments/:id', postCtrl.editComment);
 //DELETE
 router.delete('/:id/comments/:idc', postCtrl.deleteComment);
 
-module.exports = router;
+export default router;

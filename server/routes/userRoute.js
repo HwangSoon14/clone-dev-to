@@ -1,7 +1,8 @@
-const router = require('express').Router();
-const userController = require('../controllers/UserController');
-const auth = require('../middleware/Auth');
-const decodeToken = require('../middleware/DecodeToken');
+import express from 'express';
+const router = express.Router();
+import userController from '../controllers/userController.js';
+import auth from '../middleware/Auth.js';
+import decodeToken from '../middleware/DecodeToken.js';
 
 // GET
 router.get('/:userName', userController.getUserInfo);
@@ -14,15 +15,15 @@ router.use(decodeToken);
 router.get('/posts/saved', userController.savedPost);
 
 // POST
-router.post("/posts", userController.addPost)
-router.post("/posts/:id/save", userController.savePost)
+router.post('/posts', userController.addPost);
+router.post('/posts/:id/save', userController.savePost);
 
 // DELETE
-router.delete("/posts/:id/unsave", userController.unsavePost)
-router.delete("/posts/:id", userController.deletePost)
+router.delete('/posts/:id/unsave', userController.unsavePost);
+router.delete('/posts/:id', userController.deletePost);
 
 //PUT
 router.put('/').put(userController.editUser);
-router.put("/posts/:id", userController.editPost)
+router.put('/posts/:id', userController.editPost);
 
-module.exports = router;
+export default router;

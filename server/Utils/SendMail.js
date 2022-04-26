@@ -1,7 +1,7 @@
-const nodemailer = require('nodemailer');
-const formMail = require('./FormMail');
+import nodemailer from 'nodemailer';
+import {FormMail} from "./FormMail.js"
 
-const SendMail = (mail, username, code) => {
+export const SendMail = (mail, username, code) => {
 	//configure mail sending protocol
 	const transporter = nodemailer.createTransport({
 		host: 'smtp.gmail.com',
@@ -19,8 +19,7 @@ const SendMail = (mail, username, code) => {
 		from: '"DEV.TO Clone" <daylataikhoantest.dev@gmail.com>',
 		to: `${mail}`,
 		subject: '[DEV.TO Clone] Quên mật khẩu',
-		html: formMail(code,username)
+		html: FormMail(code,username)
 	});
 };
 
-module.exports = SendMail;
