@@ -5,6 +5,7 @@ import { SendMail } from '../Utils/SendMail.js';
 import { GenerateSecret, GenerateOtp, VerifyOtp, ArraySecret } from '../Utils/OtpConfig.js';
 
 let arrSecret = [];
+
 const authCtrl = {
 	register: async (req, res, next) => {
 		try {
@@ -144,5 +145,6 @@ const authCtrl = {
 			next(error);
 		}
 	},
+
 };
 export default authCtrl;
