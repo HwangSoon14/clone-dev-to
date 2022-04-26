@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const userSchema = mongoose.Schema(
 	{
@@ -6,7 +6,7 @@ const userSchema = mongoose.Schema(
 			type: String,
 			required: true,
 			trim: true,
-			unique: true
+			unique: true,
 		},
 		fullName: {
 			type: String,
@@ -45,12 +45,13 @@ const userSchema = mongoose.Schema(
 		location: {
 			type: String,
 		},
-		postsSaved: [{ type: mongoose.Types.ObjectId, ref: 'Posts', default: []}]
+		postsSaved: [{ type: mongoose.Types.ObjectId, ref: 'Posts', default: [] }],
 	},
 	{
 		timestamps: true,
-		versionKey: false
+		versionKey: false,
 	},
 );
 
-module.exports =  mongoose.model('Users', userSchema);
+const Users = mongoose.model('Users', userSchema);
+export default Users;
