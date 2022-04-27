@@ -1,24 +1,26 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../../app/authSlice';
 import Logo from '../../assest/logo.png';
 import Sidebar from '../Sidebar/Sidebar';
 import { AppRoutes } from '../../routing/AppRoutes';
 const Navbar = () => {
 	const [showSidebar, setShowSidebar] = useState(false);
-	const [isShowAuthMenu, setIsShowNavMenu] = useState(false);
+	const [isShowAuthMenu, setIsShowAuthMenu] = useState(false);
 	const dispatch = useDispatch();
+	let navigate = useNavigate();
 	const user = useSelector((state) => state.auth.current_user);
 	const handleToggleSidebar = () => {
 		setShowSidebar((prev) => !prev);
 	};
 	const toggleAuthMenu = () => {
-		setIsShowNavMenu((prev) => !prev);
+		setIsShowAuthMenu((prev) => !prev);
 	};
 
 	const handleLogout = () => {
 		dispatch(logout());
+		navigate("/sign-in");
 	};
 
 	const renderAuth = () => (
@@ -30,8 +32,8 @@ const Navbar = () => {
 			</div>
 
 			{isShowAuthMenu && (
-				<div className="absolute w-[100%] h-auto sm:w-[300px] sm:right-0 right-0 top-[50px]  left-0 sm:left-auto z-50 text-black drop-shadow-sm">
-					<div className="w-[96%] h-full px-2 animate-scrollDown gay-y-2 bg-white  mx-auto border-2 rounded-lg border-gray-200">
+				<div className="absolute w-[100%] h-auto sm:w-[300px] right-0 top-[50px] left-0 sm:left-auto z-50 text-black drop-shadow-sm">
+					<div className="w-[96%] h-full px-2 animate-scrollDown gay-y-2 bg-white mx-auto border-2 rounded-lg border-gray-200">
 						<div className="w-full pl-4 py-3 border-b-2 my-2 border-gray-200 hover:bg-purple-100 rounded-md hover:underline">
 							<span className="block font-bold">{user.userName}</span>
 							<span className="block text-gray-500 text-sm">@{user.userName}</span>
@@ -61,8 +63,8 @@ const Navbar = () => {
 	return (
 		<>
 			<div className='fixed w-full border-b-[1px] shadow-sm border-gray-200 bg-white top-0 left-0 z-50 right-0'>
-			<div className=" mx-auto  p-2 max-w-screen-2xl md:px-8 lg:px-28">
-				<div className="w-full h-full flex items-center container">
+			<div className=" mx-auto py-2 max-w-screen-2xl">
+				<div className="relative w-full h-full flex items-center px-3">
 					{/* menu-button */}
 					<div className="flex items-center justify-center md:hidden">
 						<button onClick={handleToggleSidebar}>
