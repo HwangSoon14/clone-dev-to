@@ -11,7 +11,7 @@ module.exports = {
       animation: {
         bounce200: 'bounce 1s infinite 200ms',
         bounce400: 'bounce 1s infinite 400ms',
-        slide: 'slide 1.3s',
+        slide: 'slide 0.8s',
         scrollDown: 'scrollDown 0.5s'
     },
     keyframes: {
