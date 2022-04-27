@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import FAQ from "./pages/FAQ";
 import Home from './pages/Home'
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
@@ -25,6 +26,7 @@ function App() {
         <Route exact path={AppRoutes.ABOUT} element={<About />} />
         <Route exact path={AppRoutes.CONTACT} element={<Contact />} />
         <Route exact path={AppRoutes.SPONSORS} element={<Sponsor />} />
+        <Route exact path={AppRoutes.FAQ} element={<FAQ />} />
         <Route path="*" element={<NotFound />}/> 
 
      
