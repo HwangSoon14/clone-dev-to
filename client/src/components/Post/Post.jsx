@@ -1,18 +1,16 @@
 import React from "react";
 import dayjs from "dayjs";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 const Post = ({ post }) => {
-
-
-  return (
   
 
+  return (
 
 
     <div className="w-full pb-4 drop-shadow-sm flex flex-col bg-white  border-2 border-gray-200 rounded-lg  ">
       {post.content?.image && (
         <div className="w-full h-[275px]">
-          {/* <img src={post?.image} alt="img post" className='w-full h-full object-cover'></img> */}
           <img
             src={post.userId.avatar}
             alt="img post"
@@ -30,13 +28,12 @@ const Post = ({ post }) => {
           />
         </div>
         <div className="ml-2">
-          <span className="block  font-bold text-[14px]  text-gray-700 hover:bg-gray-100 px-2 rounded-md">
+          <span className="block font-bold text-[14px] text-gray-700 hover:bg-gray-100 px-2 rounded-md">
             {post.userId.userName}
           </span>
           <span className="block text-[12px] font-thin text-gray-500 px-2">
           {dayjs(post.createdAt).format('DD-MM YYYY')}
           </span>
-          
         </div>
       </Link>
         
@@ -108,8 +105,8 @@ const Post = ({ post }) => {
           </div>
         </div>
     </div>
-
-    
+            
+  
 
     
 
