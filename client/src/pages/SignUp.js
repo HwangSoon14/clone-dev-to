@@ -4,6 +4,7 @@ import authApi from '../api/authApi';
 import Logo from '../assest/logo.png'
 import SignUpForm from '../components/Auth/SingUpForm';
 import Footer from '../components/Footer/Footer';
+import FooterLayout from '../components/Layout/FooterLayout';
 import Loading from '../components/Loading/Loading';
 
 const SignUp = () => {
@@ -24,7 +25,7 @@ const SignUp = () => {
       return (
         
 
-   <>
+   <FooterLayout>
 
         <div className="container pt-[75px] mx-auto md:px-16 sm:pb-4 flex max-w-full justify-center bg-gray-100 text-black min-h-[70vh]">
              <div className="flex items-center justify-center w-full md:w-[700px] border-2 border-gray-200 md:shadow-sm rounded-md bg-white h-full px-6 flex-col">
@@ -62,8 +63,7 @@ const SignUp = () => {
             {isLoading && <Loading />}
 
         </div>
-        <Footer/>
-      </>
+      </FooterLayout>
 
 
        )

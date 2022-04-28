@@ -7,6 +7,7 @@ import { login } from "../app/authSlice";
 import Logo from '../assest/logo.png'
 import LoginForm from "../components/Auth/LoginForm";
 import Footer from "../components/Footer/Footer";
+import FooterLayout from "../components/Layout/FooterLayout";
 import Loading from "../components/Loading/Loading";
 const Login = () => {
 
@@ -29,6 +30,7 @@ const Login = () => {
   
 
   return (
+
     <>
     <div className="container pt-20 mx-auto md:px-16 flex max-w-full justify-center bg-white-smoke text-black min-h-[90vh]">
          <div className="flex items-center justify-center w-full md:w-[700px] border-1 border-gray-200 drop-shadow-md rounded-md bg-white h-full px-6 flex-col">
@@ -66,9 +68,9 @@ const Login = () => {
 
     </div>
     
-    <Footer />
+ 
 
-    </>
+    </FooterLayout>
   );
 };
 

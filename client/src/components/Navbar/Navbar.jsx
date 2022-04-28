@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { logout } from '../../app/authSlice';
 import Logo from '../../assest/logo.png';
 import Sidebar from '../Sidebar/Sidebar';
-import { AppRoutes } from '../../routing/AppRoutes';
 const Navbar = () => {
 	const [showSidebar, setShowSidebar] = useState(false);
+
 	const [isShowAuthMenu, setIsShowAuthMenu] = useState(false);
-	const dispatch = useDispatch();
 	let navigate = useNavigate();
 	const user = useSelector((state) => state.auth.current_user);
 	const handleToggleSidebar = () => {
@@ -19,8 +17,7 @@ const Navbar = () => {
 	};
 
 	const handleLogout = () => {
-		dispatch(logout());
-		navigate("/sign-in");
+		navigate('/signout-confirm');
 	};
 
 	const renderAuth = () => (
@@ -34,10 +31,10 @@ const Navbar = () => {
 			{isShowAuthMenu && (
 				<div className="absolute w-[100%] h-auto sm:w-[300px] right-0 top-[50px] left-0 sm:left-auto z-50 text-black drop-shadow-sm">
 					<div className="w-[96%] h-full px-2 animate-scrollDown gay-y-2 bg-white mx-auto border-2 rounded-lg border-gray-200">
-						<div className="w-full pl-4 py-3 border-b-2 my-2 border-gray-200 hover:bg-purple-100 rounded-md hover:underline">
+						<Link className='w-full pl-4 py-3 border-b-2 my-2 border-gray-200 hover:bg-purple-100 rounded-md hover:underline block' to={`/profile/${user.userName}`}>
 							<span className="block font-bold">{user.userName}</span>
 							<span className="block text-gray-500 text-sm">@{user.userName}</span>
-						</div>
+						</Link>
 						<div className="auth-menu-link">
 							<Link to="/dashboard">Dashboard</Link>
 						</div>

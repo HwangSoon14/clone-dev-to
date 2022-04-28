@@ -1,11 +1,11 @@
 import React from 'react';
 import Footer from '../components/Footer/Footer';
-
+import FooterLayout from '../components/Layout/FooterLayout';
 const About = () => {
 	return (
-		<>
-			
-		<div className='md:px-3 md:py-4 bg-white-smoke  lg:px-48'>
+
+			<FooterLayout>
+			<div className='md:px-3 md:py-4 bg-white-smoke  lg:px-48'>
 			<div id="page-content" className="wrapper pages pages-about" data-current-page="pages-about">
 					<main id="main-content">
 						<div className="px-2 py-4 mt-14 mx-auto w-full min-h-screen md:px-12 md:py-16 bg-white border-transparent md:border-2 drop-shadow-sm md:border-gray-200 md:rounded-xl">
@@ -86,8 +86,8 @@ const About = () => {
 					<div id="IS_CENTERED_PAGE"></div>
 				</div>
 			</div>
-		<Footer />
-		</>
+			</FooterLayout>
+	
 
   );
 };

@@ -6,8 +6,10 @@ import Post from '../components/Post/Post';
 import ReadMore from '../components/Profile/ReadMore';
 import {dummyPost} from '../dummy-tab/index'
 import dayjs from 'dayjs';
+import FooterLayout from '../components/Layout/FooterLayout';
 
 const Profile = () => {
+	const [firstLoading , setFirstLoading] = useState(true);
 	const [isReadMore, setIsReadMore] = useState(false);
 	const [user , setUser] = useState({});
 	const [userPosts , setUserPosts] = useState([]);
@@ -40,6 +42,7 @@ const Profile = () => {
 			console.log(postsUser);
 			setUser(userInfo);
 			setUserPosts(postsUser);
+			setFirstLoading(false);
 
 		} catch (error) {
 			console.log(error.message);
@@ -52,25 +55,34 @@ const Profile = () => {
 
 
 	return (
-		<>
+		<FooterLayout>
 
 		<div className="container mt-14 max-w-screen-2xl min-h-screen bg-white-smoke relative pb-8 md:pb-20 lg:pb-24">
 			<div className="absolute w-full h-[40px] md:h-[120px] bg-black top-0 left-0 right-0 z-0"></div>
 			<div className="relative top-[40px] md:top-[80px] md:mx-auto  max-w-[1000px] lg:border-gray-200 lg:border-2 md:pb-8 md:w-[98%] border-b-2 rounded-md border-gray-300 pb-4 w-full h-full mx-auto px-3 md:p-2 md:px-1 lg:px-28 bg-white  text-black">
 				<div className="w-[55px] h-[55px] md:w-[130px] md:h-[130px] md:mx-auto  translate-y-[-50%] border-4 md:border-8 border-black rounded-full ml-2 bg-black">
-					<img
+					{firstLoading ? <div className='w-full h-full object-cover rounded-full animate-pulse bg-gray-300'></div> : <img
 						src={user.avatar}
 						alt="avatar"
 						className="w-full h-full object-cover rounded-full"
-					/>
+					/>}
 				</div>
 				<div className="w-full flex justify-end absolute top-4 right-4">
 					<Link to="/#">
 						<button className="main-btn">Edit Profile</button>
 					</Link>
 				</div>
-				<h1 className="font-bold text-2xl md:text-center">{user.userName}</h1>
-				<p className="my-2 font-normal md:text-center">{user.description}</p>
+				{firstLoading ? <h1 className="font-bold text-2xl md:text-center animate-bounce">
+				Loading ... 
+				</h1> : <h1 className="font-bold text-2xl md:text-center">
+				
+				
+				{user.userName}</h1>}
+
+				
+				<p className="my-2 font-normal md:text-center">
+					{firstLoading ? '404 Bio Not Found...' : user.description}
+				</p>
 				<div className="flex items-center gap-x-3 px-2 md:justify-center">
 					<div>
 						<svg
@@ -88,7 +100,7 @@ const Profile = () => {
 							></path>
 						</svg>
 					</div>
-					<span className="inline-block font-light text-sm text-gray-500">Joined on {dayjs(user.createdAt).format('DD-MM YYYY')}</span>
+					{firstLoading ? <span  className="inline-block font-light text-sm text-gray-500 animate-bounce400">Time is loading...</span> : <span className="inline-block font-light text-sm text-gray-500">Joined on {dayjs(user.createdAt).format('DD-MM YYYY')}</span>}
 					<div>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -135,9 +147,8 @@ const Profile = () => {
 		</div>
 		
 
-		<Footer />
 	
-		</>
+		</FooterLayout>
 	);
 };
 

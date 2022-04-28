@@ -1,7 +1,6 @@
 export const AppRoutes = {
     HOME: '/',
     LOGIN: '/sign-in',
-    FORGOT_PASSWORD: '/forgot-password',
     RESET_PASSWORD: '/reset-password',
     REGISTER: '/sign-up',
     PROFILE: '/profile/:username',
@@ -9,5 +8,8 @@ export const AppRoutes = {
     ABOUT: '/about',
     CONTACT: '/contact',
     FAQ: '/faq',
-    SPONSORS: '/sponsorship'
-  };
+    SPONSORS: '/sponsorship',
+    SIGNOUT_CONFIRM: '/signout-confirm',
+    FORGOT_PASSWORD: '/users/password/new',
+    CONFIRM_OTP: '/users/confirm/otp',
+  };  

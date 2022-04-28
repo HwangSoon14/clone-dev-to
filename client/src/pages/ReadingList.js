@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import userApi from '../api/userApi';
 import dayjs from 'dayjs';
-import Footer from '../components/Footer/Footer';
-import EmptyPage from '../components/ReadingList/EmptyPage';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import userApi from '../api/userApi';
+import FooterLayout from '../components/Layout/FooterLayout';
+import EmptyPage from '../components/ReadingList/EmptyPage';
 const ReadingList = () => {
 	const [savePostList, setSavePostList] = useState([]);
 	const [tagList, setTagList] = useState([]);
@@ -109,7 +109,7 @@ const ReadingList = () => {
 	}, []);
 
 	return (
-        <>
+        <FooterLayout>
 		 <div className="container max-w-screen-2xl mt-14 md:py-2 md:px-1 lg:px-28 bg-white-smoke  w-full overflow-x-hidden">
 			<div className="px-2 py-4">
 				<div className="flex flex-col md:flex-row md:items-center md:justify-between">
@@ -144,8 +144,8 @@ const ReadingList = () => {
 		
 
 		
-            <Footer />
-        </>
+        
+        </FooterLayout>
 	);
 };
 
