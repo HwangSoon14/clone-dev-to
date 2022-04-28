@@ -6,12 +6,13 @@ module.exports = {
     extend: {
       colors: {
         'main-color': '#7e57ff',
-        'white-smoke': '#f5f5f5'
+        'white-smoke': '#f5f5f5',
+        'secondary-color': '#3b49df'
       },
       animation: {
         bounce200: 'bounce 1s infinite 200ms',
         bounce400: 'bounce 1s infinite 400ms',
-        slide: 'slide 0.8s',
+        slide: 'slide 0.6s',
         scrollDown: 'scrollDown 0.5s'
     },
     keyframes: {

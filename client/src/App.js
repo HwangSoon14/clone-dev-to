@@ -1,13 +1,16 @@
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import About from "./pages/About";
+import ConfirmOTP from "./pages/ConfirmOTP";
 import Contact from "./pages/Contact";
 import FAQ from "./pages/FAQ";
+import ForgotPassWord from "./pages/ForgotPassWord";
 import Home from './pages/Home'
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import Profile from "./pages/Profile";
 import ReadingList from "./pages/ReadingList";
+import SignOutConfirm from "./pages/SignOutConfirm";
 import SignUp from "./pages/SignUp";
 import Sponsor from "./pages/Sponsor";
 import { AppRoutes } from "./routing/AppRoutes";
@@ -27,6 +30,9 @@ function App() {
         <Route exact path={AppRoutes.CONTACT} element={<Contact />} />
         <Route exact path={AppRoutes.SPONSORS} element={<Sponsor />} />
         <Route exact path={AppRoutes.FAQ} element={<FAQ />} />
+        <Route exact path={AppRoutes.SIGNOUT_CONFIRM} element={<SignOutConfirm />} />
+        <Route exact path={AppRoutes.FORGOT_PASSWORD} element={<ForgotPassWord />} />
+        <Route exact path={AppRoutes.CONFIRM_OTP} element={<ConfirmOTP />} />
         <Route path="*" element={<NotFound />}/> 
 
      
