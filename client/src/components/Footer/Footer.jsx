@@ -5,7 +5,7 @@ const Footer = () => {
 	return (
 		<div className="w-full px-6 py-6 sm:px-10 sm:py-8 bg-[#e5e5e5]">
 			<div className="text-gray-700 text-[14px] sm:text-[16px] lg:text-[18px] sm:leading-9 md:mx-16 lg:mx-56 font-thin text-center">
-				<Link to="/" className="auth-link inline-block text-main-color mr-2">
+				<Link to="/" className="auth-link inline-block text-main-color mr-2"> 
 					DEV Community
 				</Link>
 				— A constructive and inclusive social network for software developers. With you every step of your journey.
