@@ -27,8 +27,8 @@ const SignUp = () => {
 
    <FooterLayout>
 
-        <div className="container mt-16 mx-auto md:px-16 sm:pb-4 flex min-w-[100vw] justify-center bg-white-smoke text-black min-h-[70vh]">
-             <div className="flex items-center justify-center w-full md:w-[700px] border-2 border-gray-200 md:drop-shadow-md rounded-md bg-white h-full px-6 flex-col">
+        <div className="container pt-[75px] mx-auto md:px-16 sm:pb-4 flex max-w-full justify-center bg-gray-100 text-black min-h-[70vh]">
+             <div className="flex items-center justify-center w-full md:w-[700px] border-2 border-gray-200 md:shadow-sm rounded-md bg-white h-full px-6 flex-col">
             <span className="block font-bold text-[1.3rem] mt-4 mb-2 lg:text-[28px] lg:mt-10">
               Welcome to DEV Community
             </span>

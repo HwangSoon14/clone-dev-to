@@ -29,7 +29,7 @@ const Navbar = () => {
 			</div>
 
 			{isShowAuthMenu && (
-				<div className="absolute w-[100%] h-auto sm:w-[300px] sm:right-0 right-0 top-[50px]  left-0 sm:left-auto z-50 text-black drop-shadow-sm">
+				<div className="absolute w-[100%] h-auto sm:w-[300px] right-0 top-[50px] left-0 sm:left-auto z-50 text-black drop-shadow-sm">
 					<div className="w-[96%] h-full px-2 animate-scrollDown gay-y-2 bg-white mx-auto border-2 rounded-lg border-gray-200">
 						<Link className='w-full pl-4 py-3 border-b-2 my-2 border-gray-200 hover:bg-purple-100 rounded-md hover:underline block' to={`/profile/${user.userName}`}>
 							<span className="block font-bold">{user.userName}</span>
@@ -59,8 +59,9 @@ const Navbar = () => {
 
 	return (
 		<>
-			<div className="fixed mx-auto top-0 left-0 z-50 right-0 drop-shadow-sm p-2 max-w-screen-2xl bg-white border-b-2 border-gray-200 md:px-8 lg:px-28 ">
-				<div className="w-full h-full flex items-center container">
+			<div className='fixed w-full border-b-[1px] shadow-sm border-gray-200 bg-white top-0 left-0 z-50 right-0'>
+			<div className=" mx-auto py-2 max-w-screen-2xl">
+				<div className="relative w-full h-full flex items-center px-3">
 					{/* menu-button */}
 					<div className="flex items-center justify-center md:hidden">
 						<button onClick={handleToggleSidebar}>
@@ -172,6 +173,7 @@ const Navbar = () => {
 						</>
 					)}
 				</div>
+			</div>
 			</div>
 			<Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
 		</>
