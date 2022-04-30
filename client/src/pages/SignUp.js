@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-import React, { useState } from 'react';
-=======
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
->>>>>>> cdf6016793ff74ea4315cb63b6508e1ec609c2f7
 import { Link, useNavigate } from 'react-router-dom';
 import authApi from '../api/authApi';
 import Logo from '../assest/logo.png'
@@ -13,11 +9,8 @@ import FooterLayout from '../components/Layout/FooterLayout';
 import Loading from '../components/Loading/Loading';
 
 const SignUp = () => {
-<<<<<<< HEAD
-=======
   const user = useSelector(state => state.auth.current_user)
 
->>>>>>> cdf6016793ff74ea4315cb63b6508e1ec609c2f7
     const [isLoading , setIsLoading] = useState(false);
     let navigate = useNavigate();
 
@@ -32,15 +25,12 @@ const SignUp = () => {
           setIsLoading(false);
         }
       }
-<<<<<<< HEAD
-=======
 
 
       useEffect(() => {
         if(Object.keys(user).length > 0) return navigate('/');
       }, [])
       
->>>>>>> cdf6016793ff74ea4315cb63b6508e1ec609c2f7
       return (
         
 

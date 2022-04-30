@@ -5,10 +5,7 @@ import { SendMail } from '../Utils/SendMail.js';
 import { GenerateSecret, GenerateOtp, VerifyOtp, ArraySecret } from '../Utils/OtpConfig.js';
 
 let arrSecret = [];
-<<<<<<< HEAD
-=======
 let refreshTokens = [];
->>>>>>> cdf6016793ff74ea4315cb63b6508e1ec609c2f7
 
 const authCtrl = {
 	register: async (req, res, next) => {
@@ -29,11 +26,7 @@ const authCtrl = {
 				password: passwordHash,
 			});
 			await newUser.save();
-<<<<<<< HEAD
-			res.json({ message: 'Register success', user: newUser });
-=======
 			res.json({ message: 'Register success' ,newUser });
->>>>>>> cdf6016793ff74ea4315cb63b6508e1ec609c2f7
 		} catch (error) {
 			next(error);
 		}
@@ -47,18 +40,6 @@ const authCtrl = {
 			//check decrypt password with non-decrypt
 			const isMatch = await bcrypt.compare(password, user.password);
 			if (!isMatch) return res.status(400).json({ msg: 'Incorrect password' });
-<<<<<<< HEAD
-
-			//check all condition success , create ac_token, rf_token and send back to client
-			const access_token = authCtrl.generateAccessToken(user);
-			const refresh_token = authCtrl.generateRefreshToken(user);
-
-			//attach rf_token to cookie.
-			res.cookie('refresh_token', refresh_token, {
-				httpOnly: true,
-				secure: false,
-				path: '/',
-=======
 			//check all condition success , create ac_token, rf_token and send back to client
 			const access_token = authCtrl.generateAccessToken(user._id);
 			const refresh_token = authCtrl.generateRefreshToken(user._id);
@@ -68,7 +49,6 @@ const authCtrl = {
 				expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 14), 
 				httpOnly: true,
 				secure: false,
->>>>>>> cdf6016793ff74ea4315cb63b6508e1ec609c2f7
 				sameSite: 'strict',
 			});
 			const { password: passwordInDoc, ...rest } = user._doc;
@@ -77,24 +57,6 @@ const authCtrl = {
 			next(error);
 		}
 	},
-<<<<<<< HEAD
-	generateAccessToken: (user) => {
-		return jwt.sign(
-			{
-				userId: user.id,
-			},
-			process.env.GENERATE_AC_TOKEN,
-			{ expiresIn: '1d' },
-		);
-	},
-	generateRefreshToken: (user) => {
-		return jwt.sign(
-			{
-				userId: user.id,
-			},
-			process.env.GENERATE_RF_TOKEN,
-			{ expiresIn: '14d' },
-=======
 	generateAccessToken: (userId) => {
 		return jwt.sign(
 			{
@@ -111,7 +73,6 @@ const authCtrl = {
 			},
 			process.env.GENERATE_RF_TOKEN,
 			{ expiresIn: '35s' },
->>>>>>> cdf6016793ff74ea4315cb63b6508e1ec609c2f7
 		);
 	},
 	requestRefreshToken: async (req, res) => {
@@ -119,22 +80,6 @@ const authCtrl = {
 		const refresh_token = req.cookies.refresh_token;
 		//Send error if token is not valid
 		if (!refresh_token) return res.status(401).json("You're not authenticated");
-<<<<<<< HEAD
-		jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY, (err, user) => {
-			if (err) {
-				res.status(500).json({ message: err.message });
-			}
-			//create new access token, refresh token and send to user
-			const newAccessToken = authController.generateAccessToken(user);
-			const newRefreshToken = authController.generateRefreshToken(user);
-			res.cookie('refresh_token', newRefreshToken, {
-				httpOnly: true,
-				secure: false,
-				path: '/',
-				sameSite: 'strict',
-			});
-			res.status(200).json({
-=======
 		if (!refreshTokens.includes(refresh_token)) {
 			return res.status(403).json("Refresh token is not valid");
 		  }
@@ -155,7 +100,6 @@ const authCtrl = {
 				sameSite: 'strict',
 			});
 			return res.status(200).json({
->>>>>>> cdf6016793ff74ea4315cb63b6508e1ec609c2f7
 				access_token: newAccessToken,
 			});
 		});
@@ -169,11 +113,7 @@ const authCtrl = {
 			const mang = ArraySecret(email, secret, otp, arrSecret);
 			arrSecret = mang;
 			await SendMail(email, userName, otp);
-<<<<<<< HEAD
-			res.json({ err: 'check the verification code in the email' });
-=======
 			return res.json({ err: 'check the verification code in the email' });
->>>>>>> cdf6016793ff74ea4315cb63b6508e1ec609c2f7
 		} catch (error) {
 			next(error);
 		}
@@ -192,17 +132,11 @@ const authCtrl = {
 				httpOnly: true,
 				secure: false,
 			});
-<<<<<<< HEAD
-			res.json({ mess: 'otp code verification successful!' });
-=======
 			return res.json({ mess: 'otp code verification successful!' });
->>>>>>> cdf6016793ff74ea4315cb63b6508e1ec609c2f7
 		} catch (error) {
 			next(error);
 		}
 	},
-<<<<<<< HEAD
-=======
 	logOut: async (req, res , next) => {
 		//Clear cookies when user logs out
 		const access_token = req.headers.authorization;
@@ -226,7 +160,6 @@ const authCtrl = {
 			next(error)
 		}
 	  },
->>>>>>> cdf6016793ff74ea4315cb63b6508e1ec609c2f7
 	newPassword: async (req, res, next) => {
 		try {
 			const { newPass } = req.body;
@@ -236,19 +169,12 @@ const authCtrl = {
 			if (!isCheck) res.json({ err: 'token has expired' });
 			const hashPass = await bcrypt.hash(newPass, 10);
 			await Users.findOneAndUpdate({email: data.email}, {password: hashPass})
-<<<<<<< HEAD
-			res.json({err: "Change password successfully !"})
-=======
 			return res.json({err: "Change password successfully !"})
->>>>>>> cdf6016793ff74ea4315cb63b6508e1ec609c2f7
 		} catch (error) {
 			next(error);
 		}
 	},
-<<<<<<< HEAD
-=======
 	
->>>>>>> cdf6016793ff74ea4315cb63b6508e1ec609c2f7
 
 };
 export default authCtrl;

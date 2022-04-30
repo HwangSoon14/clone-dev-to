@@ -1,16 +1,7 @@
 import axios from "axios";
-<<<<<<< HEAD
-import jwt_decode from 'jwt-decode'
-import authApi from "./authApi";
-const axiosClient = axios.create({
-    baseURL: 'http://localhost:5000',
-    headers: {
-        'Content-type': 'application/json',
-    },
-=======
 import authApi from "./authApi";
 
-import Cookies from 'js-cookie'
+
 
 const axiosClient = axios.create({
     baseURL: 'http://localhost:5000',
@@ -19,43 +10,11 @@ const axiosClient = axios.create({
         'Content-type': 'application/json',
     },
     
->>>>>>> cdf6016793ff74ea4315cb63b6508e1ec609c2f7
 
 });
 
 //Interceptors
 // Add a request interceptor
-<<<<<<< HEAD
-axiosClient.interceptors.request.use(async function (config) {
-
-// Do something before request is sent
-  if(config.url.indexOf('/login') >= 0 || config.url.indexOf('/refresh') >= 0 ||  config.url.indexOf('/register')  >= 0) {
-    return config;
-  }
-  let date = new Date();
-  const user = JSON.parse(localStorage.getItem("current_user"));
-  const decodedToken = jwt_decode(user.access_token);
-  if(user.access_token) {
-    config.headers.Authorization = user.access_token;
-    return config;
-  }
-  else if (decodedToken.exp < date.getTime() / 1000 || !user.access_token)
-   {
-        const data = await authApi.refresh_token();
-        const access_token = data.access_token;
-        console.log("here is running")
-      localStorage.setItem("current_user",  JSON.stringify({...user,access_token}))
-      config.headers.Authorization = access_token;
-      return config;
-  }
-
-  
-
-    
-   
-    
-    // }
-=======
 
 
 
@@ -69,8 +28,7 @@ axiosClient.interceptors.request.use(async function (config) {
     if(access_token) {
       config.headers['Authorization'] = access_token;
     }
-   console.log(Cookies.get('refresh_token'))
->>>>>>> cdf6016793ff74ea4315cb63b6508e1ec609c2f7
+
     return config;
 
   }, function (error) {
@@ -83,12 +41,6 @@ axiosClient.interceptors.response.use(function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
     
-<<<<<<< HEAD
-    return response.data;
-  }, 
-    function (error) {
-   
-=======
     return response?.data;
   }, 
     async function (error) {
@@ -110,7 +62,6 @@ axiosClient.interceptors.response.use(function (response) {
         window.location = '/sign-in';
         localStorage.removeItem("current_user");
       }
->>>>>>> cdf6016793ff74ea4315cb63b6508e1ec609c2f7
   });
 
 export default axiosClient;
