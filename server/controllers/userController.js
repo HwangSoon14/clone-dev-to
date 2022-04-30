@@ -90,18 +90,10 @@ const userCtrl = {
 					path: "userId",
 					select: ["userName" , "avatar" , "fullName"]
 				}
-			})
-<<<<<<< HEAD
-			console.log(data[0].postsSaved)
-			res.status(201).json(data[0].postsSaved);
-		} catch (error) {
-			
-=======
-			
+			})			
 			res.status(201).json(data[0]?.postsSaved);
 		} catch (error) {
 			console.log({error});
->>>>>>> cdf6016793ff74ea4315cb63b6508e1ec609c2f7
 			next(error);
 		}
 	},

@@ -17,10 +17,7 @@ const Navbar = () => {
 	};
 
 	const handleLogout = () => {
-<<<<<<< HEAD
-=======
 		setIsShowAuthMenu(false);
->>>>>>> cdf6016793ff74ea4315cb63b6508e1ec609c2f7
 		navigate('/signout-confirm');
 	};
 
