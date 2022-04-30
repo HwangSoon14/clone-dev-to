@@ -1,9 +1,10 @@
 import express from 'express';
-const router = express.Router();
-import authController from '../controllers/authController.js';
 import session from 'express-session';
-import passport from  'passport';
-import "../Utils/PassPortConfig.js"
+import passport from 'passport';
+import authController from '../controllers/authController.js';
+import "../Utils/PassPortConfig.js";
+const router = express.Router();
+import cors from 'cors'
 
 router.use(
 	session({
@@ -41,8 +42,14 @@ router.post('/password/require', authController.sendMail);
 router.post('/password/confirm', authController.confirmOtp);
 router.post('/password/new', authController.newPassword);
 router.post('/login', authController.login);
-
-// //Refresh token
 router.post('/refresh', authController.requestRefreshToken);
+router.post('/log_out', authController.logOut);
+
+
+
+
+
+
+
 
 export default router;

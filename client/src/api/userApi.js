@@ -6,13 +6,13 @@ const userApi = {
 		const url = `${baseUrl}/${userName}`;
 		return axiosClient.get(url);
 	},
-    getPostsByUserId(userId) {
-        const url = `${baseUrl}/${userId}/posts`;
+	getPostsByUserId(userId) {
+		const url = `${baseUrl}/${userId}/posts`;
 		return axiosClient.get(url);
 	},
 	getSavedPostList() {
-		const url = `${baseUrl}/posts/saved`
+		const url = `${baseUrl}/posts/saved`;
 		return axiosClient.get(url);
-	}
-    }
+	},
+};
 export default userApi;

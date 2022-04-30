@@ -1,6 +1,11 @@
 import { unwrapResult } from "@reduxjs/toolkit";
+<<<<<<< HEAD
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+=======
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+>>>>>>> cdf6016793ff74ea4315cb63b6508e1ec609c2f7
 import { Link, useNavigate } from "react-router-dom";
 import authApi from "../api/authApi";
 import { login } from "../app/authSlice";
@@ -11,6 +16,11 @@ import FooterLayout from "../components/Layout/FooterLayout";
 import Loading from "../components/Loading/Loading";
 const Login = () => {
 
+<<<<<<< HEAD
+=======
+
+  const user = useSelector(state => state.auth.current_user)
+>>>>>>> cdf6016793ff74ea4315cb63b6508e1ec609c2f7
   let navigate = useNavigate();
   const [isLoading , setIsLoading] = useState(false);
   const dispatch = useDispatch();
@@ -28,6 +38,13 @@ const Login = () => {
         }
       }
   
+<<<<<<< HEAD
+=======
+      useEffect(() => {
+        if(Object.keys(user).length > 0) return navigate('/');
+      }, [])
+      
+>>>>>>> cdf6016793ff74ea4315cb63b6508e1ec609c2f7
 
   return (
 

@@ -8,7 +8,11 @@ import { ErrorHandling } from './Utils/ErrorHandling.js';
 import ParentRoute from './routes/ParentRoute.js';
 
 app.use(express.json());
+<<<<<<< HEAD
 app.use(cors());
+=======
+app.use(cors({ origin: true, credentials: true }));
+>>>>>>> cdf6016793ff74ea4315cb63b6508e1ec609c2f7
 app.use(cookieParser());
 
 //Route configuration
@@ -37,7 +41,11 @@ mongoose.connect(
 );
 
 //listen to server
+<<<<<<< HEAD
+const PORT = process.env.PORT || 7000;
+=======
 const PORT = process.env.PORT || 5000;
+>>>>>>> cdf6016793ff74ea4315cb63b6508e1ec609c2f7
 app.listen(PORT, () => {
 	console.log('server is running');
 });
