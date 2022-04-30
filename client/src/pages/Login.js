@@ -32,6 +32,7 @@ const Login = () => {
   return (
 
     <>
+    <FooterLayout>
     <div className="container pt-20 mx-auto md:px-16 flex max-w-full justify-center bg-white-smoke text-black min-h-[90vh]">
          <div className="flex items-center justify-center w-full md:w-[700px] border-1 border-gray-200 drop-shadow-md rounded-md bg-white h-full px-6 flex-col">
         <span className="block font-bold text-[1.3rem] mt-4 mb-2 lg:text-[28px] lg:mt-10">
@@ -67,10 +68,8 @@ const Login = () => {
         {isLoading && <Loading />}
 
     </div>
-    
- 
-
     </FooterLayout>
+    </>
   );
 };
 
