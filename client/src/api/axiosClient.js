@@ -1,7 +1,7 @@
 import axios from "axios";
 import authApi from "./authApi";
 
-
+import Cookies from 'js-cookie'
 
 const axiosClient = axios.create({
     baseURL: 'http://localhost:5000',
@@ -28,7 +28,7 @@ axiosClient.interceptors.request.use(async function (config) {
     if(access_token) {
       config.headers['Authorization'] = access_token;
     }
-   
+   console.log(Cookies.get('refresh_token'))
     return config;
 
   }, function (error) {
@@ -45,7 +45,7 @@ axiosClient.interceptors.response.use(function (response) {
   }, 
     async function (error) {
       const originalRequest = error.config;
-      
+      console.log("error in refresh token",{error})
       if (error.response.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true;
         const res = await authApi.refresh_token();
@@ -57,6 +57,10 @@ axiosClient.interceptors.response.use(function (response) {
         }))
         axios.defaults.headers.common['Authorization'] = access_token;
         return axiosClient(originalRequest);
+      }
+      if(error.response.data.message === "jwt expired" && error.response.status === 500) {
+        window.location = '/sign-in';
+        localStorage.removeItem("current_user");
       }
   });
 

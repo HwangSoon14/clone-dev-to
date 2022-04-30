@@ -6,7 +6,7 @@ import ConfirmOTP from "./pages/ConfirmOTP";
 import Contact from "./pages/Contact";
 import FAQ from "./pages/FAQ";
 import ForgotPassWord from "./pages/ForgotPassWord";
-import Home from './pages/Home'
+import Home from './pages/Home';
 import Login from "./pages/Login";
 import NewPassword from "./pages/NewPassword";
 import NotFound from "./pages/NotFound";
@@ -17,8 +17,10 @@ import SignUp from "./pages/SignUp";
 import Sponsor from "./pages/Sponsor";
 import { AppRoutes } from "./routing/AppRoutes";
 function App() {
-  return (
 
+
+
+  return (
     <div className="App">
     
     <Navbar />

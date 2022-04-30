@@ -13,12 +13,11 @@ const SignOutConfirm = () => {
 		setIsLoading(true);
 		try {
 			const message = await authApi.log_out();
-			console.log(message);
 			dispatch(logout());
 			navigate('/sign-in');
 			setIsLoading(false);
 		} catch (error) {
-			console.log('error in logout page', {error});
+			
 			setIsLoading(false);
 		}
 	};
