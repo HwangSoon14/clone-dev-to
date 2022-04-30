@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import authApi from '../api/authApi';
 import Logo from '../assest/logo.png'
 import SignUpForm from '../components/Auth/SingUpForm';
@@ -19,10 +20,12 @@ const SignUp = () => {
           setIsLoading(true);
             const res = await authApi.register(data);
             console.log(res);
-            navigate("/");
+            navigate("/sign-in");
+            toast.success(res.message);
             setIsLoading(false);
         } catch (error) {
           setIsLoading(false);
+          console.log("error in signUp page", error)
         }
       }
 
@@ -36,7 +39,7 @@ const SignUp = () => {
 
    <FooterLayout>
 
-        <div className="container pt-[75px] mx-auto md:px-16 sm:pb-4 flex max-w-full justify-center bg-gray-100 text-black min-h-[70vh]">
+        <div className="container pt-[75px] mx-auto md:px-16 sm:pb-4 flex max-w-full justify-center bg-gray-100 text-black min-h-[70vh] ">
              <div className="flex items-center justify-center w-full md:w-[700px] border-2 border-gray-200 md:shadow-sm rounded-md bg-white h-full px-6 flex-col">
             <span className="block font-bold text-[1.3rem] mt-4 mb-2 lg:text-[28px] lg:mt-10">
               Welcome to DEV Community

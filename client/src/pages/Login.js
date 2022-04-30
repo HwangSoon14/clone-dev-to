@@ -9,6 +9,9 @@ import LoginForm from "../components/Auth/LoginForm";
 import Footer from "../components/Footer/Footer";
 import FooterLayout from "../components/Layout/FooterLayout";
 import Loading from "../components/Loading/Loading";
+import { toast } from "react-toastify";
+
+
 const Login = () => {
 
 
@@ -23,9 +26,11 @@ const Login = () => {
           const action = login(data);
           const resultAction = await dispatch(action);
           unwrapResult(resultAction);
-            navigate("/");
-            setIsLoading(false);
+          navigate("/");
+          toast.success("Login successfully !");
+          setIsLoading(false);
         } catch (error) {
+          console.log("error" , error)
           setIsLoading(false);
         }
       }
@@ -39,7 +44,7 @@ const Login = () => {
 
     <>
     <FooterLayout>
-    <div className="container pt-20 mx-auto md:px-16 flex max-w-full justify-center bg-white-smoke text-black min-h-[90vh]">
+    <div className="container pt-20 mx-auto md:px-16 flex max-w-full justify-center lg:pb-4 bg-white-smoke text-black min-h-[90vh]">
          <div className="flex items-center justify-center w-full md:w-[700px] border-1 border-gray-200 drop-shadow-md rounded-md bg-white h-full px-6 flex-col">
         <span className="block font-bold text-[1.3rem] mt-4 mb-2 lg:text-[28px] lg:mt-10">
           Welcome to DEV Community

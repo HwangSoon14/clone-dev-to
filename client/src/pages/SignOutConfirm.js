@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import authApi from '../api/authApi';
 import { logout } from '../app/authSlice';
 import FooterLayout from '../components/Layout/FooterLayout';
@@ -13,11 +14,13 @@ const SignOutConfirm = () => {
 		setIsLoading(true);
 		try {
 			const message = await authApi.log_out();
+			
 			dispatch(logout());
+			toast.success(message);
 			navigate('/sign-in');
 			setIsLoading(false);
-		} catch (error) {
-			
+			} catch (error) {
+			console.log("error in confirm sign out page");	
 			setIsLoading(false);
 		}
 	};

@@ -1,4 +1,3 @@
-import axios from 'axios';
 import axiosClient from './axiosClient';
 const baseUrl = '/api/v1/auth';
 const authApi = {

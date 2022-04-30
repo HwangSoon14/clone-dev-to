@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import authApi from '../api/authApi';
-
+import { toast } from 'react-toastify';
 const initialState = {
     current_user: JSON.parse(localStorage.getItem("current_user")) || {},
 
@@ -8,11 +8,19 @@ const initialState = {
 
 export const login = createAsyncThunk('auth/login', async (payload) => {
     // call API to register
-    const  res = await authApi.login(payload);
+    try {
+      const  res = await authApi.login(payload);
+    console.log(res);
     //save current_user to local storage
     localStorage.setItem("current_user", JSON.stringify({...res}));
-
+    
     return {...res};
+    } catch (error) {
+      console.log("error in slice", error)
+      toast.error(error.msg);
+      throw new Error();
+    }
+
 }
 );
 

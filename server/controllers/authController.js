@@ -63,7 +63,7 @@ const authCtrl = {
 				userId: userId,
 			},
 			process.env.GENERATE_AC_TOKEN,
-			{ expiresIn: '15s' },
+			{ expiresIn: '1h' },
 		);
 	},
 	generateRefreshToken: (userId) => {
@@ -72,7 +72,7 @@ const authCtrl = {
 				userId: userId
 			},
 			process.env.GENERATE_RF_TOKEN,
-			{ expiresIn: '35s' },
+			{ expiresIn: '14d' },
 		);
 	},
 	requestRefreshToken: async (req, res) => {
