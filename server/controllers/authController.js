@@ -144,9 +144,7 @@ const authCtrl = {
 	logOut: async (req, res , next) => {
 		//Clear cookies when user logs out
 		const access_token = req.headers.authorization;
-		console.log("access_token", access_token)
 		const refresh_token = req.cookies.refresh_token;
-		console.log("refresh_token", refresh_token)
 		try {
 			if (access_token) {
 				jwt.verify(access_token, process.env.GENERATE_AC_TOKEN, (err, user) => {

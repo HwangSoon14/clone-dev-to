@@ -122,7 +122,7 @@ const ReadingList = () => {
 
 	return (
 		<FooterLayout>
-			<div className="container max-w-screen-2xl mt-14 md:py-2 md:px-1 lg:px-28 bg-white-smoke  w-full overflow-x-hidden">
+			<div className="container max-w-screen-2xl mx-auto mt-14 md:py-2 md:px-1 lg:px-28 bg-white-smoke  w-full overflow-x-hidden">
 				<div className="px-2 py-4">
 					<div className="flex flex-col md:flex-row md:items-center md:justify-between">
 						<span className="block md:inline-block text-[22px] font-semibold md:text-3xl">

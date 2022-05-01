@@ -93,7 +93,6 @@ const userCtrl = {
 			})			
 			res.status(201).json(data[0]?.postsSaved);
 		} catch (error) {
-			console.log({error});
 			next(error);
 		}
 	},
