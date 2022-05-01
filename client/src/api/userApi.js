@@ -14,5 +14,7 @@ const userApi = {
 		const url = `${baseUrl}/posts/saved`;
 		return axiosClient.get(url);
 	},
+	
+
 };
 export default userApi;

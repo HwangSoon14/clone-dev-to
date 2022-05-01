@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import Users from '../models/userModel.js';
+import { ArraySecret, GenerateOtp, GenerateSecret, VerifyOtp } from '../Utils/OtpConfig.js';
 import { SendMail } from '../Utils/SendMail.js';
-import { GenerateSecret, GenerateOtp, VerifyOtp, ArraySecret } from '../Utils/OtpConfig.js';
 
 let arrSecret = [];
 let refreshTokens = [];
@@ -108,12 +108,13 @@ const authCtrl = {
 		try {
 			const { email } = req.body;
 			const { userName } = (await Users.findOne({ email })) || { userName: null };
+			console.log(userName)
 			const secret = GenerateSecret();
 			const otp = GenerateOtp(secret);
 			const mang = ArraySecret(email, secret, otp, arrSecret);
 			arrSecret = mang;
 			await SendMail(email, userName, otp);
-			return res.json({ err: 'check the verification code in the email' });
+			return res.json({ err: 'Check the verification code in the email' });
 		} catch (error) {
 			next(error);
 		}
@@ -121,8 +122,11 @@ const authCtrl = {
 	confirmOtp: async (req, res, next) => {
 		try {
 			const { otp } = req.body;
+			console.log(otp);
 			const info = arrSecret.find((val) => val.otp === otp);
-			const isCheck = VerifyOtp(otp, info.secret);
+			console.log("info", info);
+			const isCheck = VerifyOtp(otp, info?.secret);
+			console.log("isCheck", isCheck);
 			if (!isCheck) return res.json({ err: 'your otp code has expired !' });
 			const token = jwt.sign({ email: info.email, type: 'reset' }, process.env.TOKEN_SECRET, {
 				expiresIn: '12h',
@@ -164,10 +168,10 @@ const authCtrl = {
 			const { token } = req.cookies;
 			const isCheck = jwt.verify(token, process.env.TOKEN_SECRET);
 			const data = jwt.decode(token, process.env.TOKEN_SECRET)
-			if (!isCheck) res.json({ err: 'token has expired' });
+			if (!isCheck) res.json({ err: 'Token has expired' });
 			const hashPass = await bcrypt.hash(newPass, 10);
 			await Users.findOneAndUpdate({email: data.email}, {password: hashPass})
-			return res.json({err: "Change password successfully !"})
+			return res.json({mess: "Change password successfully !"})
 		} catch (error) {
 			next(error);
 		}

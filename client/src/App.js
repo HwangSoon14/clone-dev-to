@@ -19,6 +19,9 @@ import { AppRoutes } from './routing/AppRoutes';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NewPosts from './pages/NewPosts';
+import CodeOfConduct from './pages/CodeOfConduct';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
 function App() {
 	return (
 		<div className="App">
@@ -58,6 +61,9 @@ function App() {
 				<Route exact path={AppRoutes.CONFIRM_OTP} element={<ConfirmOTP />} />
 				<Route exact path={AppRoutes.NEW_PASSWORD} element={<NewPassword />} />
 				<Route exact path={AppRoutes.NEW_POST} element={<NewPosts/>} />
+				<Route exact path={AppRoutes.CODE_OF_CONDUCT} element={<CodeOfConduct />} />
+				<Route exact path={AppRoutes.PRIVACY} element={<Privacy />} />
+				<Route exact path={AppRoutes.TERMS} element={<Terms />} />
 				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</div>
