@@ -18,6 +18,7 @@ import Sponsor from './pages/Sponsor';
 import { AppRoutes } from './routing/AppRoutes';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import NewPosts from './pages/NewPosts';
 function App() {
 	return (
 		<div className="App">
@@ -56,6 +57,7 @@ function App() {
 				<Route exact path={AppRoutes.FORGOT_PASSWORD} element={<ForgotPassWord />} />
 				<Route exact path={AppRoutes.CONFIRM_OTP} element={<ConfirmOTP />} />
 				<Route exact path={AppRoutes.NEW_PASSWORD} element={<NewPassword />} />
+				<Route exact path={AppRoutes.NEW_POST} element={<NewPosts/>} />
 				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</div>

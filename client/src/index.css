@@ -70,3 +70,18 @@ code {
 		opacity: 0.2;
 	}
 }
+
+.ck-editor__editable_inline {
+    min-height: 300px;
+}
+.post-tab__preview::-webkit-scrollbar {
+	width: 8px;
+	padding: 10px 0px;
+}
+.post-tab__preview::-webkit-scrollbar-track {
+	background-color: white;
+	}
+.post-tab__preview::-webkit-scrollbar-thumb {
+	background-color: rgb(255, 143, 51);
+	border-radius: 999px;
+}
