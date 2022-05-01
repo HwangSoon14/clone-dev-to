@@ -13,11 +13,8 @@ export const AppRoutes = {
     FORGOT_PASSWORD: '/users/password/new',
     CONFIRM_OTP: '/users/confirm/otp',
     NEW_PASSWORD: '/users/type-new-password',
-<<<<<<< HEAD
-    NEW_POST: '/new'
-=======
+    NEW_POST: '/new',
   CODE_OF_CONDUCT: '/code-of-conduct',
   PRIVACY: '/privacy',
   TERMS: '/terms'
->>>>>>> origin/master
   };  
