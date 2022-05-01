@@ -12,5 +12,8 @@ export const AppRoutes = {
     SIGNOUT_CONFIRM: '/signout-confirm',
     FORGOT_PASSWORD: '/users/password/new',
     CONFIRM_OTP: '/users/confirm/otp',
-    NEW_PASSWORD: '/users/type-new-password'
+    NEW_PASSWORD: '/users/type-new-password',
+  CODE_OF_CONDUCT: '/code-of-conduct',
+  PRIVACY: '/privacy',
+  TERMS: '/terms'
   };  
