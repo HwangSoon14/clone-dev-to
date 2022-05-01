@@ -17,6 +17,18 @@ const authApi = {
 	log_out() {
 		const url  = `${baseUrl}/log_out`;
 		return axiosClient.post(url , { credentials: 'include'});
+	},
+	sendMail(data) {
+		const url = `${baseUrl}/password/require`;
+		return axiosClient.post(url, { ...data });
+	},
+	confirmOTP(OTP) {
+		const url = `${baseUrl}/password/confirm`;
+		return axiosClient.post(url, {otp: OTP});
+	},
+	newPassword(newPassword) {
+		const url = `${baseUrl}/password/new`;
+		return axiosClient.post(url , {newPass:newPassword }, { credentials: 'include'});
 	}
 };
 export default authApi;

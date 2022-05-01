@@ -9,6 +9,7 @@ export function GenerateOtp(secret) {
 	return totp.generate(secret);
 }
 export function VerifyOtp(otp, secret) {
+
 	return totp.check(otp, secret);
 }
 export function ArraySecret(email, secret, otp, arraySecret) {
