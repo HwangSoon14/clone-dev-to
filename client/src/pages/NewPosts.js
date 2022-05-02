@@ -104,7 +104,7 @@ function NewPosts() {
 					<img
 						className=" h-full w-full object-cover rounded-tl-2xl rounded-br-2xl"
 						src={formData.current.banner}
-						alt="can't get image"
+						alt="can't get"
 						ref={imgRef}
 					/>
 				</div>
@@ -132,17 +132,21 @@ function NewPosts() {
 						style={{
 							chips: {
 								backgroundColor: `rgb(183 24 255)`,
-								fontSize: 'medium',
+								fontSize: 'bold',
+								cursor: 'pointer'
 							},
 							searchBox: {
 								border: 'none',
 								padding: '0px',
 							},
+							option: {
+								transition: 'all 0.15s ease',
+							}
 						}}
 						customCloseIcon={
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
-								className="h-6 w-6"
+								className="h-5 w-5"
 								fill="none"
 								viewBox="0 0 24 24"
 								stroke="currentColor"

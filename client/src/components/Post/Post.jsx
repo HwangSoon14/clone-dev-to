@@ -2,11 +2,14 @@ import React from "react";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Avatar from '../../assest/avatar.jfif'
+
 const Post = ({ post }) => {
   
-
+  const [tooltipStatus, setTooltipStatus] = useState(0);
   return (
 
+  <div className="relative">
 
     <div className="w-full pb-4 drop-shadow-sm flex flex-col bg-white  border-2 border-gray-200 rounded-lg  ">
       {post.content?.image && (
@@ -19,8 +22,8 @@ const Post = ({ post }) => {
         </div>
       )}
       <div className="">
-      <Link to={`/profile/${post.userId.userName}`} className="flex flex-1 px-5 pt-7 pb-2 ">
-      <div className="flex items-center justify-center">
+      <Link to={`/profile/${post.userId.userName}`} className="flex flex-1 px-5 pt-7 pb-2">
+      <div className="flex items-center justify-center" onMouseEnter={() => setTooltipStatus(1)} onMouseLeave={() => setTooltipStatus(0)} >
           <img
             className="inline-block border-2 border-gray-300 w-[35px] h-[35px] object-cover rounded-[50%]"
             src={post.userId.avatar}
@@ -106,7 +109,32 @@ const Post = ({ post }) => {
         </div>
     </div>
             
-  
+            {tooltipStatus === 1 && (
+              <div className="absolute top-[50px] left-[45px] text-base w-[300px] h-[auto] bg-transparent z-50" onMouseEnter={() => setTooltipStatus(1)} onMouseLeave={() => setTooltipStatus(0)}>
+                <div className="w-[90%] h-[90%] bg-white mx-auto rounded-lg drop-shadow-lg overflow-hidden pb-4">
+                  <div className="relative top-0 left-0 right-0 h-[35px] bg-black"></div>
+                  <div className="flex relative">
+                    <div className="w-[50px] h-[50px] translate-y-[-50%] relative left-2">
+                      <img className="w-full h-full object-cover rounded-full" src={Avatar} alt="avt"></img>
+                    </div>
+                    <span className="font-bold ml-4 text-[18px]">Elsaaa</span>
+                  </div>
+                  <div className="w-full h-auto flex items-center justify-center">
+                    <button className="main-btn w-[90%] h-full">
+                      Follow
+                    </button>
+                  </div>
+                  <p className="text-gray-500 text-sm my-4 px-2">hiii! I love to speak with people !</p>
+                  <ul className="px-2">
+                      <li>
+                        <span className="block font-semibold">Location</span>
+                        <span className="block text-sm">England , Stockholm</span>
+                      </li>
+                  </ul>
+                </div>
+              </div>
+            )}
+    </div>
 
     
 
