@@ -9,11 +9,11 @@ import { useNavigate } from 'react-router-dom';
 
 function uploadAdapter(loader) {
 	return {
-		upload: () => {
+		upload: () => {	
 			return new Promise((resolve, reject) => {
 				const body = new FormData();
 				loader.file.then((file) => {
-					body.append('image', file);
+					body.append('image', file);	
 					fetch(`http://localhost:5000/api/v1/uploads/single`, {
 						method: 'post',
 						body: body,
