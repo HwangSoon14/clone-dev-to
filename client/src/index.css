@@ -71,9 +71,6 @@ code {
 	}
 }
 
-.ck-editor__editable_inline {
-    min-height: 300px;
-}
 .post-tab__preview::-webkit-scrollbar {
 	width: 8px;
 	padding: 10px 0px;
