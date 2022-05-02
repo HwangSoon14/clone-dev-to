@@ -26,7 +26,7 @@ const authCtrl = {
 				password: passwordHash,
 			});
 			await newUser.save();
-			res.json({ message: 'Register success' ,newUser });
+			res.json({ message: 'Register success', newUser });
 		} catch (error) {
 			next(error);
 		}
@@ -46,13 +46,34 @@ const authCtrl = {
 			refreshTokens.push(refresh_token);
 			//attach rf_token to cookie.
 			res.cookie('refresh_token', refresh_token, {
-				expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 14), 
+				expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 14),
 				httpOnly: true,
 				secure: false,
 				sameSite: 'strict',
 			});
 			const { password: passwordInDoc, ...rest } = user._doc;
 			res.status(200).json({ ...rest, access_token });
+		} catch (error) {
+			next(error);
+		}
+	},
+	logOut: async (req, res, next) => {
+		//Clear cookies when user logs out
+		const access_token = req.headers.authorization;
+		const refresh_token = req.cookies.refresh_token;
+		try {
+			if (access_token) {
+				jwt.verify(access_token, process.env.GENERATE_AC_TOKEN, (err, user) => {
+					if (err) {
+						return res.status(401).json('Token is not valid!');
+					}
+					refreshTokens = refreshTokens.filter((token) => token !== refresh_token);
+					res.clearCookie('refresh_token');
+					return res.status(200).json('Logged out successfully!');
+				});
+			} else {
+				return res.status(401).json("You're not authenticated");
+			}
 		} catch (error) {
 			next(error);
 		}
@@ -69,7 +90,7 @@ const authCtrl = {
 	generateRefreshToken: (userId) => {
 		return jwt.sign(
 			{
-				userId: userId
+				userId: userId,
 			},
 			process.env.GENERATE_RF_TOKEN,
 			{ expiresIn: '14d' },
@@ -81,20 +102,20 @@ const authCtrl = {
 		//Send error if token is not valid
 		if (!refresh_token) return res.status(401).json("You're not authenticated");
 		if (!refreshTokens.includes(refresh_token)) {
-			return res.status(403).json("Refresh token is not valid");
-		  }
+			return res.status(403).json('Refresh token is not valid');
+		}
 		jwt.verify(refresh_token, process.env.GENERATE_RF_TOKEN, (err, user) => {
 			if (err) {
-			 	return res.status(500).json({ message: err.message });
+				return res.status(500).json({ message: err.message });
 			}
 			//create new access token, refresh token and send to user
 			refreshTokens = refreshTokens.filter((token) => token !== refresh_token);
 			const newAccessToken = authCtrl.generateAccessToken(user.userId);
 			const newRefreshToken = authCtrl.generateRefreshToken(user.userId);
-			
+
 			refreshTokens.push(newRefreshToken);
 			res.cookie('refresh_token', newRefreshToken, {
-				expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 14), 
+				expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 14),
 				httpOnly: true,
 				secure: false,
 				sameSite: 'strict',
@@ -108,7 +129,7 @@ const authCtrl = {
 		try {
 			const { email } = req.body;
 			const { userName } = (await Users.findOne({ email })) || { userName: null };
-			console.log(userName)
+			console.log(userName);
 			const secret = GenerateSecret();
 			const otp = GenerateOtp(secret);
 			const mang = ArraySecret(email, secret, otp, arrSecret);
@@ -124,9 +145,9 @@ const authCtrl = {
 			const { otp } = req.body;
 			console.log(otp);
 			const info = arrSecret.find((val) => val.otp === otp);
-			console.log("info", info);
+			console.log('info', info);
 			const isCheck = VerifyOtp(otp, info?.secret);
-			console.log("isCheck", isCheck);
+			console.log('isCheck', isCheck);
 			if (!isCheck) return res.json({ err: 'your otp code has expired !' });
 			const token = jwt.sign({ email: info.email, type: 'reset' }, process.env.TOKEN_SECRET, {
 				expiresIn: '12h',
@@ -141,42 +162,19 @@ const authCtrl = {
 			next(error);
 		}
 	},
-	logOut: async (req, res , next) => {
-		//Clear cookies when user logs out
-		const access_token = req.headers.authorization;
-		const refresh_token = req.cookies.refresh_token;
-		try {
-			if (access_token) {
-				jwt.verify(access_token, process.env.GENERATE_AC_TOKEN, (err, user) => {
-				  if (err) {
-					return res.status(401).json("Token is not valid!");
-				  }
-				  refreshTokens = refreshTokens.filter((token) => token !== refresh_token);
-				  res.clearCookie("refresh_token");
-				  return res.status(200).json("Logged out successfully!");
-				});
-			  } else {
-				return res.status(401).json("You're not authenticated");
-			  }
-		} catch (error) {
-			next(error)
-		}
-	  },
 	newPassword: async (req, res, next) => {
 		try {
 			const { newPass } = req.body;
 			const { token } = req.cookies;
 			const isCheck = jwt.verify(token, process.env.TOKEN_SECRET);
-			const data = jwt.decode(token, process.env.TOKEN_SECRET)
+			const data = jwt.decode(token, process.env.TOKEN_SECRET);
 			if (!isCheck) res.json({ err: 'Token has expired' });
 			const hashPass = await bcrypt.hash(newPass, 10);
-			await Users.findOneAndUpdate({email: data.email}, {password: hashPass})
-			return res.json({mess: "Change password successfully !"})
+			await Users.findOneAndUpdate({ email: data.email }, { password: hashPass });
+			return res.json({ mess: 'Change password successfully !' });
 		} catch (error) {
 			next(error);
 		}
 	},
-	
-
 };
 export default authCtrl;

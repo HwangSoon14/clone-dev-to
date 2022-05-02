@@ -1,9 +1,8 @@
-import {QueryMethod} from '../Utils/QueryMethod.js';
+import { QueryMethod } from '../Utils/QueryMethod.js';
 import postModel from '../models/PostModel.js';
 import commentModel from '../models/commentModel.js';
 
 const postController = {
-
 	getAllPost: async (req, res, next) => {
 		try {
 			const queryMethod = new QueryMethod(req.query, postModel.find({}, {}))
@@ -100,7 +99,7 @@ const postController = {
 			next(error);
 		}
 	},
-	
+
 	deleteComment: async (req, res, next) => {
 		try {
 			const { id, idc } = req.params;

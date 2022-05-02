@@ -24,10 +24,10 @@ const userCtrl = {
 	},
 	addPost: async (req, res, next) => {
 		try {
-			const { title, content, tags } = req.body;
+			const { title, content, tags, poster } = req.body;
 
-			const data = await PostModel.create({ title, content, tags, userId: req.userId });
-			res.status(201).json(data);
+			const data = await PostModel.create({ title, content, tags, userId: req.userId, poster });
+			res.status(201).json({ mess: 'successfully added new post' });
 		} catch (error) {
 			next(error);
 		}
@@ -35,9 +35,9 @@ const userCtrl = {
 	editPost: async (req, res, next) => {
 		try {
 			const { id } = req.params;
-			const { title, content, tags } = req.body;
-			await PostModel.updateOne({ userId: req.userId, _id: id }, { title, content, tags });
-			res.status(201).json({ mess: 'sửa post' });
+			const { title, content, tags, poster } = req.body;
+			await PostModel.updateOne({ userId: req.userId, _id: id }, { title, content, tags, poster });
+			res.status(201).json({ mess: 'Edit post successfully' });
 		} catch (error) {
 			next(error);
 		}
@@ -46,7 +46,7 @@ const userCtrl = {
 		try {
 			const { id } = req.params;
 			await PostModel.deleteOne({ userId: req.userId, _id: id });
-			res.status(201).json({ mess: 'xóa post' });
+			res.status(201).json({ mess: 'Delete post successfully' });
 		} catch (error) {
 			next(error);
 		}
@@ -83,14 +83,14 @@ const userCtrl = {
 	},
 	savedPost: async (req, res, next) => {
 		try {
-			const data = await UserModel.find({_id: req.userId}, {postsSaved: 1}).populate({
-			path: "postsSaved",
-				select: ["title", "updatedAt", "tags"],
+			const data = await UserModel.find({ _id: req.userId }, { postsSaved: 1 }).populate({
+				path: 'postsSaved',
+				select: ['title', 'updatedAt', 'tags'],
 				populate: {
-					path: "userId",
-					select: ["userName" , "avatar" , "fullName"]
-				}
-			})			
+					path: 'userId',
+					select: ['userName', 'avatar', 'fullName'],
+				},
+			});
 			res.status(201).json(data[0]?.postsSaved);
 		} catch (error) {
 			next(error);

@@ -1,4 +1,4 @@
-import {cloudinary} from '../Utils/UploadCloudinary.js';
+import { cloudinary } from '../Utils/UploadCloudinary.js';
 import fs from 'fs';
 
 const uploadCtrl = {
@@ -14,10 +14,10 @@ const uploadCtrl = {
 				idImage: data.public_id,
 			});
 		} catch (error) {
-			next(error)
+			next(error);
 		}
 	},
-	multiple: async (req, res,next) => {
+	multiple: async (req, res, next) => {
 		try {
 			const arrPromise = req.files.map(async (file) => {
 				const result = await cloudinary.uploader.upload(file.path, {
@@ -33,7 +33,7 @@ const uploadCtrl = {
 			const data = await Promise.all(arrPromise);
 			res.json(data);
 		} catch (error) {
-			next(error)
+			next(error);
 		}
 	},
 };
