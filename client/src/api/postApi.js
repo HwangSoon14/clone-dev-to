@@ -1,5 +1,7 @@
 import axiosClient from "./axiosClient";
 
+const baseUrl = '/api/v1/posts';
+
 const postApi = {
     getAllPost(data)
     {
@@ -7,10 +9,10 @@ const postApi = {
         return axiosClient.post(url,data);
     },
 
-    getPostById(data)
+    getPostBySlug(slug)
     {
-        const url = '/api/post/login';
-        return axiosClient.post(url,data);
+        const url = `${baseUrl}/${slug}`;
+        return axiosClient.get(url);
     },
     addNewPost() {
 

@@ -14,7 +14,10 @@ const userApi = {
 		const url = `${baseUrl}/posts/saved`;
 		return axiosClient.get(url);
 	},
-	
+	createPost(data){
+		const url = `${baseUrl}/posts`;
+		return axiosClient.post(url, data)
+	}
 
 };
 export default userApi;
