@@ -16,5 +16,6 @@ export const AppRoutes = {
     NEW_POST: '/new',
   CODE_OF_CONDUCT: '/code-of-conduct',
   PRIVACY: '/privacy',
-  TERMS: '/terms'
+  TERMS: '/terms',
+  DETAIL_PAGE: '/:username/:slug'
   };  

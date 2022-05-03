@@ -22,6 +22,7 @@ import NewPosts from './pages/NewPosts';
 import CodeOfConduct from './pages/CodeOfConduct';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
+import DetailPage from './pages/DetailPage';
 function App() {
 	return (
 		<div className="App">
@@ -64,6 +65,7 @@ function App() {
 				<Route exact path={AppRoutes.CODE_OF_CONDUCT} element={<CodeOfConduct />} />
 				<Route exact path={AppRoutes.PRIVACY} element={<Privacy />} />
 				<Route exact path={AppRoutes.TERMS} element={<Terms />} />
+				<Route exact path={AppRoutes.DETAIL_PAGE} element={<DetailPage/>} />
 				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</div>
