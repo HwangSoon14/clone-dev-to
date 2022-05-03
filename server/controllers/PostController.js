@@ -20,7 +20,11 @@ const postController = {
 		try {
 			const { slug } = req.params;
 
-			const data = (await postModel.findOne({ slug })) || [];
+			const data =
+				(await postModel.findOne({ slug }).populate({
+					path: 'userId',
+					select: ['userName', 'avatar'],
+				})) || [];
 			res.status(200).json(data);
 		} catch (error) {
 			next(error);
