@@ -21,7 +21,7 @@ function DetailPage() {
 			<section className="mt-[70px] mb-5 max-w-screen-2xl mx-auto px-3 md:px-5 md:flex md:flex-wrap md:gap-3 xl:gap-5">
 				<ActionPost />
 				<MainPost post={post} />
-				<div className="w-full lg:w-1/5 relative">
+				<div className="w-full md:w-[calc(100%-76px)] ml-auto lg:w-1/5 relative">
 					<div className="sticky top-[70px] left-0">
 						<div className="rounded-lg border-[1px] ">
 							<div className="h-8 bg-purple-500 rounded-t-md "></div>

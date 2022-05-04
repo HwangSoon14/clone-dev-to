@@ -5,7 +5,7 @@ import { timeConvert } from '../../Utils/TimeConvert';
 function MainPost({ post }) {
 	console.log(post);
 	return (
-		<div className="md:flex-1 overflow-auto mb-5 sm:mb-0">
+		<div className="md:flex-1 overflow-auto mb-5 md:mb-0">
 			{/* content post */}
 			<div className="break-words rounded-md border-[1px] mb-5">
 				<img className="h-80 w-full rounded-t-md object-cover" src={post.poster} alt="" />
@@ -44,7 +44,7 @@ function MainPost({ post }) {
 			</div>
 
 			{/* Read next */}
-			<div className="rounded-md border-[1px] py-10 pl-14">
+			<div className="rounded-md border-[1px] py-5 pl-7 md:py-10 md:pl-14">
 				<h3 className="font-bold text-xl mb-7">Read Next</h3>
 				<div className="flex gap-5 items-center mb-7">
 					<img

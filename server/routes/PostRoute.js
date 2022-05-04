@@ -28,3 +28,5 @@ router.put('/comments/:id', postCtrl.editComment);
 router.delete('/:id/comments/:idc', postCtrl.deleteComment);
 
 export default router;
+
+
