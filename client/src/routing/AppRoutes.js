@@ -17,5 +17,6 @@ export const AppRoutes = {
   CODE_OF_CONDUCT: '/code-of-conduct',
   PRIVACY: '/privacy',
   TERMS: '/terms',
-  DETAIL_PAGE: '/:username/:slug'
+  DETAIL_PAGE: '/:username/:slug',
+  SEARCH: '/search',
   };  

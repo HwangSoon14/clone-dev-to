@@ -44,6 +44,12 @@ code {
 	.auth-menu-link {
 		@apply my-1 px-4 py-3 rounded-md hover:underline hover:text-purple-500 hover:bg-purple-100;
 	}
+	.search-tab {
+		@apply font-bold rounded-lg bg-white text-main-color;
+	}
+	.search-list-item {
+		@apply font-bold bg-white rounded-lg;
+	}
 }
 
 .fade-loading {
@@ -76,7 +82,7 @@ code {
 .custom-highlighter-syntax {
 	font-family: 'Nunito', sans-serif;
 	font-size: 18px;
-    font-weight: 400;
+	font-weight: 400;
 }
 .custom-highlighter-syntax p {
 	line-height: 25px;
