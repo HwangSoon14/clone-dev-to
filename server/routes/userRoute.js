@@ -27,3 +27,5 @@ router.put('/').put(userController.editUser);
 router.put('/posts/:id', userController.editPost);
 
 export default router;
+
+
