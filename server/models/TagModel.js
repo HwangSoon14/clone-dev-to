@@ -12,5 +12,5 @@ const tagSchema = new mongoose.Schema(
 		versionKey: false,
 	},
 );
-const Posts = mongoose.model('Tags', tagSchema);
-export default Posts;
+const Tags = mongoose.model('Tags', tagSchema);
+export default Tags;
