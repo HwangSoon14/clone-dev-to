@@ -24,9 +24,9 @@ const userCtrl = {
 	},
 	addPost: async (req, res, next) => {
 		try {
-			const { title, content, tags, poster } = req.body;
+			const { title, content, tags, banner } = req.body;
 
-			const data = await PostModel.create({ title, content, tags, userId: req.userId, poster });
+			const data = await PostModel.create({ title, content, tags, userId: req.userId, banner });
 			res.status(201).json({ mess: 'successfully added new post' });
 		} catch (error) {
 			next(error);
@@ -35,8 +35,8 @@ const userCtrl = {
 	editPost: async (req, res, next) => {
 		try {
 			const { id } = req.params;
-			const { title, content, tags, poster } = req.body;
-			await PostModel.updateOne({ userId: req.userId, _id: id }, { title, content, tags, poster });
+			const { title, content, tags, banner } = req.body;
+			await PostModel.updateOne({ userId: req.userId, _id: id }, { title, content, tags, banner });
 			res.status(201).json({ mess: 'Edit post successfully' });
 		} catch (error) {
 			next(error);
