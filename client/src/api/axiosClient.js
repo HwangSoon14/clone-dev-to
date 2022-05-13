@@ -1,6 +1,5 @@
 import axios from 'axios';
 import authApi from './authApi';
-
 const axiosClient = axios.create({
 	baseURL: 'http://localhost:5000',
 	withCredentials: true,
@@ -37,14 +36,12 @@ axiosClient.interceptors.response.use(
 	function (response) {
 		// Any status code that lie within the range of 2xx cause this function to trigger
 		// Do something with response data
-
 		return response?.data;
 	},
 	async function (error) {
 		const originalRequest = error.config;
 
 		if (error.response) {
-			console.log('response', error.response);
 			if (error.response.status === 401 && !originalRequest._retry) {
 				originalRequest._retry = true;
 				try {

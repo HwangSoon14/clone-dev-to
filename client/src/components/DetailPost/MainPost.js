@@ -3,7 +3,6 @@ import ReactMarkdown from 'react-markdown';
 import SyntaxHighlight from '../SyntaxHighlight';
 import { timeConvert } from '../../Utils/TimeConvert';
 function MainPost({ post }) {
-	console.log(post);
 	return (
 		<div className="md:flex-1 overflow-auto mb-5 md:mb-0">
 			{/* content post */}
