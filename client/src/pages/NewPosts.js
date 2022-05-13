@@ -31,7 +31,7 @@ function NewPosts() {
 		title: '',
 		content: 'Write your post content here...',
 		tags: [],
-		poster: '',
+		banner: '',
 	});
 	const [isloading, setLoading] = useState(false);
 	const [options, setOptions] = useState([
@@ -93,7 +93,7 @@ function NewPosts() {
 						form.append('image', e.target.files[0]);
 						setLoading(true);
 						axios.post('http://localhost:5000/api/v1/uploads/single', form).then((result) => {
-							formData.current.poster = result.data.urlImage;
+							formData.current.banner = result.data.urlImage;
 							setLoading(false);
 							imgRef.current.src = result.data.urlImage;
 						});
@@ -114,7 +114,7 @@ function NewPosts() {
 				</button>
 				<div
 					className={
-						formData.current.poster
+						formData.current.banner
 							? 'h-36 sm:h-40 mt-4 w-full sm:w-2/3 lg:w-1/4 rounded-tl-2xl rounded-br-2xl'
 							: 'hidden'
 					}
@@ -122,7 +122,7 @@ function NewPosts() {
 					<img
 						className=" h-full w-full object-cover rounded-tl-2xl rounded-br-2xl"
 
-						src={formData.current.poster}
+						src={formData.current.banner}
 						alt="can't get image"
 						ref={imgRef}
 					/>
