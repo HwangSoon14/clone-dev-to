@@ -10,13 +10,11 @@ export const login = createAsyncThunk('auth/login', async (payload) => {
     // call API to register
     try {
       const  res = await authApi.login(payload);
-    console.log(res);
     //save current_user to local storage
     localStorage.setItem("current_user", JSON.stringify({...res}));
     
     return {...res};
     } catch (error) {
-      console.log("error in slice", error)
       toast.error(error.msg);
       throw new Error();
     }

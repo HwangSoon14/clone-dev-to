@@ -38,7 +38,6 @@ const NewPassword = () => {
 			navigate('/sign-in');
 			setIsLoading(false);
 		} catch (error) {
-			console.log('error in update the NewPassword page', error);
 			setIsLoading(false);
 		}
 	};

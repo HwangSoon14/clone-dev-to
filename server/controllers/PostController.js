@@ -1,8 +1,78 @@
 import { QueryMethod } from '../Utils/QueryMethod.js';
 import postModel from '../models/PostModel.js';
 import commentModel from '../models/commentModel.js';
-
+import followModel from '../models/FollowModel.js';
+import { ConvertDate } from '../Utils/ConvertDate.js';
 const postController = {
+	getLatest: async (req, res, next) => {
+		try {
+			const data = await postModel.find({
+				createdAt: {
+					$lte: new Date(),
+					$gte: new Date(new Date().setDate(new Date().getDate() - 5)),
+				},
+			});
+			res.json(data);
+		} catch (error) {
+			next(error);
+		}
+	},
+
+	getRelevant: async (req, res, next) => {
+		try {
+			const result = await followModel.find({ userId: req.userId });
+			const followerArr = [];
+			const tagArr = [];
+			result.map((val) => {
+				followerArr.push(val.followerId), tagArr.push(val.tagId);
+			});
+			const data = await postModel.find({
+				userId: { $in: followerArr },
+				tags: { $in: ['javascript'] },
+				createdAt: {
+					$lte: new Date(),
+					$gte: new Date(new Date().setDate(new Date().getDate() - 5)),
+				},
+			});
+			res.json(data);
+		} catch (error) {
+			next(error);
+		}
+	},
+
+	getTopPost: async (req, res, next) => {
+		try {
+			const { type } = req.params;
+			const { StartAndEndPoint } = ConvertDate;
+			const { start, end } = StartAndEndPoint(type);
+			const data = await postModel.find(
+				{
+					createdAt: {
+						$lte: start,
+						$gte: end,
+					},
+				},
+				null,
+				{ lean: true },
+			);
+			const scoreArr = data
+				.map((val) => {
+					const time = (new Date().getTime() - new Date(val.createdAt).getTime()) / 3600000;
+					const g = 1.8;
+					const score = (val.likes.length - 1) / Math.pow(time + 2, g);
+					const { ...rest } = val;
+					return {
+						...val,
+						score,
+					};
+				})
+				.sort((a, b) => b.score - a.score);
+			res.json(scoreArr);
+		} catch (error) {
+			next(error);
+		}
+	},
+
 	getAllPost: async (req, res, next) => {
 		try {
 			const queryMethod = new QueryMethod(req.query, postModel.find({}, {}))

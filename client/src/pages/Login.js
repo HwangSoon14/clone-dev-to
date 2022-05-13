@@ -30,7 +30,6 @@ const Login = () => {
           toast.success("Login successfully !");
           setIsLoading(false);
         } catch (error) {
-          console.log("error" , error)
           setIsLoading(false);
         }
       }

@@ -25,13 +25,10 @@ export class QueryMethod {
 		return this;
 	}
 	filter() {
-		const queryObj = {...this.query};
-		console.log(queryObj)
-		
+		const queryObj = {...this.query};		
 		const excludeFields = ['page', 'sort', 'limit'];
 		excludeFields.forEach(x => delete(queryObj[x]));
 		if(queryObj.q) {
-			console.log("hehe")
 			this.method.find({title: {$regex: queryObj.q}});
 		}
         this.method.find();

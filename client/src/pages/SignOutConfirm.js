@@ -20,7 +20,6 @@ const SignOutConfirm = () => {
 			navigate('/sign-in');
 			setIsLoading(false);
 			} catch (error) {
-			console.log("error in confirm sign out page");	
 			setIsLoading(false);
 		}
 	};

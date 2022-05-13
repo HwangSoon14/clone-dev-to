@@ -1,8 +1,23 @@
 export const ConvertDate = {
-	StartTheDay: () => {
-		return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 0, 0, 0, 0);
+	StartAndEndPoint:  (type) => {
+		let end = new Date();
+		switch (type) {
+			case 'week':
+				end = new Date(new Date().setDate(new Date().getDate() - 7));
+				break;
+			case 'month':
+				end = new Date(new Date().setDate(new Date().getDate() - 30));
+				break;
+			case 'year':
+				end = new Date(new Date().setDate(new Date().getDate() - 365));
+				break;
+			default:
+				end = new Date(new Date(new Date().setFullYear(2020)));
+				break;
+		}
+		return {
+			start: new Date(),
+			end
+		};
 	},
-    EndOfDay: () => {
-        return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59, 59, 999);
-    }
 };

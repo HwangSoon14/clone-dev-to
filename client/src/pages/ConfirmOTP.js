@@ -56,7 +56,6 @@ const ConfirmOTP = () => {
 			toast.warn(res.err);
 			setIsLoading(false);
 		} catch (error) {
-			console.log('error in when send otp again', error);
 			toast.error(error.mess);
 			setIsLoading(false);
 		}
@@ -76,7 +75,6 @@ const ConfirmOTP = () => {
 			toast.success(res.mess);
 			setIsLoading(false);
 		} catch (error) {
-			console.log('error when send confirm OTP to server');
 			localStorage.removeItem('send_mail');
 			localStorage.removeItem('send_to_mail');
 			toast.error('Your OTP is wrong , please get the new one');
