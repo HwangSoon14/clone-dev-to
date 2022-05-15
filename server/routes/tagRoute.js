@@ -6,5 +6,4 @@ const router = express.Router();
 
 router.get('/' , tagCtrl.getAllTag);
 
-
 export default router;

@@ -45,22 +45,19 @@ const postController = {
 			const { type } = req.params;
 			const { StartAndEndPoint } = ConvertDate;
 			const { start, end } = StartAndEndPoint(type);
-			const data = await postModel.find(
-				{
+			const data = await postModel
+				.find({
 					createdAt: {
 						$lte: start,
 						$gte: end,
 					},
-				},
-				null,
-				{ lean: true },
-			);
+				})
+				.lean();
 			const scoreArr = data
 				.map((val) => {
 					const time = (new Date().getTime() - new Date(val.createdAt).getTime()) / 3600000;
 					const g = 1.8;
 					const score = (val.likes.length - 1) / Math.pow(time + 2, g);
-					const { ...rest } = val;
 					return {
 						...val,
 						score,

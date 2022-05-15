@@ -14,7 +14,7 @@ export class QueryMethod {
 	}
 	sort() {
 		const type = this.query.sort || '';
-		this.method = this.method.sort({ createdAt: type });
+	this.method = this.method.sort({ createdAt: type });
 		return this;
 	}
 	populate(path, select) {
@@ -24,15 +24,12 @@ export class QueryMethod {
 		});
 		return this;
 	}
-	filter() {
-		const queryObj = {...this.query};		
-		const excludeFields = ['page', 'sort', 'limit'];
-		excludeFields.forEach(x => delete(queryObj[x]));
-		if(queryObj.q) {
-			this.method.find({title: {$regex: queryObj.q}});
+	search(model) {
+		const {q} = this.query
+		if(q) {
+			this.method = model.find({title: {$regex: q}})
 		}
-        this.method.find();
-        return this;
+		return this
 	}
 }
 
