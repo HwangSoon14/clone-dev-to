@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Tag from '../components/Tag/Tag';
 import tagApi from '../api/tagApi';
 import { useSearchParams } from 'react-router-dom'
-
+import FooterLayout from '../components/Layout/FooterLayout';
 export default function Tags() {
 
 	const [listTag, setListTag] = useState([]);
@@ -30,16 +30,18 @@ export default function Tags() {
 	};
 
 	return (
-		<div className="mt-16 max-w-screen-2xl mx-auto px-3 xl:px-5">
+		<FooterLayout>
+
+		<div className="mt-14 pb-8 md:pb-14 max-w-screen-2xl mx-auto px-3 xl:px-5 bg-[#f5f5f5]">
 			<div className="flex justify-between items-center py-5">
-				<h2 className="font-semibold text-xl md:text-3xl">Top tags</h2>
+				<h2 className="font-semibold text-lg md:text-3xl">Top tags</h2>
 				<div className="flex gap-4">
 					<div className="relative">
 						<input
 							onChange={handleOnChange}
 							type="text"
 							placeholder="Search for tag"
-							className="py-2 placeholder:text-gray-700 border-2 rounded-md pl-2"
+							className="py-2 placeholder:text-gray-700 border-2 rounded-md pl-2 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 "
 						/>
 						<div className="absolute right-2 top-2">
 							<svg
@@ -57,7 +59,7 @@ export default function Tags() {
 							</svg>
 						</div>
 					</div>
-					<button>Following tags</button>
+					<button className="hover:bg-gray-200 text-sm md:text-base px-2 rounded-lg">Following tags</button>
 				</div>
 			</div>
 			<div className="w-full h-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -73,5 +75,7 @@ export default function Tags() {
 				))}
 			</div>
 		</div>
+		</FooterLayout>
+
 	);
 }
