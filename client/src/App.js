@@ -24,6 +24,7 @@ import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import DetailPage from './pages/DetailPage';
 import Search from './pages/Search';
+import Tags from './pages/Tags';
 function App() {
 	return (
 		<div className="App">
@@ -68,6 +69,7 @@ function App() {
 				<Route exact path={AppRoutes.TERMS} element={<Terms />} />
 				<Route exact path={AppRoutes.DETAIL_PAGE} element={<DetailPage/>} />
 				<Route exact path={AppRoutes.SEARCH} element={<Search/>} />
+				<Route exact path={AppRoutes.TAGS} element={<Tags/>} />
 				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</div>

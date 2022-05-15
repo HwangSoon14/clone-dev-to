@@ -33,7 +33,6 @@ const ForgotPassWord = () => {
 			navigate('/users/confirm/otp');
 			setIsLoading(false);
 		} catch (error) {
-			console.log('error in send-mail page', { error });
 			setIsLoading(false);
 		}
 	};

@@ -7,7 +7,7 @@ function MainPost({ post }) {
 		<div className="md:flex-1 overflow-auto mb-5 md:mb-0">
 			{/* content post */}
 			<div className="break-words rounded-md border-[1px] mb-5">
-				<img className="h-80 w-full rounded-t-md object-cover" src={post.poster} alt="" />
+				<img className="h-80 w-full rounded-t-md object-cover" src={post.banner} alt="" />
 				{/* post info */}
 				<div className="p-5 sm:p-10">
 					{/* info author */}

@@ -39,13 +39,11 @@ const Profile = () => {
 				commentLength: totalComments,
 				tagLength: 0,
 			})
-			console.log(postsUser);
 			setUser(userInfo);
 			setUserPosts(postsUser);
 			setFirstLoading(false);
 
 		} catch (error) {
-			console.log(error.message);
 		}
 
 

@@ -92,7 +92,6 @@ const ReadingList = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			const res = await userApi.getSavedPostList();
-			console.log(res);
 			setSavePostList(res);
 
 			const list = res.reduce((initArray, currentItem) => {

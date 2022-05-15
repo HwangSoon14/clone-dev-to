@@ -19,13 +19,11 @@ const SignUp = () => {
         try {
           setIsLoading(true);
             const res = await authApi.register(data);
-            console.log(res);
             navigate("/sign-in");
             toast.success(res.message);
             setIsLoading(false);
         } catch (error) {
           setIsLoading(false);
-          console.log("error in signUp page", error)
         }
       }
 
