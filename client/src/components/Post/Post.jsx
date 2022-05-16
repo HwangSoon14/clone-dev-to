@@ -7,6 +7,7 @@ import Avatar from '../../assest/avatar.jfif'
 const Post = ({ post }) => {
   
   const [tooltipStatus, setTooltipStatus] = useState(0);
+  console.log(post)
   return (
 
   <div className="relative">
@@ -42,7 +43,7 @@ const Post = ({ post }) => {
         
       </div>
       <div className="mx-2 px-3 md:mx-8 md:px-8">
-        <h1 className="font-bold text-xl  md:text-2xl hover:text-purple-900 cursor-pointer">{post.title}</h1>
+        <Link to={`/${post.userId._id}/${post.slug}`}><h1 className="font-bold text-xl  md:text-2xl hover:text-purple-900 cursor-pointer">{post.title}</h1></Link>
         <div className="flex items-center  gap-x-2 md:gap-x-4 my-2">
           {post.tags.map((tag, idx) => (
             <div

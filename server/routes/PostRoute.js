@@ -8,7 +8,6 @@ import decodeToken from '../middleware/DecodeToken.js';
 router.use(decodeToken);
 
 // GET
-router.get('/all', postCtrl.getAllPost);
 router.get('/latest', postCtrl.getLatest);
 router.get('/relevant', postCtrl.getRelevant);
 router.get('/top/:type', postCtrl.getTopPost);

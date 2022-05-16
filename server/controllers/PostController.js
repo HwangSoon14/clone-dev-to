@@ -11,6 +11,9 @@ const postController = {
 					$lte: new Date(),
 					$gte: new Date(new Date().setDate(new Date().getDate() - 5)),
 				},
+			}).populate({
+				path: 'userId',
+				select: ['userName', 'avatar'],
 			});
 			res.json(data);
 		} catch (error) {
@@ -26,13 +29,30 @@ const postController = {
 			result.map((val) => {
 				followerArr.push(val.followerId), tagArr.push(val.tagId);
 			});
+			if(followerArr.length === 0) {
+				const data = await postModel.find({
+					createdAt: {
+						$lte: new Date(),
+						$gte: new Date(new Date().setDate(new Date().getDate() - 5)),
+					},
+				}).populate({
+					path: 'userId',
+					select: ['userName', 'avatar'],
+				});
+				return res.json(data);
+			}
 			const data = await postModel.find({
-				userId: { $in: followerArr },
-				tags: { $in: ['javascript'] },
+				$or: [
+					{userId: { $in: followerArr }},
+					{tags: { $in:tagArr }}
+				],
 				createdAt: {
 					$lte: new Date(),
 					$gte: new Date(new Date().setDate(new Date().getDate() - 5)),
 				},
+			}).populate({
+				path: 'userId',
+				select: ['userName', 'avatar'],
 			});
 			res.json(data);
 		} catch (error) {
@@ -51,8 +71,10 @@ const postController = {
 						$lte: start,
 						$gte: end,
 					},
-				})
-				.lean();
+				}).populate({
+					path: 'userId',
+					select: ['userName', 'avatar'],
+				}).lean();
 			const scoreArr = data
 				.map((val) => {
 					const time = (new Date().getTime() - new Date(val.createdAt).getTime()) / 3600000;
@@ -63,21 +85,8 @@ const postController = {
 						score,
 					};
 				})
-				.sort((a, b) => b.score - a.score);
+				.sort((a, b) => b.score - a.score)
 			res.json(scoreArr);
-		} catch (error) {
-			next(error);
-		}
-	},
-
-	getAllPost: async (req, res, next) => {
-		try {
-			const queryMethod = new QueryMethod(req.query, postModel.find({}, {}))
-				.populate('userId', 'fullName, avatar')
-				.pagination()
-				.sort();
-			const data = await queryMethod.method;
-			res.status(200).json(data);
 		} catch (error) {
 			next(error);
 		}

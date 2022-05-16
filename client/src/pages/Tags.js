@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Tag from '../components/Tag/Tag';
+import { useSearchParams } from 'react-router-dom';
 import tagApi from '../api/tagApi';
-import { useSearchParams } from 'react-router-dom'
 import FooterLayout from '../components/Layout/FooterLayout';
+import Tag from '../components/Tag/Tag';
 export default function Tags() {
 
 	const [listTag, setListTag] = useState([]);
 	const change = useRef();
   const [searchParams, setSearchParams] = useSearchParams();
-
+ 
   useEffect(() => {
 		const getTag = async () => {
 			const data = await tagApi.getAllTag(searchParams.get("q"));
