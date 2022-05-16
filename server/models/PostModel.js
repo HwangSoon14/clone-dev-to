@@ -17,6 +17,7 @@ const postSchema = new mongoose.Schema(
 		slug: { type: String, slug: 'title', slug_padding_size: 3, unique: true },
 		likes: [{ type: mongoose.Types.ObjectId, default: [] }],
 		saver: [{ type: mongoose.Types.ObjectId, default: [] }],
+		comments: [{ type: mongoose.Types.ObjectId, default: [] }],
 	},
 	{
 		timestamps: true,

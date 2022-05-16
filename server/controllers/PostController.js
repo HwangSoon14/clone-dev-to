@@ -2,19 +2,18 @@ import { QueryMethod } from '../Utils/QueryMethod.js';
 import postModel from '../models/PostModel.js';
 import commentModel from '../models/commentModel.js';
 import followModel from '../models/FollowModel.js';
-import { ConvertDate } from '../Utils/ConvertDate.js';
+import { ConvertDate, RecentTimes } from '../Utils/ConvertDate.js';
 const postController = {
 	getLatest: async (req, res, next) => {
 		try {
-			const data = await postModel.find({
-				createdAt: {
-					$lte: new Date(),
-					$gte: new Date(new Date().setDate(new Date().getDate() - 5)),
-				},
-			}).populate({
-				path: 'userId',
-				select: ['userName', 'avatar'],
-			});
+			const data = await postModel
+				.find({
+					createdAt: RecentTimes,
+				})
+				.populate({
+					path: 'userId',
+					select: ['userName', 'avatar'],
+				});
 			res.json(data);
 		} catch (error) {
 			next(error);
@@ -27,33 +26,29 @@ const postController = {
 			const followerArr = [];
 			const tagArr = [];
 			result.map((val) => {
-				followerArr.push(val.followerId), tagArr.push(val.tagId);
+				followerArr.push(val.followerId);
+				tagArr.push(val.tagId);
 			});
-			if(followerArr.length === 0) {
-				const data = await postModel.find({
-					createdAt: {
-						$lte: new Date(),
-						$gte: new Date(new Date().setDate(new Date().getDate() - 5)),
-					},
-				}).populate({
+			if (followerArr.length === 0) {
+				const data = await postModel
+					.find({
+						createdAt: RecentTimes,
+					})
+					.populate({
+						path: 'userId',
+						select: ['userName', 'avatar'],
+					});
+				return res.json(data);
+			}
+			const data = await postModel
+				.find({
+					$or: [{ userId: { $in: followerArr } }, { tags: { $in: tagArr } }],
+					createdAt: RecentTimes,
+				})
+				.populate({
 					path: 'userId',
 					select: ['userName', 'avatar'],
 				});
-				return res.json(data);
-			}
-			const data = await postModel.find({
-				$or: [
-					{userId: { $in: followerArr }},
-					{tags: { $in:tagArr }}
-				],
-				createdAt: {
-					$lte: new Date(),
-					$gte: new Date(new Date().setDate(new Date().getDate() - 5)),
-				},
-			}).populate({
-				path: 'userId',
-				select: ['userName', 'avatar'],
-			});
 			res.json(data);
 		} catch (error) {
 			next(error);
@@ -71,22 +66,26 @@ const postController = {
 						$lte: start,
 						$gte: end,
 					},
-				}).populate({
+				})
+				.populate({
 					path: 'userId',
 					select: ['userName', 'avatar'],
-				}).lean();
-			const scoreArr = data
-				.map((val) => {
-					const time = (new Date().getTime() - new Date(val.createdAt).getTime()) / 3600000;
-					const g = 1.8;
-					const score = (val.likes.length - 1) / Math.pow(time + 2, g);
-					return {
-						...val,
-						score,
-					};
 				})
-				.sort((a, b) => b.score - a.score)
-			res.json(scoreArr);
+				.lean();
+
+			const scoreArr = data.map((val) => {
+				const time = Math.abs(new Date() - new Date(val.createdAt)) / 3600000;
+				const score = (val.likes.length - 1) / Math.pow(time + 2, 1.8);
+				return {
+					...val,
+					score,
+				};
+			});
+
+			const negativeNumber = scoreArr.filter((val) => val.score < 0).sort((a, b) => a.score - b.score);
+			const positiveNumber = scoreArr.filter((val) => val.score > 0).sort((a, b) => b.score - a.score);
+
+			res.json([...positiveNumber, ...negativeNumber]);
 		} catch (error) {
 			next(error);
 		}
@@ -140,7 +139,7 @@ const postController = {
 	likePost: async (req, res, next) => {
 		try {
 			const { id } = req.params;
-			const data = await postModel.updateOne({ _id: id, userId: req.userId }, { $addToSet: { likes: req.userId } });
+			const data = await postModel.updateOne({ _id: id }, { $addToSet: { likes: req.userId } });
 			res.status(201).json({ mess: 'like' });
 		} catch (error) {
 			next(error);
@@ -150,7 +149,7 @@ const postController = {
 	unlikePost: async (req, res, next) => {
 		try {
 			const { id } = req.params;
-			const data = await postModel.updateOne({ _id: id, userId: req.userId }, { $pull: { likes: req.userId } });
+			const data = await postModel.updateOne({ _id: id }, { $pull: { likes: req.userId } });
 			res.status(201).json({ mess: 'unlike' });
 		} catch (error) {
 			next(error);
@@ -160,9 +159,10 @@ const postController = {
 	addComment: async (req, res, next) => {
 		try {
 			const { id } = req.params;
-			const { content } = req.body;
-			const data = await commentModel.create({ userId: req.userId, postId: id, content });
-			await postModel.updateOne({ _id: id, userId: req.userId }, { $push: { comments: data._id } });
+			const { content, replyToId } = req.body;
+			const data = await commentModel.create({ userId: req.userId, postId: id, content, replyToId });
+			const re = await postModel.updateOne({ _id: id }, { $addToSet: { comments: data._id } });
+			console.log(re)
 			res.status(201).json({ mess: 'add new comment successfully' });
 		} catch (error) {
 			next(error);

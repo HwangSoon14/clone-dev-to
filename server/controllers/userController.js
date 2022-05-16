@@ -76,7 +76,7 @@ const userCtrl = {
 
 			await UserModel.updateOne({ _id: req.userId }, { $pull: { postsSaved: id } });
 			await PostModel.updateOne({ _id: id }, { $pull: { saver: req.userId } });
-			res.status(201).json({ mess: 'save post!' });
+			res.status(201).json({ mess: 'unsave post!' });
 		} catch (error) {
 			next(error);
 		}
