@@ -2,6 +2,7 @@ import TagModel from '../models/TagModel.js';
 import postModel from '../models/PostModel.js';
 import { QueryMethod } from '../Utils/QueryMethod.js';
 const tagCtrl = {
+
 	getAllTag: async (req, res, next) => {
 		try {
 			const queryMethod = new QueryMethod(req.query, TagModel.find({})).search(TagModel);
@@ -24,5 +25,6 @@ const tagCtrl = {
 			next(error);
 		}
 	},
+	
 };
 export default tagCtrl;
