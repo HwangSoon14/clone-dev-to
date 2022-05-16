@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import BallsLoading from '../components/Loading/BallsLoading';
 import Multiselect from 'multiselect-react-dropdown';
@@ -9,6 +9,7 @@ import 'react-markdown-editor-lite/lib/index.css';
 import uploadApi from '../api/uploadApi';
 import userApi from '../api/userApi';
 import { toast } from 'react-toastify';
+import tagApi from '../api/tagApi';
 
 function onImageUpload(file) {
 	return new Promise(async (resolve, reject) => {
@@ -34,25 +35,7 @@ function NewPosts() {
 		banner: '',
 	});
 	const [isloading, setLoading] = useState(false);
-	const [options, setOptions] = useState([
-		{
-			name: 'Once relegated to the browser as one of the 3 core technologies of the web, JavaScript can now be found almost anywhere you find code',
-			tag: '#javascript',
-		},
-		{ name: 'The magic behind computers. 💻', tag: '#programming' },
-		{
-			name: 'Productivity includes tips on how to use tools and software, process optimization, useful references, experience, and mindstate optimization.',
-			tag: '#react',
-		},
-		{
-			name: 'Hypertext Markup Language — the standard markup language for documents designed to be displayed in a web browser.',
-			tag: '#html',
-		},
-		{
-			name: 'Optional static type-checking for JavaScript.',
-			tag: '#typescript',
-		},
-	]);
+	const [options, setOptions] = useState([]);
 
 	function handleEditorChange({ html, text }) {
 		formData.current.content = text;
@@ -80,6 +63,25 @@ function NewPosts() {
 		}
 	}
 
+	useEffect(() => {
+		(async () => {
+			const tagList = await tagApi.getAllTag();
+
+			tagList.forEach(item => {
+				for(let key in item) {
+					if(key !== "title") {
+						delete(item[key])
+					}
+					else {
+						let temp = item[key];
+						item[key]= "";
+						item[key] = "#" + temp; 
+					}
+				}
+			})
+			setOptions(tagList)
+		})()
+	} , [])
 	return (
 		<div className="mt-20">
 			<div className="w-[95%] mx-auto overflow-hidden">
@@ -123,7 +125,7 @@ function NewPosts() {
 						className=" h-full w-full object-cover rounded-tl-2xl rounded-br-2xl"
 
 						src={formData.current.banner}
-						alt="can't get image"
+						alt="can't get"
 						ref={imgRef}
 					/>
 				</div>
@@ -144,7 +146,7 @@ function NewPosts() {
 						selectionLimit={4}
 						placeholder="Add up to 4 tags..."
 						hidePlaceholder={true}
-						displayValue="tag"
+						displayValue="title"
 						selectedValues={formData.current.tags}
 						onSelect={onSelect}
 						onRemove={onRemove}

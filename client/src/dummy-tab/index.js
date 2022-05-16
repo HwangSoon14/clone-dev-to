@@ -82,7 +82,7 @@ export const routeTab = [
             <path fill="#C1694F" d="M12.507 14.501a1 1 0 11-1.415-1.414l8.485-8.485a1 1 0 111.415 1.414l-8.485 8.485z"></path>
         </g>
     </svg>,
-        route: '/'
+        route: '/tags'
     },
     {
         name: 'FAQ',

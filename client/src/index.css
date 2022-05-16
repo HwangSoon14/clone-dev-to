@@ -50,6 +50,12 @@ code {
 	.search-list-item {
 		@apply font-bold bg-white rounded-lg;
 	}
+	.active-main-tab {
+		@apply font-bold;
+	}
+	.main-tab-hover {
+		@apply rounded-lg hover:bg-white hover:text-main-color transition-all;
+	}
 }
 
 .fade-loading {

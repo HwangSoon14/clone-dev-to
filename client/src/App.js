@@ -25,6 +25,7 @@ import Terms from './pages/Terms';
 import DetailPage from './pages/DetailPage';
 import Search from './pages/Search';
 import Tags from './pages/Tags';
+import HomeCpn from './components/Home/HomeCpn';
 function App() {
 	return (
 		<div className="App">
@@ -42,34 +43,38 @@ function App() {
 			/>
 			<Navbar />
 			<Routes>
-				<Route exact path={AppRoutes.HOME} element={<Home />} />
-				<Route exact path={AppRoutes.PROFILE} element={<Profile />} />
-				<Route exact path={AppRoutes.LOGIN} element={<Login />} />
-				<Route exact path={AppRoutes.REGISTER} element={<SignUp />} />
+				<Route path={AppRoutes.HOME} element={<Home />} >
+					<Route path='' element={<HomeCpn/>}></Route>
+       				<Route path='latest' element={<HomeCpn/>}></Route>
+       				<Route path='top/:type' element={<HomeCpn/>}></Route>
+      			 	<Route path='*' element={<NotFound />}></Route>	
+				</Route>
+				<Route path={AppRoutes.PROFILE} element={<Profile />} />
+				<Route path={AppRoutes.LOGIN} element={<Login />} />
+				<Route path={AppRoutes.REGISTER} element={<SignUp />} />
 				<Route
-					exact
-					path={AppRoutes.READING_LIST}
+										path={AppRoutes.READING_LIST}
 					element={
 						<PrivateRoute>
 							<ReadingList />
 						</PrivateRoute>
 					}
 				/>
-				<Route exact path={AppRoutes.ABOUT} element={<About />} />
-				<Route exact path={AppRoutes.CONTACT} element={<Contact />} />
-				<Route exact path={AppRoutes.SPONSORS} element={<Sponsor />} />
-				<Route exact path={AppRoutes.FAQ} element={<FAQ />} />
-				<Route exact path={AppRoutes.SIGNOUT_CONFIRM} element={<SignOutConfirm />} />
-				<Route exact path={AppRoutes.FORGOT_PASSWORD} element={<ForgotPassWord />} />
-				<Route exact path={AppRoutes.CONFIRM_OTP} element={<ConfirmOTP />} />
-				<Route exact path={AppRoutes.NEW_PASSWORD} element={<NewPassword />} />
-				<Route exact path={AppRoutes.NEW_POST} element={<NewPosts/>} />
-				<Route exact path={AppRoutes.CODE_OF_CONDUCT} element={<CodeOfConduct />} />
-				<Route exact path={AppRoutes.PRIVACY} element={<Privacy />} />
-				<Route exact path={AppRoutes.TERMS} element={<Terms />} />
-				<Route exact path={AppRoutes.DETAIL_PAGE} element={<DetailPage/>} />
-				<Route exact path={AppRoutes.SEARCH} element={<Search/>} />
-				<Route exact path={AppRoutes.TAGS} element={<Tags/>} />
+				<Route path={AppRoutes.ABOUT} element={<About />} />
+				<Route path={AppRoutes.CONTACT} element={<Contact />} />
+				<Route path={AppRoutes.SPONSORS} element={<Sponsor />} />
+				<Route path={AppRoutes.FAQ} element={<FAQ />} />
+				<Route path={AppRoutes.SIGNOUT_CONFIRM} element={<SignOutConfirm />} />
+				<Route path={AppRoutes.FORGOT_PASSWORD} element={<ForgotPassWord />} />
+				<Route path={AppRoutes.CONFIRM_OTP} element={<ConfirmOTP />} />
+				<Route path={AppRoutes.NEW_PASSWORD} element={<NewPassword />} />
+				<Route path={AppRoutes.NEW_POST} element={<NewPosts/>} />
+				<Route path={AppRoutes.CODE_OF_CONDUCT} element={<CodeOfConduct />} />
+				<Route path={AppRoutes.PRIVACY} element={<Privacy />} />
+				<Route path={AppRoutes.TERMS} element={<Terms />} />
+				<Route path={AppRoutes.DETAIL_PAGE} element={<DetailPage/>} />
+				<Route path={AppRoutes.SEARCH} element={<Search/>} />
+				<Route path={AppRoutes.TAGS} element={<Tags/>} />
 				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</div>
