@@ -1,5 +1,5 @@
 export const ConvertDate = {
-	StartAndEndPoint:  (type) => {
+	StartAndEndPoint: (type) => {
 		let end = new Date();
 		switch (type) {
 			case 'week':
@@ -17,7 +17,12 @@ export const ConvertDate = {
 		}
 		return {
 			start: new Date(),
-			end
+			end,
 		};
 	},
+};
+
+export const RecentTimes = {
+	$lte: new Date(),
+	$gte: new Date(new Date().setDate(new Date().getDate() - 5)),
 };
