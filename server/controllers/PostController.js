@@ -20,7 +20,7 @@ const postController = {
 
 	getRelevant: async (req, res, next) => {
 		try {
-			const result = await followModel.find({ userId: req.userId });
+			const result = await followModel.find({ userId: req.userId }).lean();
 			const followerArr = [];
 			const tagArr = [];
 			result.map((val) => {
