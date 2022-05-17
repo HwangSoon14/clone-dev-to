@@ -22,34 +22,43 @@ const postController = {
 
 	getRelevant: async (req, res, next) => {
 		try {
-			const result = await followModel.find({ userId: req.userId }).lean();
 			const followerArr = [];
 			const tagArr = [];
-			result.map((val) => {
-				followerArr.push(val.followerId);
-				tagArr.push(val.tagId);
+			if(req.userId) {
+				const result = await followModel.find({ userId: req.userId }).lean();
+				
+				result.map((val) => {
+				followerArr.push(val.followerId), tagArr.push(val.tagId);
 			});
-			if (followerArr.length === 0) {
-				const data = await postModel
-					.find({
-						createdAt: RecentTimes,
-					})
-					.populate({
-						path: 'userId',
-						select: ['userName', 'avatar'],
-					});
-				return res.json(data);
 			}
-			const data = await postModel
-				.find({
-					$or: [{ userId: { $in: followerArr } }, { tags: { $in: tagArr } }],
-					createdAt: RecentTimes,
-				})
-				.populate({
+			if(followerArr.length === 0) {
+				const data = await postModel.find({
+					createdAt: {
+						$lte: new Date(),
+						$gte: new Date(new Date().setDate(new Date().getDate() - 5)),
+					},
+				}).populate({
 					path: 'userId',
 					select: ['userName', 'avatar'],
 				});
-			res.json(data);
+				return res.json(data);
+			}
+			else {
+				const data = await postModel.find({
+					$or: [
+						{userId: { $in: followerArr }},
+						{tags: { $in:tagArr }}
+					],
+					createdAt: {
+						$lte: new Date(),
+						$gte: new Date(new Date().setDate(new Date().getDate() - 5)),
+					},
+				}).populate({
+					path: 'userId',
+					select: ['userName', 'avatar'],
+				});
+				res.json(data);
+			}
 		} catch (error) {
 			next(error);
 		}

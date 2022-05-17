@@ -42,7 +42,7 @@ const ReadingList = () => {
 				All tags
 			</button>
 			{tags && tags.map((tag, idx) => (
-				<button className="block bg-transparent pl-2 py-2 text-gray-500 w-full text-sm text-left transition-all hover:bg-purple-100 rounded-lg">
+				<button key={idx} className="block bg-transparent pl-2 py-2 text-gray-500 w-full text-sm text-left transition-all hover:bg-purple-100 rounded-lg">
 					#{tag}
 				</button>
 			))}
@@ -121,7 +121,7 @@ const ReadingList = () => {
 
 	return (
 		<FooterLayout>
-			<div className="container max-w-screen-2xl mx-auto mt-14 md:py-2 md:px-1 lg:px-28 bg-white-smoke  w-full overflow-x-hidden">
+			<div className="container md:min-h-[60vh] max-w-screen-2xl mx-auto mt-14 md:py-2 md:px-1 lg:px-28 bg-white-smoke  w-full overflow-x-hidden">
 				<div className="px-2 py-4">
 					<div className="flex flex-col md:flex-row md:items-center md:justify-between">
 						<span className="block md:inline-block text-[22px] font-semibold md:text-3xl">

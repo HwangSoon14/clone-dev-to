@@ -56,6 +56,9 @@ code {
 	.main-tab-hover {
 		@apply rounded-lg hover:bg-white hover:text-main-color transition-all;
 	}
+	.detail-leftside-btn-hover {
+		@apply;
+	}
 }
 
 .fade-loading {
