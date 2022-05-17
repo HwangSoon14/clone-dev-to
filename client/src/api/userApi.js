@@ -17,6 +17,14 @@ const userApi = {
 	createPost(data){
 		const url = `${baseUrl}/posts`;
 		return axiosClient.post(url, data)
+	},
+	savePost(id) {
+		const url = `${baseUrl}/posts/${id}/save`;
+		return axiosClient.post(url)
+	},
+	unsavePost(id) {
+		const url = `${baseUrl}/posts/${id}/unsave`;
+		return axiosClient.delete(url)
 	}
 
 };

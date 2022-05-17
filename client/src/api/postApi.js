@@ -22,6 +22,14 @@ const postApi = {
     deletePost(id) {
 
     },
+    likePost(id){
+        const url = `${baseUrl}/${id}/like`;
+        return axiosClient.post(url);
+    },
+    unLikePost(id){
+        const url = `${baseUrl}/${id}/unlike`;
+        return axiosClient.post(url);
+    },
 
 };
 export default postApi;
