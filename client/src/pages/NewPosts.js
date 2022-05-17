@@ -50,7 +50,7 @@ function NewPosts() {
 	}
 	async function upLoadPost() {
 		const tags = formData.current.tags.map((val) => {
-			return val.tag.split('#')[1];
+			return val.title.split('#')[1];
 		});
 		try {
 			await userApi.createPost({ ...formData.current, tags });

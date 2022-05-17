@@ -29,9 +29,16 @@ export default function Tags() {
 		}, 500);
 	};
 
+	let EmptyComponent = () => (
+		<div className='w-full h-[20vh] mb-32'>
+			<div className='mx-auto h-full rounded-lg border-2 border-gray-200 bg-white flex items-center justify-center'>
+				<p className='text-gray-500'>No results match that query</p>
+			</div>
+		</div>
+	)
+
 	return (
 		<FooterLayout>
-
 		<div className="mt-14 pb-8 md:pb-14 max-w-screen-2xl mx-auto px-3 xl:px-5 bg-[#f5f5f5]">
 			<div className="flex justify-between items-center py-5">
 				<h2 className="font-semibold text-lg md:text-3xl">Top tags</h2>
@@ -62,7 +69,7 @@ export default function Tags() {
 					<button className="hover:bg-gray-200 text-sm md:text-base px-2 rounded-lg">Following tags</button>
 				</div>
 			</div>
-			<div className="w-full h-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+			{listTag.length === 0 ? <EmptyComponent /> :  <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
 				{listTag.map((val, index) => (
 					<Tag
 						title={val.title}
@@ -73,8 +80,9 @@ export default function Tags() {
 						thumbnail={val.thumbnail}
 					/>
 				))}
-			</div>
-		</div>
+			</div>}
+		</div>  
+	
 		</FooterLayout>
 
 	);
