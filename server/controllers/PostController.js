@@ -135,7 +135,7 @@ const postController = {
 		try {
 			const { id } = req.params;
 			const queryMethod = new QueryMethod(req.query, commentModel.find({ postId: id }))
-				.populate('userId', 'fullName, avatar')
+				.populate('userId', ['userName', 'avatar'])
 				.pagination()
 				.sort();
 			const data = (await queryMethod.method) || [];

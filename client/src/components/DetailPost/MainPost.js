@@ -1,9 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import SyntaxHighlight from '../SyntaxHighlight';
 import { timeConvert } from '../../Utils/TimeConvert';
+<<<<<<< HEAD
 function MainPost({ post }) {
 	
+=======
+import { useSelector } from 'react-redux';
+import CommentParent from './CommentParent';
+function MainPost({ post , commentList}) {
+
+	const [commentParents , setCommentParent] = useState([]);
+	const [commentChilds , setCommentChilds] = useState([]);
+	const user  = useSelector(state => state.auth.current_user);
+
+	useEffect(() => {
+		let parentCmtList = commentList.filter(cmt => !cmt.replyToId);
+		let childCmtList = commentList.filter(cmt => cmt.replyToId);
+		setCommentParent(parentCmtList);
+		setCommentChilds(childCmtList);
+	}, [commentList])
+
+
+	let EmptyCommentLayout = () => (
+
+		<div className='border-t-2 border-gray-100'>
+					<div className='h-full py-8 md:px-12 text-center'>
+						<span className='tracking-widest text-gray-600'>This post have no comment yet !</span>
+					</div>
+				</div>
+	)
+
+>>>>>>> origin/master
 	return (
 		<div className="md:flex-1 overflow-auto mb-5 md:mb-0">
 			{/* content post */}
@@ -40,7 +68,18 @@ function MainPost({ post }) {
 							components={SyntaxHighlight}
 						/>
 					</div>
+					
 				</div>
+				{commentList.length === 0 ? <EmptyCommentLayout /> : <div className='border-t-2 border-gray-100'>
+					<div className='h-full px-3 py-4 md:px-12'>
+						<span className='block font-bold text-lg md:text-2xl md:mt-4 mb-8'>Discussion ({commentList.length})</span>
+						<div className='w-full h-full'>
+							{commentParents && commentParents?.map((comment , idx) => (
+								<CommentParent key={idx} comment={comment} childCommentList={commentChilds}/>
+							))}
+						</div>
+					</div>
+				</div>}
 			</div>
 
 			{/* Read next */}
