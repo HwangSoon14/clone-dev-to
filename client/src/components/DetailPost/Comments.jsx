@@ -14,7 +14,6 @@ export default function Comments({ post }) {
 		const getData = async () => {
 			const data = await postApi.getCommentByPostId(post._id);
 			const Parents = data.filter((val) => !val.replyToId);
-			console.log("Parents", Parents)
 			setCommentsParent(Parents);
 		};
 		getData();
@@ -50,7 +49,7 @@ export default function Comments({ post }) {
 				</div>
 				<div className="w-full h-full">
 					{commentsParent?.map((comment, idx) => (
-						<CommentParent key={idx} comment={comment}/>
+						<CommentParent key={comment._id} comment={comment}/>
 					))}
 				</div>
 			</div>

@@ -12,14 +12,13 @@ const CommentParent = ({ comment }) => {
 		const getData = async () => {
 			const data = await postApi.getCommentByPostId(comment.postId);
 			const Child = data.filter((val) => val.replyToId === comment._id);
-			console.log("Child", Child)
 			setCommentsChild(Child);
 		};
 		getData();
 	}, [isPostComment]);
 
 	return (
-		<div>
+		<div parent={comment._id}>
 			<div className="w-full h-full flex">
 				<div className="mr-2">
 					<img
@@ -135,8 +134,8 @@ const CommentParent = ({ comment }) => {
 				</div>
 			</div>
 			<div className="ml-4 md:ml-8">
-				{commentsChild.map((cmt, idx) => (
-					<Comment key={idx} comment={cmt} parentId={comment._id} setPostComment={setPostComment} />
+				{commentsChild.map((cmt) => (
+					<Comment key={cmt._id} comment={cmt} parentId={comment._id} setPostComment={setPostComment} />
 				))}
 			</div>
 		</div>
