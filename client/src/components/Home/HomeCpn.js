@@ -19,6 +19,7 @@ const HomeCpn = () => {
     setIsLoading(true);
        (async() => {
         const res = await postApi.getAllPost(location.pathname);
+        console.log(res)
         setListPostData(res);
         setIsLoading(false);
        })()
@@ -57,9 +58,7 @@ const HomeCpn = () => {
     ) 
     const renderTabTopButton = () => (
             <>
-           
-           
-           
+                    
             <Link to="/top/week">
                 <button onClick={() => {
                         activeButtonTop("Week")

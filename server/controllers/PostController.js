@@ -107,7 +107,7 @@ const postController = {
 			const data =
 				(await postModel.findOne({ slug }).populate({
 					path: 'userId',
-					select: ['userName', 'avatar'],
+					select: ['userName', 'avatar', "createdAt", "description"],
 				})) || [];
 			res.status(200).json(data);
 		} catch (error) {

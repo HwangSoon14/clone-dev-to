@@ -7,7 +7,7 @@ import Avatar from '../../assest/avatar.jfif'
 const Post = ({ post }) => {
   
   const [tooltipStatus, setTooltipStatus] = useState(0);
-  console.log(post)
+  
   return (
 
   <div className="relative">

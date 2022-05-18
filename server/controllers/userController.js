@@ -36,7 +36,7 @@ const userCtrl = {
 		try {
 			const { id } = req.params;
 			const { title, content, tags, banner } = req.body;
-			await PostModel.updateOne({ userId: req.userId, _id: id }, { title, content, tags, banner });
+			await PostModel.updateOne({ userId: req.userId, _id: id }, { title, content, tags, banner: req.body?.banner });
 			res.status(201).json({ mess: 'Edit post successfully' });
 		} catch (error) {
 			next(error);
