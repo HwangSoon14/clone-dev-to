@@ -135,7 +135,7 @@ const postController = {
 		try {
 			const { id } = req.params;
 			const queryMethod = new QueryMethod(req.query, commentModel.find({ postId: id }))
-				.populate('userId', 'fullName, avatar')
+				.populate('userId', ['userName', 'avatar'])
 				.pagination()
 				.sort();
 			const data = (await queryMethod.method) || [];
@@ -171,7 +171,6 @@ const postController = {
 			const { content, replyToId } = req.body;
 			const data = await commentModel.create({ userId: req.userId, postId: id, content, replyToId });
 			const re = await postModel.updateOne({ _id: id }, { $addToSet: { comments: data._id } });
-			console.log(re)
 			res.status(201).json({ mess: 'add new comment successfully' });
 		} catch (error) {
 			next(error);

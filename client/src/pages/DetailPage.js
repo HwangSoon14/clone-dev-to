@@ -9,24 +9,29 @@ import {useSelector} from 'react-redux'
 function DetailPage() {
 	const params = useParams();
 	const [post, setPost] = useState([]);
+	const [commentList, setCommentList] = useState([]);
 	const [isLike , setIsLike] = useState(false);
 	const user = useSelector(state => state.auth.current_user);
 
 	useEffect(() => {
 		const callApi = async () => {
 			const data = await postApi.getPostBySlug(params.slug);
+			const comments = await postApi.getCommentByPostId(data._id);
+			setCommentList(comments)
 			setPost(data)
 		};
 		callApi();
 	}, []);
 
 
+	console.log(post);
 
+	
 	return (
 		<FooterLayout>
 			<section className="mt-[70px] mb-5 max-w-screen-2xl mx-auto px-3 md:px-5 2xl:px-0 md:flex md:flex-wrap md:gap-3 xl:gap-5">
 				<ActionPost post={post} />
-				<MainPost post={post} />
+				<MainPost post={post} commentList={commentList}/>
 				<div className="w-full md:w-[calc(100%-76px)] ml-auto lg:w-1/5 relative">
 					<div className="sticky top-[70px] left-0">
 						<div className="rounded-lg border-[1px] ">

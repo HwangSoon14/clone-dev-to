@@ -30,6 +30,12 @@ const postApi = {
         const url = `${baseUrl}/${id}/unlike`;
         return axiosClient.post(url);
     },
+    getCommentByPostId(id) {
+        const url = `${baseUrl}/${id}/comments`;
+        return axiosClient.get(url);
+
+
+    }
 
 };
 export default postApi;
