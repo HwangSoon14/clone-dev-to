@@ -1,6 +1,6 @@
-import { timeConvert } from '../../Utils/TimeConvert';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import postApi from '../../api/postApi';
+import { timeConvert } from '../../Utils/TimeConvert';
 
 const Comment = ({ comment, parentId, setPostComment }) => {
 	const [isShowFrameChat, setShowFrameChat] = useState(false);
@@ -79,8 +79,8 @@ const Comment = ({ comment, parentId, setPostComment }) => {
 					{isShowFrameChat && (
 						<div className="flex-1">
 							<textarea
-								placeholder="nhập nội dung comment nào các dân chơi"
-								className="w-full border-[1px] rounded-lg min-h-[80px]"
+								placeholder="What's on your mind now ? "
+								className="w-full border-[1px] rounded-lg min-h-[80px] pl-4 pt-3"
 								ref={contentComment}
 							></textarea>
 							<button

@@ -6,17 +6,22 @@ const CommentParent = ({ comment }) => {
 	const [isShowFrameChat, setShowFrameChat] = useState(false);
 	const [commentsChild, setCommentsChild] = useState([]);
 	const [isPostComment, setPostComment] = useState(false);
+	const [isHide , setIsHide] = useState(false);
 	const contentComment = useRef();
 
 	useEffect(() => {
 		const getData = async () => {
 			const data = await postApi.getCommentByPostId(comment.postId);
 			const Child = data.filter((val) => val.replyToId === comment._id);
-			console.log("Child", Child)
+			console.log('Child', Child);
 			setCommentsChild(Child);
 		};
 		getData();
 	}, [isPostComment]);
+
+	const toggleChildComment = () => {
+		setIsHide(x => !x);
+	}
 
 	return (
 		<div>
@@ -28,7 +33,7 @@ const CommentParent = ({ comment }) => {
 						alt="avt"
 					></img>
 				</div>
-				<div className="flex-1 mb-4 relative">
+				<div className="flex-1 mb-1 relative">
 					<div>
 						<div className=" border-[2px] border-gray-200 shadow-sm rounded-lg">
 							<div className="px-3 py-4 md:px-5 bg-white">
@@ -105,17 +110,20 @@ const CommentParent = ({ comment }) => {
 					{isShowFrameChat && (
 						<div className="flex-1">
 							<textarea
-								placeholder="nhập nội dung comment nào các dân chơi"
-								className="w-full border-[1px] rounded-lg min-h-[80px]"
+								placeholder="What's on your mind now ?"
+								className="w-full border-[1px] rounded-lg min-h-[80px] pl-4 pt-3"
 								ref={contentComment}
 							></textarea>
 							<button
 								className="px-3 py-2 mt-2 bg-blue-700 text-white  rounded-md"
 								onClick={async () => {
 									try {
-										await postApi.addComment(comment.postId, { content: contentComment.current.value, replyToId: comment._id });
+										await postApi.addComment(comment.postId, {
+											content: contentComment.current.value,
+											replyToId: comment._id,
+										});
 										contentComment.current.value = '';
-										setShowFrameChat(false)
+										setShowFrameChat(false);
 										setPostComment((x) => !x);
 									} catch (error) {}
 								}}
@@ -134,11 +142,58 @@ const CommentParent = ({ comment }) => {
 					)}
 				</div>
 			</div>
-			<div className="ml-4 md:ml-8">
-				{commentsChild.map((cmt, idx) => (
-					<Comment key={idx} comment={cmt} parentId={comment._id} setPostComment={setPostComment} />
-				))}
-			</div>
+			{!isHide && commentsChild.length !== 0 && (
+				<span
+					className="inline-flex ml-12  mb-4 items-center gap-x-2 text-[14px] font-semibold text-main-color cursor-pointer px-4 py-2 rounded-lg bg-purple-100"
+					onClick={toggleChildComment}
+				>
+					{commentsChild.length} comments
+					<svg
+						className="w-4 h-4"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 17l-4 4m0 0l-4-4m4 4V3"></path>
+					</svg>
+				</span>
+			) }
+			 
+		{ (isHide && commentsChild.length !== 0) && 
+		<>
+		<div className="ml-6 md:ml-10">
+						{commentsChild.map((cmt) => (
+							<Comment key={cmt._id} comment={cmt} parentId={comment._id} setPostComment={setPostComment} />
+						))}
+					</div>
+					<span
+						className="inline-flex ml-12  mb-4 items-center gap-x-2 text-[14px] text-black font-semibold cursor-pointer px-4 py-2 rounded-lg bg-red-200"
+						onClick={toggleChildComment}
+					>
+						Hide comment
+						<svg
+							className="w-4 h-4"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth="2"
+								d="M5 10l7-7m0 0l7 7m-7-7v18"
+							></path>
+						</svg>
+					</span>
+		</>
+
+		}
+				
+					
+				
+			
 		</div>
 	);
 };
