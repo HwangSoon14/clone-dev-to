@@ -1,32 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import SyntaxHighlight from '../SyntaxHighlight';
 import { timeConvert } from '../../Utils/TimeConvert';
-import { useSelector } from 'react-redux';
-import CommentParent from './CommentParent';
-function MainPost({ post , commentList}) {
+import Comments from './Comments';
 
-	const [commentParents , setCommentParent] = useState([]);
-	const [commentChilds , setCommentChilds] = useState([]);
-	const user  = useSelector(state => state.auth.current_user);
-
-	useEffect(() => {
-		let parentCmtList = commentList.filter(cmt => !cmt.replyToId);
-		let childCmtList = commentList.filter(cmt => cmt.replyToId);
-		setCommentParent(parentCmtList);
-		setCommentChilds(childCmtList);
-	}, [commentList])
-
-
-	let EmptyCommentLayout = () => (
-
-		<div className='border-t-2 border-gray-100'>
-					<div className='h-full py-8 md:px-12 text-center'>
-						<span className='tracking-widest text-gray-600'>This post have no comment yet !</span>
-					</div>
-				</div>
-	)
-
+function MainPost({ post }) {
 	return (
 		<div className="md:flex-1 overflow-auto mb-5 md:mb-0">
 			{/* content post */}
@@ -36,11 +14,7 @@ function MainPost({ post , commentList}) {
 				<div className="p-5 sm:p-10">
 					{/* info author */}
 					<div className="flex gap-2 mb-5">
-						<img
-							className="h-10 w-10 object-cover rounded-full"
-							src={post.userId?.avatar}
-							alt=""
-						/>
+						<img className="h-10 w-10 object-cover rounded-full" src={post.userId?.avatar} alt="" />
 						<div>
 							<h3 className="capitalize font-semibold text-sm leading-4">{post.userId?.userName}</h3>
 							<span className="font-light text-xs">Posted on {timeConvert(post.createdAt)}</span>
@@ -58,23 +32,10 @@ function MainPost({ post , commentList}) {
 					</div>
 					{/* content */}
 					<div className="custom-highlighter-syntax pt-7 pb-6 sm:pt-10 sm:pb-8">
-						<ReactMarkdown
-							children={post.content}
-							components={SyntaxHighlight}
-						/>
+						<ReactMarkdown children={post.content} components={SyntaxHighlight} />
 					</div>
-					
 				</div>
-				{commentList.length === 0 ? <EmptyCommentLayout /> : <div className='border-t-2 border-gray-100'>
-					<div className='h-full px-3 py-4 md:px-12'>
-						<span className='block font-bold text-lg md:text-2xl md:mt-4 mb-8'>Discussion ({commentList.length})</span>
-						<div className='w-full h-full'>
-							{commentParents && commentParents?.map((comment , idx) => (
-								<CommentParent key={idx} comment={comment} childCommentList={commentChilds}/>
-							))}
-						</div>
-					</div>
-				</div>}
+				<Comments post={post} />
 			</div>
 
 			{/* Read next */}

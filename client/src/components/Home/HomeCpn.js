@@ -19,7 +19,6 @@ const HomeCpn = () => {
     setIsLoading(true);
        (async() => {
         const res = await postApi.getAllPost(location.pathname);
-        console.log(res)
         setListPostData(res);
         setIsLoading(false);
        })()

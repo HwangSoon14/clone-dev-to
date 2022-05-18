@@ -30,11 +30,13 @@ const postApi = {
         const url = `${baseUrl}/${id}/unlike`;
         return axiosClient.post(url);
     },
-    getCommentByPostId(id) {
-        const url = `${baseUrl}/${id}/comments`;
+    getCommentByPostId(id, type) {
+        const url = `${baseUrl}/${id}/comments?sort=desc`;
         return axiosClient.get(url);
-
-
+    },
+   addComment(id,body) {
+        const url = `${baseUrl}/${id}/comments`;
+        return axiosClient.post(url, body);
     }
 
 };

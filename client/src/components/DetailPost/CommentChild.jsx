@@ -1,55 +1,39 @@
+import { timeConvert } from '../../Utils/TimeConvert';
 import React, { useEffect, useRef, useState } from 'react';
 import postApi from '../../api/postApi';
-import { timeConvert } from '../../Utils/TimeConvert';
-import Comment from './CommentChild';
-const CommentParent = ({ comment }) => {
+
+const Comment = ({ comment, parentId, setPostComment }) => {
 	const [isShowFrameChat, setShowFrameChat] = useState(false);
-	const [commentsChild, setCommentsChild] = useState([]);
-	const [isPostComment, setPostComment] = useState(false);
 	const contentComment = useRef();
 
-	useEffect(() => {
-		const getData = async () => {
-			const data = await postApi.getCommentByPostId(comment.postId);
-			const Child = data.filter((val) => val.replyToId === comment._id);
-			console.log("Child", Child)
-			setCommentsChild(Child);
-		};
-		getData();
-	}, [isPostComment]);
-
 	return (
-		<div>
+		<div className="my-2">
 			<div className="w-full h-full flex">
 				<div className="mr-2">
 					<img
-						className="w-[30px] h-[30px] mt-3 md:w-[37px] md:h-[37px] rounded-full object-contain border-2 border-gray-200"
+						className="w-[25px] h-[25px]  mt-3 md:w-[32px] md:h-[32px] rounded-full object-contain border-2 border-gray-200"
 						src={comment.userId.avatar}
 						alt="avt"
 					></img>
 				</div>
 				<div className="flex-1 mb-4 relative">
 					<div>
-						<div className=" border-[2px] border-gray-200 shadow-sm rounded-lg">
+						<div className=" border-2 border-gray-200 rounded-lg">
 							<div className="px-3 py-4 md:px-5 bg-white">
 								<div className="flex items-center">
-									<span className="text-[#3d3d3d] font-semibold text-[14px] md:text-base max-w-[75px] truncate">
+									<span className="text-[#3d3d3d] font-semibold text-[14px] max-w-[75px] truncate ">
 										{comment.userId?.userName}
 									</span>
-									<span className="mx-1 md:mx-2 inline-block text-[#bdbdbd]">•</span>
-									<span className="text-gray-500 text-[12px] md:text-sm">{timeConvert(comment?.createdAt)}</span>
+									<span className="mx-1 inline-block text-[#bdbdbd]">•</span>
+									<span className="text-gray-500 text-[12px]">{timeConvert(comment?.createdAt)}</span>
 								</div>
-								<p className="mt-3  tracking-widest leading-7 md:leading-9 text-[14px] text-gray-700 md:text-base">
+								<p className="mt-3 tracking-widest leading-7 md:leading-9 text-[14px] text-gray-700 md:text-base">
 									{comment.content}
 								</p>
 							</div>
 						</div>
 						<div className="flex items-center gap-x-3 my-2 ml-2">
-							<button
-								title="heart"
-								aria-pressed="false"
-								className="flex gap-x-2 px-2 py-1 items-center hover:bg-gray-200 transition-all rounded-lg justify-center"
-							>
+							<button title="heart" aria-pressed="false" className="flex gap-x-2 items-center justify-center">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									width="24"
@@ -61,11 +45,9 @@ const CommentParent = ({ comment }) => {
 								</svg>
 								<span className="text-gray-600">{comment.likes} like</span>
 							</button>
-							<button
-								title="heart"
-								aria-pressed="false"
-								className="flex gap-x-2 px-2 py-1 items-center hover:bg-gray-200 transition-all rounded-lg justify-center"
-							>
+							<button title="heart" aria-pressed="false" onClick={() => {
+								setShowFrameChat(true)
+							}}>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									width="24"
@@ -75,20 +57,12 @@ const CommentParent = ({ comment }) => {
 								>
 									<path d="M10.5 5h3a6 6 0 110 12v2.625c-3.75-1.5-9-3.75-9-8.625a6 6 0 016-6zM12 15.5h1.5a4.501 4.501 0 001.722-8.657A4.5 4.5 0 0013.5 6.5h-3A4.5 4.5 0 006 11c0 2.707 1.846 4.475 6 6.36V15.5z"></path>
 								</svg>
-								<span
-									className="text-gray-600"
-									onClick={() => {
-										setShowFrameChat(true);
-									}}
-								>
-									Reply
-								</span>
 							</button>
 						</div>
-						<div className="absolute right-2 top-2 cursor-pointer">
+						<div className="absolute right-2 top-2">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
-								className="h-5 w-5 text-gray-500"
+								className="h-5 w-5 cursor-pointer text-gray-500"
 								fill="none"
 								viewBox="0 0 24 24"
 								stroke="currentColor"
@@ -113,10 +87,10 @@ const CommentParent = ({ comment }) => {
 								className="px-3 py-2 mt-2 bg-blue-700 text-white  rounded-md"
 								onClick={async () => {
 									try {
-										await postApi.addComment(comment.postId, { content: contentComment.current.value, replyToId: comment._id });
+										await postApi.addComment(comment.postId, { content: contentComment.current.value, replyToId: parentId});
 										contentComment.current.value = '';
 										setShowFrameChat(false)
-										setPostComment((x) => !x);
+										setPostComment(x=>!x);
 									} catch (error) {}
 								}}
 							>
@@ -134,13 +108,8 @@ const CommentParent = ({ comment }) => {
 					)}
 				</div>
 			</div>
-			<div className="ml-4 md:ml-8">
-				{commentsChild.map((cmt, idx) => (
-					<Comment key={idx} comment={cmt} parentId={comment._id} setPostComment={setPostComment} />
-				))}
-			</div>
 		</div>
 	);
 };
 
-export default CommentParent;
+export default Comment;
