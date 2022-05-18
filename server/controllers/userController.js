@@ -26,7 +26,7 @@ const userCtrl = {
 		try {
 			const { title, content, tags } = req.body;
 
-			const data = await PostModel.create({ title, content, tags, userId: req.userId });
+			const data = await PostModel.create({ title, content, tags, userId: req.userId, banner:  req.body?.banner});
 			res.status(201).json({ mess: 'successfully added new post' });
 		} catch (error) {
 			next(error);

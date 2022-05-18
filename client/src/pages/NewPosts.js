@@ -49,7 +49,6 @@ function NewPosts() {
 		formData.current.tags = selectedList;
 	}
 	async function upLoadPost() {
-		console.log("tags", formData.current.tags)
 		const tags = formData.current.tags.map((val) => {
 			return val.title.split('#')[1];
 		});

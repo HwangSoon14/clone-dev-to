@@ -39,21 +39,21 @@ function App() {
 				pauseOnFocusLoss
 				draggable
 				pauseOnHover
-				theme='dark'
+				theme="dark"
 			/>
 			<Navbar />
 			<Routes>
-				<Route path={AppRoutes.HOME} element={<Home />} >
-					<Route path='' element={<HomeCpn/>}></Route>
-       				<Route path='latest' element={<HomeCpn/>}></Route>
-       				<Route path='top/:type' element={<HomeCpn/>}></Route>
-      			 	<Route path='*' element={<NotFound />}></Route>	
+				<Route path={AppRoutes.HOME} element={<Home />}>
+					<Route path="" element={<HomeCpn />}></Route>
+					<Route path="latest" element={<HomeCpn />}></Route>
+					<Route path="top/:type" element={<HomeCpn />}></Route>
+					<Route path="*" element={<NotFound />}></Route>
 				</Route>
 				<Route path={AppRoutes.PROFILE} element={<Profile />} />
 				<Route path={AppRoutes.LOGIN} element={<Login />} />
 				<Route path={AppRoutes.REGISTER} element={<SignUp />} />
 				<Route
-										path={AppRoutes.READING_LIST}
+					path={AppRoutes.READING_LIST}
 					element={
 						<PrivateRoute>
 							<ReadingList />
@@ -68,13 +68,13 @@ function App() {
 				<Route path={AppRoutes.FORGOT_PASSWORD} element={<ForgotPassWord />} />
 				<Route path={AppRoutes.CONFIRM_OTP} element={<ConfirmOTP />} />
 				<Route path={AppRoutes.NEW_PASSWORD} element={<NewPassword />} />
-				<Route path={AppRoutes.NEW_POST} element={<NewPosts/>} />
+				<Route path={AppRoutes.NEW_POST} element={<NewPosts />} />
 				<Route path={AppRoutes.CODE_OF_CONDUCT} element={<CodeOfConduct />} />
 				<Route path={AppRoutes.PRIVACY} element={<Privacy />} />
 				<Route path={AppRoutes.TERMS} element={<Terms />} />
-				<Route path={AppRoutes.DETAIL_PAGE} element={<DetailPage/>} />
-				<Route path={AppRoutes.SEARCH} element={<Search/>} />
-				<Route path={AppRoutes.TAGS} element={<Tags/>} />
+				<Route path={AppRoutes.DETAIL_PAGE} element={<DetailPage />} />
+				<Route path={AppRoutes.SEARCH} element={<Search />} />
+				<Route path={AppRoutes.TAGS} element={<Tags />} />
 				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</div>

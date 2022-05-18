@@ -7,7 +7,7 @@ import Avatar from '../../assest/avatar.jfif'
 const Post = ({ post }) => {
   
   const [tooltipStatus, setTooltipStatus] = useState(0);
-  console.log(post)
+  
   return (
 
   <div className="relative">
@@ -75,9 +75,11 @@ const Post = ({ post }) => {
                 ></path>
               </svg>
             </div>
+            <Link to={`/${post.userId._id}/${post.slug}`}>
             <span className="inline-block ml-2 text-gray-500 cursor-pointer">
               {post.likes.length} <span className="hidden md:inline-block">reactions</span>
             </span>
+            </Link>
           </div>
 
           {/* Comment */}
@@ -98,9 +100,12 @@ const Post = ({ post }) => {
                 ></path>
               </svg>
             </div>
-            <span className="inline-block ml-2 text-gray-500 cursor-pointer">
+            <Link to={`/${post.userId._id}/${post.slug}`}>
+
+            <span className="inline-block ml-2 text-gray-500 cursor-spointer">
               {post.comments.length} <span className="hidden md:inline-block">comments</span>
             </span>
+            </Link>
           </div>
 
           <div className="flex ml-auto items-center justify-center ">

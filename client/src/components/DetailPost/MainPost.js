@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import SyntaxHighlight from '../SyntaxHighlight';
 import { timeConvert } from '../../Utils/TimeConvert';
 function MainPost({ post }) {
+	
 	return (
 		<div className="md:flex-1 overflow-auto mb-5 md:mb-0">
 			{/* content post */}
@@ -14,7 +15,7 @@ function MainPost({ post }) {
 					<div className="flex gap-2 mb-5">
 						<img
 							className="h-10 w-10 object-cover rounded-full"
-							src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQseeFyHCn_0C84nKwMjHhtD_Qk4Kxrj7SNbw&usqp=CAU"
+							src={post.userId?.avatar}
 							alt=""
 						/>
 						<div>
