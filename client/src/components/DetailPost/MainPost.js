@@ -2,10 +2,6 @@ import React, { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import SyntaxHighlight from '../SyntaxHighlight';
 import { timeConvert } from '../../Utils/TimeConvert';
-<<<<<<< HEAD
-function MainPost({ post }) {
-	
-=======
 import { useSelector } from 'react-redux';
 import CommentParent from './CommentParent';
 function MainPost({ post , commentList}) {
@@ -31,7 +27,6 @@ function MainPost({ post , commentList}) {
 				</div>
 	)
 
->>>>>>> origin/master
 	return (
 		<div className="md:flex-1 overflow-auto mb-5 md:mb-0">
 			{/* content post */}
