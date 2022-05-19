@@ -1,6 +1,6 @@
 import { QueryMethod } from '../Utils/QueryMethod.js';
 import postModel from '../models/PostModel.js';
-import commentModel from '../models/commentModel.js';
+import commentModel from '../models/CommentModel.js';
 import followModel from '../models/FollowModel.js';
 import { ConvertDate, RecentTimes } from '../Utils/ConvertDate.js';
 const postController = {

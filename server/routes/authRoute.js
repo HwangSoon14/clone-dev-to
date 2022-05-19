@@ -1,7 +1,7 @@
 import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
-import authController from '../controllers/authController.js';
+import authController from '../controllers/AuthController.js';
 import "../Utils/PassPortConfig.js";
 const router = express.Router();
 import cors from 'cors'
