@@ -4,15 +4,18 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Avatar from '../../assest/avatar.jfif'
 
-const Post = ({ post }) => {
+const Post = ({ post, type }) => {
   
   const [tooltipStatus, setTooltipStatus] = useState(0);
   
   return (
 
   <div className="relative">
-
+   
     <div className="w-full pb-4 drop-shadow-sm flex flex-col bg-white  border-2 border-gray-200 rounded-lg  ">
+      {
+        type &&  <img src={post.banner} className ="rounded-t-md" alt="" />
+      }
       {post.content?.image && (
         <div className="w-full h-[275px]">
           <img

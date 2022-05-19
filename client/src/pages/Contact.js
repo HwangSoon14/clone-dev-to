@@ -6,7 +6,7 @@ const Contact = () => {
 	return (
         <FooterLayout>
 
-		<div className="w-full-screen h-auto bg-white-smoke mt-14 md:px-2 md:py-2 lg:px-48 lg:py-4">
+		<div className="max-w-screen-xl mx-auto h-auto  mt-14 md:px-2 md:py-2 lg:py-4">
 			<div className="w-full h-full bg-white pl-3 py-4 md:border-2 md:border-gray-200 md:rounded-lg md:p-12 lg:px-16">
 				<h1 className="font-semibold text-3xl mb-3">Contacts</h1>
 				<p className='leading-8 tracking-widest text-gray-700 font-medium mb-3'>DEV Community would love to hear from you!</p>
