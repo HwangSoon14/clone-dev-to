@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import uploadController from '../controllers/uploadController.js';
+import uploadController from '../controllers/UploadController.js';
 import {upload} from '../Utils/MulterStorage.js';
 
 //Single File

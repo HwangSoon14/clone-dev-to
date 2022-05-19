@@ -77,6 +77,7 @@ const Comment = ({ comment, parentId, setPostComment , setVisible }) => {
 								<span className="text-gray-600">reply</span>
 
 							</button>
+							<span className='text-sm'>Reply</span>
 						</div>
 						<div className="absolute right-2 top-2">
 							<svg

@@ -15,14 +15,6 @@ export const ConvertDate = {
 				end = new Date(new Date(new Date().setFullYear(2020)));
 				break;
 		}
-		return {
-			start: new Date(),
-			end,
-		};
+		return end
 	},
-};
-
-export const RecentTimes = {
-	$lte: new Date(),
-	$gte: new Date(new Date().setDate(new Date().getDate() - 5)),
 };

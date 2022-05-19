@@ -2,7 +2,7 @@ import React from 'react';
 
 const EmptyPage = () => {
 	return (
-		<div className="container max-w-screen-2xl  md:py-2 md:px-1 lg:px-28 bg-white h-[25vh]  lg:h-[50vh] w-full overflow-x-hidden">
+		<div className="container max-w-screen-xl  md:py-2 md:px-1 lg:px-28 bg-white h-[25vh]  lg:h-[50vh] w-full overflow-x-hidden">
 			<div className="w-full h-full flex flex-col items-center justify-center px-6">
 				<span className="font-semibold block text-lg mb-3">Your reading list is empty</span>
 				<p className="max-w-[80%] text-sm text-center leading-7">

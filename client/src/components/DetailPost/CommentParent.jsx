@@ -5,6 +5,7 @@ import { auth } from '../../Utils/auth';
 import { timeConvert } from '../../Utils/TimeConvert';
 import Comment from './CommentChild';
 const CommentParent = ({ comment  , setVisible}) => {
+
 	const [isShowFrameChat, setShowFrameChat] = useState(false);
 	const [commentsChild, setCommentsChild] = useState([]);
 	const [isPostComment, setPostComment] = useState(false);
@@ -16,9 +17,8 @@ const CommentParent = ({ comment  , setVisible}) => {
 	console.log("render")
 	useEffect(() => {
 		const getData = async () => {
-			const data = await postApi.getCommentByPostId(comment.postId);
+			const data = await postApi.getCommentByPostId(comment.postId, "asc");
 			const Child = data.filter((val) => val.replyToId === comment._id);
-			console.log('Child', Child);
 			setCommentsChild(Child);
 		};
 		getData();
@@ -29,7 +29,7 @@ const CommentParent = ({ comment  , setVisible}) => {
 	}
 
 	return (
-		<div>
+		<div parent={comment._id}>
 			<div className="w-full h-full flex">
 				<div className="mr-2">
 					<img
@@ -199,10 +199,7 @@ const CommentParent = ({ comment  , setVisible}) => {
 		</>
 
 		}
-				
-					
-				
-			
+							
 		</div>
 	);
 };
