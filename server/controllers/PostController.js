@@ -10,10 +10,7 @@ const postController = {
 				.find({
 					createdAt: RecentTimes,
 				})
-				.populate({
-					path: 'userId',
-					select: ['userName', 'avatar'],
-				});
+				.populate('userId', 'userName avatar');
 			res.json(data);
 		} catch (error) {
 			next(error);
@@ -34,15 +31,9 @@ const postController = {
 			if (followerArr.length === 0) {
 				const data = await postModel
 					.find({
-						createdAt: {
-							$lte: new Date(),
-							$gte: new Date(new Date().setDate(new Date().getDate() - 5)),
-						},
+						createdAt: RecentTimes,
 					})
-					.populate({
-						path: 'userId',
-						select: ['userName', 'avatar'],
-					});
+					.populate('userId', 'userName avatar');
 				return res.json(data);
 			} else {
 				const data = await postModel
@@ -53,10 +44,7 @@ const postController = {
 							$gte: new Date(new Date().setDate(new Date().getDate() - 5)),
 						},
 					})
-					.populate({
-						path: 'userId',
-						select: ['userName', 'avatar'],
-					});
+					.populate('userId', 'userName avatar');
 				res.json(data);
 			}
 		} catch (error) {
@@ -76,10 +64,7 @@ const postController = {
 						$gte: end,
 					},
 				})
-				.populate({
-					path: 'userId',
-					select: ['userName', 'avatar'],
-				})
+				.populate('userId', 'userName avatar')
 				.lean();
 
 			const scoreArr = data.map((val) => {
@@ -104,12 +89,15 @@ const postController = {
 		try {
 			const { slug } = req.params;
 
-			const data =
-				(await postModel.findOne({ slug }).populate({
-					path: 'userId',
-					select: ['userName', 'avatar', 'createdAt', 'description'],
-				})) || [];
-			res.status(200).json(data);
+			const result = await postModel
+				.findOne({ slug })
+				.populate('userId', 'userName avatar description createdAt')
+				.lean();
+			const readnext = await postModel
+				.find({ tags: { $in: result.tags }, createdAt: RecentTimes }, { title: 1, createdAt: 1, slug: 1 })
+				.populate('userId', 'userName avatar')
+				.limit(4);
+			res.status(200).json({ ...result, readNext: readnext });
 		} catch (error) {
 			next(error);
 		}

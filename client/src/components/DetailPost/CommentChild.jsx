@@ -2,7 +2,7 @@ import { timeConvert } from '../../Utils/TimeConvert';
 import React, { useEffect, useRef, useState } from 'react';
 import postApi from '../../api/postApi';
 
-const Comment = ({ comment, parentId, setPostComment }) => {
+const CommentChild = ({ comment, parentId, setPostComment }) => {
 	const [isShowFrameChat, setShowFrameChat] = useState(false);
 	const contentComment = useRef();
 
@@ -112,4 +112,4 @@ const Comment = ({ comment, parentId, setPostComment }) => {
 	);
 };
 
-export default Comment;
+export default CommentChild;

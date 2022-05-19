@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import postApi from '../../api/postApi';
 import { timeConvert } from '../../Utils/TimeConvert';
-import Comment from './CommentChild';
+import CommentChild from './CommentChild';
+
 const CommentParent = ({ comment }) => {
 	const [isShowFrameChat, setShowFrameChat] = useState(false);
 	const [commentsChild, setCommentsChild] = useState([]);
@@ -135,7 +136,7 @@ const CommentParent = ({ comment }) => {
 			</div>
 			<div className="ml-4 md:ml-8">
 				{commentsChild.map((cmt) => (
-					<Comment key={cmt._id} comment={cmt} parentId={comment._id} setPostComment={setPostComment} />
+					<CommentChild key={cmt._id} comment={cmt} parentId={comment._id} setPostComment={setPostComment} />
 				))}
 			</div>
 		</div>

@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import SyntaxHighlight from '../SyntaxHighlight';
 import { timeConvert } from '../../Utils/TimeConvert';
 import Comments from './Comments';
+import ReadNext from './ReadNext';
 
 function MainPost({ post }) {
 	return (
@@ -39,42 +40,7 @@ function MainPost({ post }) {
 			</div>
 
 			{/* Read next */}
-			<div className="rounded-md border-[1px] py-5 pl-7 md:py-10 md:pl-14">
-				<h3 className="font-bold text-xl mb-7">Read Next</h3>
-				<div className="flex gap-5 items-center mb-7">
-					<img
-						className="h-16 w-16 object-cover rounded-full"
-						src="https://res.cloudinary.com/practicaldev/image/fetch/s--6SvPRpm---/c_imagga_scale,f_auto,fl_progressive,h_100,q_auto,w_100/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/438512/0ac2d181-2fd0-4861-95ab-f3fb2fd90f58.jpeg"
-						alt=""
-					/>
-					<div>
-						<h3 className="font-semibold text-lg">How to Create a Custom Hook in React</h3>
-						<h4 className="font-light text-gray-400">Anurag Gharat - Apr 18</h4>
-					</div>
-				</div>
-				<div className="flex gap-5 items-center mb-7">
-					<img
-						className="h-16 w-16 object-cover rounded-full"
-						src="https://res.cloudinary.com/practicaldev/image/fetch/s--6SvPRpm---/c_imagga_scale,f_auto,fl_progressive,h_100,q_auto,w_100/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/438512/0ac2d181-2fd0-4861-95ab-f3fb2fd90f58.jpeg"
-						alt=""
-					/>
-					<div>
-						<h3 className="font-semibold text-lg">How to Create a Custom Hook in React</h3>
-						<h4 className="font-light text-gray-400">Anurag Gharat - Apr 18</h4>
-					</div>
-				</div>
-				<div className="flex gap-5 items-center mb-7">
-					<img
-						className="h-16 w-16 object-cover rounded-full"
-						src="https://res.cloudinary.com/practicaldev/image/fetch/s--6SvPRpm---/c_imagga_scale,f_auto,fl_progressive,h_100,q_auto,w_100/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/438512/0ac2d181-2fd0-4861-95ab-f3fb2fd90f58.jpeg"
-						alt=""
-					/>
-					<div>
-						<h3 className="font-semibold text-lg">How to Create a Custom Hook in React</h3>
-						<h4 className="font-light text-gray-400">Anurag Gharat - Apr 18</h4>
-					</div>
-				</div>
-			</div>
+			<ReadNext post={post.readNext} />
 		</div>
 	);
 }

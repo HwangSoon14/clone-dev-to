@@ -11,7 +11,7 @@ function ActionPost() {
 	const user = useSelector(state => state.auth.current_user);
 	const [post, setPost] = useState([]);
 	const params = useParams();
-
+	
 
 	useEffect(() => {
 		const callApi = async () => {
@@ -27,7 +27,7 @@ function ActionPost() {
 			else  setIsSave(false);
 		};
 		callApi();
-	}, [isLike , isSave]);
+	}, [isLike , isSave, params]);
 
 	const handleLikePost =  async () => {
 		try {

@@ -8,11 +8,14 @@ export default function Comments({ post }) {
 	const [commentsParent, setCommentsParent] = useState([]);
 	const [isPostComment, setPostComment] = useState(false);
 	const user = useSelector((state) => state.auth.current_user);
+	
+	const countComment = useRef();
 	const contentComment = useRef();
 
 	useEffect(() => {
 		const getData = async () => {
 			const data = await postApi.getCommentByPostId(post._id);
+			countComment.current = data
 			const Parents = data.filter((val) => !val.replyToId);
 			setCommentsParent(Parents);
 		};
@@ -23,7 +26,7 @@ export default function Comments({ post }) {
 		<div className="border-t-2 border-gray-100">
 			<div className="h-full px-3 py-4 md:px-12">
 				<span className="block font-semibold text-lg md:text-2xl md:mt-4 mb-8">
-					Discussion ({commentsParent.length})
+					Discussion ({countComment.current?.length})
 				</span>
 				<div className="flex gap-2 mb-3">
 					<img className="w-[37px] h-[37px] object-cover rounded-full border-2" src={user.avatar} alt="" />
