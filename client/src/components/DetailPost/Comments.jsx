@@ -1,54 +1,72 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import postApi from '../../api/postApi';
+import Picker from 'emoji-picker-react';
 import CommentParent from './CommentParent';
+import { memo } from "react";
+import EmojiPicker from '../EmojiPicker/EmojiPicker';
+import AuthModal from '../AuthModal/AuthModal';
+import { auth } from '../../Utils/auth';
 export default function Comments({ post }) {
-
 	const [commentsParent, setCommentsParent] = useState([]);
 	const [isPostComment, setPostComment] = useState(false);
 	const user = useSelector((state) => state.auth.current_user);
 	const contentComment = useRef();
+	const [visibleModal , setVisibleModal] = useState(false)
+	const isLogin = useRef(auth(user))
 
-	
+	console.log(isLogin)
 	useEffect(() => {
 		const getData = async () => {
 			const data = await postApi.getCommentByPostId(post._id);
 			const Parents = data.filter((val) => !val.replyToId);
-			console.log("Parents", Parents)
+			console.log('Parents', Parents);
 			setCommentsParent(Parents);
 		};
 		getData();
 	}, [post._id, isPostComment]);
-	
-	  
+
+
+	const addComment = async () => {
+		try {
+				await postApi.addComment(post._id, { content: contentComment.current.value });
+				contentComment.current.value = '';
+				setPostComment((x) => !x);
+		} catch (error) {
+			console.log(error);
+		}
+	}
 
 	return (
-		<div className="border-t-2 border-gray-100">
+		<>
+			<div className="border-t-2 border-gray-100">
 			<div className="h-full px-3 py-4 md:px-12">
 				<span className="block font-semibold text-lg md:text-2xl md:mt-4 mb-8">
 					Discussion ({commentsParent.length})
 				</span>
 				<div className="flex gap-2 mb-6">
 					<img className="w-[37px] h-[37px] object-cover rounded-full border-2" src={user.avatar} alt="" />
-					<div className="flex-1 relative">
-		
-						<textarea
-							placeholder="What's on your mind now ? "
-							className="w-full border-[1px] rounded-lg min-h-[80px] pt-3 pl-4 "
-							ref={contentComment}
-						>
-							
-						</textarea>
-						
+					<div className="flex-1">
+						<div className="relative">
+							<textarea
+							onFocus={() => {
+								if(!isLogin.current) setVisibleModal(true);
+							}}
+								placeholder="What's on your mind now ? "
+								className="w-full border-[1px] rounded-lg min-h-[80px] pt-3 pl-4 "
+								ref={contentComment}
+							></textarea>
+							<EmojiPicker textRef={contentComment}/>
+						</div>
+
 						<button
 							className="px-3 py-2 mt-2 bg-blue-700 text-white  rounded-md"
-							onClick={async () => {
-								try {
-									 await postApi.addComment(post._id, { content: contentComment.current.value });
-                                     contentComment.current.value  = ""
-                                     setPostComment(x => !x);
-								} catch (error) {}
-							}}
+							onClick={() => {
+
+								if(!isLogin.current) return setVisibleModal(true);
+								else addComment(); 
+							}
+							}
 						>
 							Submit
 						</button>
@@ -56,10 +74,12 @@ export default function Comments({ post }) {
 				</div>
 				<div className="w-full h-full">
 					{commentsParent?.map((comment, idx) => (
-						<CommentParent key={comment._id} comment={comment}/>
+						<CommentParent key={comment._id} comment={comment} setVisible={setVisibleModal}/>
 					))}
 				</div>
 			</div>
 		</div>
+			{ visibleModal && <AuthModal setVisible={setVisibleModal}/>}
+		</>
 	);
 }

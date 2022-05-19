@@ -1,14 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import postApi from '../../api/postApi';
+import { auth } from '../../Utils/auth';
 import { timeConvert } from '../../Utils/TimeConvert';
 import Comment from './CommentChild';
-const CommentParent = ({ comment }) => {
+const CommentParent = ({ comment  , setVisible}) => {
 	const [isShowFrameChat, setShowFrameChat] = useState(false);
 	const [commentsChild, setCommentsChild] = useState([]);
 	const [isPostComment, setPostComment] = useState(false);
 	const [isHide , setIsHide] = useState(false);
 	const contentComment = useRef();
+	const user = useSelector(state => state.auth.current_user);
+	const isLogin = useRef(auth(user));
 
+	console.log("render")
 	useEffect(() => {
 		const getData = async () => {
 			const data = await postApi.getCommentByPostId(comment.postId);
@@ -17,7 +22,7 @@ const CommentParent = ({ comment }) => {
 			setCommentsChild(Child);
 		};
 		getData();
-	}, [isPostComment]);
+	}, [isPostComment , comment._id , comment.postId]);
 
 	const toggleChildComment = () => {
 		setIsHide(x => !x);
@@ -53,6 +58,9 @@ const CommentParent = ({ comment }) => {
 							<button
 								title="heart"
 								aria-pressed="false"
+								onClick={() => {
+									if(!isLogin.current) setVisible(true);
+								}}
 								className="flex gap-x-2 px-2 py-1 items-center hover:bg-gray-200 transition-all rounded-lg justify-center"
 							>
 								<svg
@@ -64,7 +72,7 @@ const CommentParent = ({ comment }) => {
 								>
 									<path d="M18.884 12.595l.01.011L12 19.5l-6.894-6.894.01-.01A4.875 4.875 0 0112 5.73a4.875 4.875 0 016.884 6.865zM6.431 7.037a3.375 3.375 0 000 4.773L12 17.38l5.569-5.569a3.375 3.375 0 10-4.773-4.773L9.613 10.22l-1.06-1.062 2.371-2.372a3.375 3.375 0 00-4.492.25v.001z"></path>
 								</svg>
-								<span className="text-gray-600">{comment.likes} like</span>
+								<span  className="text-gray-600">{comment.likes} like</span>
 							</button>
 							<button
 								title="heart"
@@ -83,7 +91,8 @@ const CommentParent = ({ comment }) => {
 								<span
 									className="text-gray-600"
 									onClick={() => {
-										setShowFrameChat(true);
+									if(!isLogin.current) setVisible(true);
+										else setShowFrameChat(true);
 									}}
 								>
 									Reply
@@ -164,7 +173,7 @@ const CommentParent = ({ comment }) => {
 		<>
 		<div className="ml-6 md:ml-10">
 						{commentsChild.map((cmt) => (
-							<Comment key={cmt._id} comment={cmt} parentId={comment._id} setPostComment={setPostComment} />
+							<Comment key={cmt._id} comment={cmt} parentId={comment._id} setPostComment={setPostComment} setVisible={setVisible}/>
 						))}
 					</div>
 					<span
@@ -198,4 +207,4 @@ const CommentParent = ({ comment }) => {
 	);
 };
 
-export default CommentParent;
+export default React.memo(CommentParent);
