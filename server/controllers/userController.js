@@ -1,4 +1,4 @@
-import UserModel from '../models/userModel.js';
+import UserModel from '../models/UserModel.js';
 import PostModel from '../models/PostModel.js';
 const userCtrl = {
 	getUserInfo: async (req, res, next) => {

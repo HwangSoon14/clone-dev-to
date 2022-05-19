@@ -1,10 +1,10 @@
 import express from 'express';
 const Router = express.Router();
-import authRoute from './authRoute.js';
+import authRoute from './AuthRoute.js';
 import uploadRoute from './UploadRoute.js';
 import postRoute from './PostRoute.js';
-import userRoute from './userRoute.js';
-import tagRoute from '../routes/tagRoute.js'
+import userRoute from './UserRoute.js';
+import tagRoute from './TagRoute.js'
 export default function ParentRoute(app) {
 	Router.use('/auth', authRoute);
 	Router.use('/users', userRoute);
