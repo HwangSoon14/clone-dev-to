@@ -93,11 +93,14 @@ const postController = {
 				.findOne({ slug })
 				.populate('userId', 'userName avatar description createdAt')
 				.lean();
-			const readnext = await postModel
+			const readNext = await postModel
 				.find({ tags: { $in: result.tags }, createdAt: RecentTimes }, { title: 1, createdAt: 1, slug: 1 })
 				.populate('userId', 'userName avatar')
 				.limit(4);
-			res.status(200).json({ ...result, readNext: readnext });
+			const otherPost = await postModel.find({
+				createdAt: RecentTimes,
+			}, {title: 1, slug: 1, tags: 1}).limit(3)
+			res.status(200).json({ ...result, readNext: readNext, otherPost});
 		} catch (error) {
 			next(error);
 		}

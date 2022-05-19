@@ -62,30 +62,10 @@ function ActionPost() {
 		}
 	}
 
-	// useEffect(() => {
-	// 
-	// } , [post.likes])
-
-	// const likePost = async () => {
-	// 	try {
-	// 		const res = await postApi
-	// 	} catch (error) {
-	// 		console.log(error)
-	// 	}
-	// }
-	
-	// 	(async() => {
-	// 		try {
-	// 			const res = await postApi.likePost(post._id); 
-	// 			console.log(res);
-	// 		} catch (error) {
-	// 			console.log(error);
-	// 		}
-
 
 	return (
-		<div className="w-full fixed bottom-0 left-0 h-14 bg-white rounded-t-xl border-t-2 md:rounded-t-none md:h-auto md:relative md:w-16 z-20">
-			<div className="md:sticky top-[70px] left-0 flex w-full h-full items-center justify-between px-8 md:flex-col md:justify-start md:mt-32 md:gap-y-8">
+		<div className="w-full fixed bottom-0 left-0 h-14 bg-white rounded-t-xl border-t-2 md:border-t-0 md:rounded-t-none md:h-auto md:relative md:w-16 z-20">
+			<div className="md:sticky top-[140px] left-0 flex w-full h-auto items-center justify-between px-8 md:flex-col md:justify-start md:gap-y-8">
 				<div className="flex items-center justify-center md:flex-col group cursor-pointer">
 					<div className={`p-2  group-hover:bg-red-100  ${isLike && 'bg-red-100'} rounded-full`} onClick={() => {
 						if(isLike) return handleUnlikePost();
