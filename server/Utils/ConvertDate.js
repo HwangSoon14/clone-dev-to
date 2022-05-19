@@ -18,3 +18,8 @@ export const ConvertDate = {
 		return end
 	},
 };
+
+export const RecentTimes = {
+	"$lte": new Date(),
+	"$gte": new Date(new Date().setDate(new Date().getDate() - 5)),
+};
