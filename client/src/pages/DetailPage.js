@@ -22,7 +22,7 @@ function DetailPage() {
 	return (
 		<FooterLayout>
 			<ScrollToTop>
-				<section className="mt-[70px] mb-5 max-w-screen-2xl mx-auto px-3 md:px-5 2xl:px-0 md:flex md:flex-wrap md:gap-3 xl:gap-5">
+				<section className="mt-[70px] mb-5 max-w-screen-xl mx-auto px-3 md:px-5 2xl:px-0 md:flex md:flex-wrap md:gap-3 xl:gap-5">
 					<ActionPost />
 					<MainPost post={post} />
 					<OtherPost post={post} />

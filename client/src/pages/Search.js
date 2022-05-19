@@ -34,7 +34,7 @@ const Search = () => {
 
 	return (
 		<FooterLayout>
-			<div className="container max-w-screen-2xl mx-auto mt-14 md:py-2 md:px-1 lg:px-28 bg-white-smoke  w-full overflow-x-hidden">
+			<div className="container max-w-screen-xl mx-auto mt-14 md:py-2 md:px-1 lg:px-28 bg-white-smoke  w-full overflow-x-hidden">
 				<div className="px-2 py-4 min-h-screen lg:px-24"><z></z>
 					<form className='md:hidden w-full h-auto'>
                         <input

@@ -84,7 +84,7 @@ const HomeCpn = () => {
 
     return (
         <div className='bg-[#F5F5F5]'>
-        <div className='container max-w-screen-2xl mt-14 mx-auto md:py-2 md:px-1 lg:px-28min-h-screen w-full overflow-x-hidden'>
+        <div className='container max-w-screen-xl mt-14 mx-auto md:py-2 md:px-1 lg:px-28min-h-screen w-full overflow-x-hidden'>
         <div className="w-full h-full flex flex-col md:flex-row">
             <TabSide />
             <div className='flex flex-col flex-1 md:p-1 lg:p-2'>

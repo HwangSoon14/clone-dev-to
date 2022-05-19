@@ -66,7 +66,7 @@ const Navbar = () => {
 	return (
 		<>
 			<div className="fixed w-full border-b-[1px] shadow-sm border-gray-200 bg-white top-0 left-0 z-50 right-0">
-				<div className=" mx-auto py-2 max-w-screen-2xl">
+				<div className=" mx-auto py-2 max-w-screen-xl">
 					<div className="relative w-full h-full flex items-center px-3">
 						{/* menu-button */}
 						<div className="flex items-center justify-center md:hidden">
