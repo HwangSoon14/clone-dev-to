@@ -39,7 +39,7 @@ export default function Tags() {
 
 	return (
 		<FooterLayout>
-		<div className="mt-14 pb-8 md:pb-14 max-w-screen-2xl mx-auto px-3 xl:px-5 bg-[#f5f5f5]">
+		<div className="mt-14 pb-8 md:pb-14 max-w-screen-xl mx-auto px-3 xl:px-5">
 			<div className="flex justify-between items-center py-5">
 				<h2 className="font-semibold text-lg md:text-3xl">Top tags</h2>
 				<div className="flex gap-4">

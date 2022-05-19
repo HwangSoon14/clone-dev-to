@@ -6,7 +6,7 @@ const NotFound = () => {
     return (
         <FooterLayout>
 
-        <div className='mx-auto mt-14 md:px-8 max-w-screen-2xl max-h-[100vh] flex flex-col '>
+        <div className='mx-auto mt-14 md:px-8 max-w-screen-xl max-h-[100vh] flex flex-col '>
             <div className='text-center text-2xl sm:text-3xl md:text-4xl mt-16 text-purple-500 font-bold mb-4'>
                 PAGE NOT FOUND !
 
