@@ -2,13 +2,16 @@ import { QueryMethod } from '../Utils/QueryMethod.js';
 import postModel from '../models/PostModel.js';
 import commentModel from '../models/CommentModel.js';
 import followModel from '../models/FollowModel.js';
-import { ConvertDate, RecentTimes } from '../Utils/ConvertDate.js';
+import { ConvertDate } from '../Utils/ConvertDate.js';
 const postController = {
 	getLatest: async (req, res, next) => {
 		try {
 			const data = await postModel
 				.find({
-					createdAt: RecentTimes,
+					createdAt: {
+						$lte: new Date(),
+						$gte: new Date(new Date().setDate(new Date().getDate() - 5)),
+					},
 				})
 				.populate('userId', 'userName avatar');
 			res.json(data);
@@ -31,7 +34,10 @@ const postController = {
 			if (followerArr.length === 0) {
 				const data = await postModel
 					.find({
-						createdAt: RecentTimes,
+						createdAt: {
+							$lte: new Date(),
+							$gte: new Date(new Date().setDate(new Date().getDate() - 5)),
+						},
 					})
 					.populate('userId', 'userName avatar');
 				return res.json(data);
@@ -56,17 +62,17 @@ const postController = {
 		try {
 			const { type } = req.params;
 			const { StartAndEndPoint } = ConvertDate;
-			const { start, end } = StartAndEndPoint(type);
+			const end = StartAndEndPoint(type);
 			const data = await postModel
 				.find({
 					createdAt: {
-						$lte: start,
-						$gte: end,
+						$lte: new Date(),
+						$gte: end
 					},
 				})
 				.populate('userId', 'userName avatar')
 				.lean();
-
+			
 			const scoreArr = data.map((val) => {
 				const time = Math.abs(new Date() - new Date(val.createdAt)) / 3600000;
 				const score = (val.likes.length - 1) / Math.pow(time + 2, 1.8);
@@ -77,8 +83,8 @@ const postController = {
 			});
 
 			const negativeNumber = scoreArr.filter((val) => val.score < 0).sort((a, b) => a.score - b.score);
-			const positiveNumber = scoreArr.filter((val) => val.score > 0).sort((a, b) => b.score - a.score);
-
+			const positiveNumber = scoreArr.filter((val) => val.score >= 0).sort((a, b) => b.score - a.score);
+			
 			res.json([...positiveNumber, ...negativeNumber]);
 		} catch (error) {
 			next(error);

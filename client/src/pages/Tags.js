@@ -40,9 +40,9 @@ export default function Tags() {
 	return (
 		<FooterLayout>
 		<div className="mt-14 pb-8 md:pb-14 max-w-screen-xl mx-auto px-3 xl:px-5">
-			<div className="flex justify-between items-center py-5">
+			<div className="flex flex-wrap justify-between items-center py-5 gap-3">
 				<h2 className="font-semibold text-lg md:text-3xl">Top tags</h2>
-				<div className="flex gap-4">
+				<div className="flex flex-wrap w-full justify-between sm:w-auto gap-4">
 					<div className="relative">
 						<input
 							onChange={handleOnChange}

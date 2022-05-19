@@ -31,7 +31,7 @@ const postApi = {
         return axiosClient.post(url);
     },
     getCommentByPostId(id, type) {
-        const url = `${baseUrl}/${id}/comments?sort=desc`;
+        const url = `${baseUrl}/${id}/comments?sort=${type}`;
         return axiosClient.get(url);
     },
    addComment(id,body) {

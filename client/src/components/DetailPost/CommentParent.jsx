@@ -11,7 +11,7 @@ const CommentParent = ({ comment }) => {
 
 	useEffect(() => {
 		const getData = async () => {
-			const data = await postApi.getCommentByPostId(comment.postId);
+			const data = await postApi.getCommentByPostId(comment.postId, "asc");
 			const Child = data.filter((val) => val.replyToId === comment._id);
 			setCommentsChild(Child);
 		};
