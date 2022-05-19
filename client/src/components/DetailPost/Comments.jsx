@@ -14,7 +14,7 @@ export default function Comments({ post }) {
 
 	useEffect(() => {
 		const getData = async () => {
-			const data = await postApi.getCommentByPostId(post._id);
+			const data = await postApi.getCommentByPostId(post._id, "desc");
 			countComment.current = data
 			const Parents = data.filter((val) => !val.replyToId);
 			setCommentsParent(Parents);
