@@ -1,10 +1,23 @@
-import { timeConvert } from '../../Utils/TimeConvert';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import postApi from '../../api/postApi';
+import { auth } from '../../Utils/auth';
+import { timeConvert } from '../../Utils/TimeConvert';
 
-const CommentChild = ({ comment, parentId, setPostComment }) => {
+const Comment = ({ comment, parentId, setPostComment , setVisible }) => {
 	const [isShowFrameChat, setShowFrameChat] = useState(false);
 	const contentComment = useRef();
+	const user = useSelector(state => state.auth.current_user)
+	const isLogin = useRef(auth(user))
+
+	const addComment = async () => {
+			try {
+				await postApi.addComment(comment.postId, { content: contentComment.current.value, replyToId: parentId});
+				contentComment.current.value = '';
+				setShowFrameChat(false)
+				setPostComment(x=>!x);
+			} catch (error) {}
+	}
 
 	return (
 		<div className="my-2">
@@ -33,7 +46,9 @@ const CommentChild = ({ comment, parentId, setPostComment }) => {
 							</div>
 						</div>
 						<div className="flex items-center gap-x-3 my-2 ml-2">
-							<button title="heart" aria-pressed="false" className="flex gap-x-2 items-center justify-center">
+							<button onClick={() => {
+								if(!isLogin.current) setVisible(true);
+							}} title="heart" aria-pressed="false" className="flex gap-x-2 items-center justify-center">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									width="24"
@@ -45,8 +60,10 @@ const CommentChild = ({ comment, parentId, setPostComment }) => {
 								</svg>
 								<span className="text-gray-600">{comment.likes} like</span>
 							</button>
-							<button title="heart" aria-pressed="false" onClick={() => {
-								setShowFrameChat(true)
+							<button  className="flex gap-x-2 items-center justify-center" title="heart" aria-pressed="false" onClick={() => {
+								
+								if(!isLogin.current) setVisible(true);
+								else setShowFrameChat(true)
 							}}>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -57,6 +74,8 @@ const CommentChild = ({ comment, parentId, setPostComment }) => {
 								>
 									<path d="M10.5 5h3a6 6 0 110 12v2.625c-3.75-1.5-9-3.75-9-8.625a6 6 0 016-6zM12 15.5h1.5a4.501 4.501 0 001.722-8.657A4.5 4.5 0 0013.5 6.5h-3A4.5 4.5 0 006 11c0 2.707 1.846 4.475 6 6.36V15.5z"></path>
 								</svg>
+								<span className="text-gray-600">reply</span>
+
 							</button>
 							<span className='text-sm'>Reply</span>
 						</div>
@@ -75,25 +94,26 @@ const CommentChild = ({ comment, parentId, setPostComment }) => {
 									d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
 								/>
 							</svg>
+							
 						</div>
 					</div>
 					{isShowFrameChat && (
 						<div className="flex-1">
 							<textarea
-								placeholder="nhập nội dung comment nào các dân chơi"
-								className="w-full border-[1px] rounded-lg min-h-[80px]"
+								placeholder="What's on your mind now ? "
+								className="w-full border-[1px] rounded-lg min-h-[80px] pl-4 pt-3"
 								ref={contentComment}
+								onFocus={() => {
+									if(!isLogin.current) setVisible(true);
+								}}
 							></textarea>
 							<button
 								className="px-3 py-2 mt-2 bg-blue-700 text-white  rounded-md"
-								onClick={async () => {
-									try {
-										await postApi.addComment(comment.postId, { content: contentComment.current.value, replyToId: parentId});
-										contentComment.current.value = '';
-										setShowFrameChat(false)
-										setPostComment(x=>!x);
-									} catch (error) {}
-								}}
+								onClick={ () => {
+
+									if(!isLogin.current) setVisible(true)
+									else addComment();				}
+								}
 							>
 								Submit
 							</button>
@@ -113,4 +133,4 @@ const CommentChild = ({ comment, parentId, setPostComment }) => {
 	);
 };
 
-export default CommentChild;
+export default React.memo(Comment);
