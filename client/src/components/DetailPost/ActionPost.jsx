@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import postApi from '../../api/postApi';
 import userApi from '../../api/userApi';
+import { auth } from '../../Utils/auth';
+import AuthModal from '../AuthModal/AuthModal';
 
 function ActionPost() {
 
 	const [isLike , setIsLike] = useState(false);
 	const [isSave , setIsSave] = useState(false);
+	const [visibleModal, setVisibleModal] = useState(false);
 	const user = useSelector(state => state.auth.current_user);
 	const [post, setPost] = useState([]);
 	const params = useParams();
-	
+	const isLogin = useRef(auth(user))
 
 	useEffect(() => {
 		const callApi = async () => {
@@ -68,8 +71,13 @@ function ActionPost() {
 			<div className="md:sticky top-[160px] left-0 flex w-full h-full md:h-auto items-center justify-between px-8 md:flex-col md:justify-start md:gap-y-8">
 				<div className="flex items-center justify-center md:flex-col group cursor-pointer">
 					<div className={`p-2  group-hover:bg-red-100  ${isLike && 'bg-red-100'} rounded-full`} onClick={() => {
-						if(isLike) return handleUnlikePost();
+
+					    if(isLogin.current) {
+							if(isLike) return handleUnlikePost();
 						else return handleLikePost();
+						}
+						else setVisibleModal(true);
+						
 					}}>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -109,8 +117,12 @@ function ActionPost() {
 				</div>
 				<div className="flex items-center justify-center md:flex-col group cursor-pointer" >
 					<div className={`p-2 group-hover:bg-[#d1d1ff]  ${isSave && 'bg-[#d1d1ff]'}  rounded-full`} onClick={() => {
+						  if(isLogin.current) {
+						  
 						if(isSave) return handleUnsavePost();
 						else return handleSavePost();
+						  }
+						  else setVisibleModal(true);
 					}}>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -127,6 +139,8 @@ function ActionPost() {
 					<span className={`inline-block ml-1 text-gray-600 text-sm md:text-lg group-hover:text-[#55c] ${isSave && 'text-[#55c]'}`}>{post.saver?.length}</span>
 				</div>
 			</div>
+			{ visibleModal && <AuthModal setVisible={setVisibleModal}/>}
+
 		</div>
 	);
 }

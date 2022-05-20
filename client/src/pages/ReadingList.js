@@ -55,16 +55,20 @@ const renderTags = (tags) => (
 const renderPostSaved = (postList) => (
 	<div className="w-full h-full">
 		{postList?.map((post, idx) => (
-			<Link to="/" key={idx}>
+			<Link to={`/${post.userId.userName}/${post.slug}`}  key={idx}>
 				<div className="flex items-stretch justify-between px-2 pt-4 pb-2 md:pl-6 bg-white">
 					<div className="flex-1 flex items-stretch">
+						
+						<Link to={`/profile/${post.userId.userName}`}>
 						<div className="w-[35px] h-[auto] md:w-[40px]">
+
 							<img
 								src={post.userId.avatar}
 								alt="avatar"
 								className="w-full h-[35px] md:h-[40px] object-contain rounded-full"
 							/>
 						</div>
+						</Link>
 						<div className="flex-1 ml-2 max-w-[80%]">
 							<p className="text-md  font-semibold text-gray-800 md:text-[18px]">{post.title}</p>
 							<div className="flex items-center flex-wrap max-w-[95%]">
@@ -109,6 +113,7 @@ const ReadingList = () => {
 				return prev;
 			}, []);
 			setTagList(temp_tagList);
+			console.log(res)
 		};
 		fetchData();
 	}, []);

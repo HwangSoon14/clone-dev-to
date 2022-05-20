@@ -14,6 +14,7 @@ function DetailPage() {
 	useEffect(() => {
 		const callApi = async () => {
 			const data = await postApi.getPostBySlug(params.slug);
+			console.log(data)
 			setPost(data);
 		};
 		callApi();

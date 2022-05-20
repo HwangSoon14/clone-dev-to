@@ -14,7 +14,9 @@ const Post = ({ post, type }) => {
    
     <div className="w-full pb-4 drop-shadow-sm flex flex-col bg-white  border-2 border-gray-200 rounded-lg  ">
       {
-        type &&  <img src={post.banner} className ="rounded-t-md" alt="" />
+        type &&  <Link to={`/${post.userId.userName}/${post.slug}`}>
+        <img src={post.banner} className ="rounded-t-md" alt="" />
+        </Link>
       }
       {post.content?.image && (
         <div className="w-full h-[275px]">

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import postApi from '../../api/postApi';
 import { auth } from '../../Utils/auth';
 import { timeConvert } from '../../Utils/TimeConvert';
+import EmojiPicker from '../EmojiPicker/EmojiPicker';
 
 const Comment = ({ comment, parentId, setPostComment , setVisible }) => {
 	const [isShowFrameChat, setShowFrameChat] = useState(false);
@@ -34,7 +35,7 @@ const Comment = ({ comment, parentId, setPostComment , setVisible }) => {
 						<div className=" border-2 border-gray-200 rounded-lg">
 							<div className="px-3 py-4 md:px-5 bg-white">
 								<div className="flex items-center">
-									<span className="text-[#3d3d3d] font-semibold text-[14px] max-w-[75px] truncate ">
+									<span className="text-[#3d3d3d] font-semibold text-[14px]  w-[75px] md:w-auto truncate ">
 										{comment.userId?.userName}
 									</span>
 									<span className="mx-1 inline-block text-[#bdbdbd]">•</span>
@@ -76,8 +77,8 @@ const Comment = ({ comment, parentId, setPostComment , setVisible }) => {
 								</svg>
 								<span className="text-gray-600">reply</span>
 
+
 							</button>
-							<span className='text-sm'>Reply</span>
 						</div>
 						<div className="absolute right-2 top-2">
 							<svg
@@ -99,6 +100,8 @@ const Comment = ({ comment, parentId, setPostComment , setVisible }) => {
 					</div>
 					{isShowFrameChat && (
 						<div className="flex-1">
+						<div className="relative">
+
 							<textarea
 								placeholder="What's on your mind now ? "
 								className="w-full border-[1px] rounded-lg min-h-[80px] pl-4 pt-3"
@@ -107,6 +110,10 @@ const Comment = ({ comment, parentId, setPostComment , setVisible }) => {
 									if(!isLogin.current) setVisible(true);
 								}}
 							></textarea>
+							<EmojiPicker textRef={contentComment}/>
+
+						</div>
+
 							<button
 								className="px-3 py-2 mt-2 bg-blue-700 text-white  rounded-md"
 								onClick={ () => {

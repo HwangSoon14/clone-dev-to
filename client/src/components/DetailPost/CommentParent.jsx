@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import postApi from '../../api/postApi';
 import { auth } from '../../Utils/auth';
 import { timeConvert } from '../../Utils/TimeConvert';
+import EmojiPicker from '../EmojiPicker/EmojiPicker';
 import Comment from './CommentChild';
 const CommentParent = ({ comment  , setVisible}) => {
 
@@ -43,7 +44,7 @@ const CommentParent = ({ comment  , setVisible}) => {
 						<div className=" border-[2px] border-gray-200 shadow-sm rounded-lg">
 							<div className="px-3 py-4 md:px-5 bg-white">
 								<div className="flex items-center">
-									<span className="text-[#3d3d3d] font-semibold text-[14px] md:text-base max-w-[75px] truncate">
+									<span className="text-[#3d3d3d] font-semibold text-[14px] md:text-base w-[75px] md:w-auto truncate">
 										{comment.userId?.userName}
 									</span>
 									<span className="mx-1 md:mx-2 inline-block text-[#bdbdbd]">•</span>
@@ -117,12 +118,19 @@ const CommentParent = ({ comment  , setVisible}) => {
 						</div>
 					</div>
 					{isShowFrameChat && (
-						<div className="flex-1">
+						<div className="flex-1 my-2">
+						<div className="relative">
 							<textarea
 								placeholder="What's on your mind now ?"
 								className="w-full border-[1px] rounded-lg min-h-[80px] pl-4 pt-3"
 								ref={contentComment}
+								onFocus={() => {
+									if(!isLogin.current) setVisible(true);
+								}}
 							></textarea>
+							<EmojiPicker textRef={contentComment}/>
+						</div>
+
 							<button
 								className="px-3 py-2 mt-2 bg-blue-700 text-white  rounded-md"
 								onClick={async () => {
