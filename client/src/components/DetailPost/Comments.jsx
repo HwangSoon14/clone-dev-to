@@ -47,7 +47,7 @@ export default function Comments({ post }) {
 					Discussion ({countComment.current?.length})
 				</span>
 				<div className="flex gap-2 mb-6">
-					<img className="w-[37px] h-[37px] object-cover rounded-full border-2" src={user.avatar} alt="" />
+					<img className="w-[37px] h-[37px] object-cover rounded-full border-[1px]" src={user.avatar} alt="" />
 					<div className="flex-1">
 						<div className="relative">
 							<textarea

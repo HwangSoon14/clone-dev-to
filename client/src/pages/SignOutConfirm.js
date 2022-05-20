@@ -1,25 +1,28 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import authApi from '../api/authApi';
 import { logout } from '../app/authSlice';
 import FooterLayout from '../components/Layout/FooterLayout';
 import Loading from '../components/Loading/Loading';
+
 const SignOutConfirm = () => {
+	
 	const [isLoading, setIsLoading] = useState(false);
 	const dispatch = useDispatch();
 	let navigate = useNavigate();
+
 	const handleLogout = async () => {
 		setIsLoading(true);
 		try {
+			localStorage.removeItem('current_user');
+			navigate('/sign-in');
 			const message = await authApi.log_out();
-			
 			dispatch(logout());
 			toast.success(message);
-			navigate('/sign-in');
 			setIsLoading(false);
-			} catch (error) {
+		} catch (error) {
 			setIsLoading(false);
 		}
 	};

@@ -80,7 +80,7 @@ const renderPostSaved = (postList) => (
 								{post.tags.map((tag, idx) => (
 									<span
 										key={idx}
-										className="text-[10px] text-gray-700 font-thin md:text-[12px] px-1 py-1 rounded-lg border-2 mx-1 border-transparent hover:bg-gray-200 hover:border-gray-300"
+										className="text-[10px] text-gray-700 font-thin md:text-[12px] px-1 py-1 rounded-lg border-[1px] mx-1 border-transparent hover:bg-gray-200 hover:border-gray-300"
 									>
 										#{tag}
 									</span>
@@ -145,7 +145,7 @@ const ReadingList = () => {
 				</div>
 				<div className="flex items-stretch gap-x-2">
 					<div className="hidden md:block w-[250px]">{renderTags(tagList)}</div>
-					<div className="flex-1 border-t-2 border-b-2 drop-shadow-sm border-gray-100 md:border-2 md:rounded-xl">
+					<div className="flex-1 border-t-2 border-b-2 drop-shadow-sm border-gray-100 md:border-[1px] md:rounded-xl">
 						{savePostList.length > 0 ? renderPostSaved(savePostList) : <EmptyPage />}
 					</div>
 				</div>
