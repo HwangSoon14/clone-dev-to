@@ -24,9 +24,10 @@ const userCtrl = {
 	},
 	addPost: async (req, res, next) => {
 		try {
-			const { title, content, tags } = req.body;
-			console.log(req.body?.banner)
-			const data = await PostModel.create({ title, content, tags, userId: req.userId, banner: req.body?.banner});
+			let defaultBanner = "https://res.cloudinary.com/tuy-n-beat/image/upload/v1652102581/default/6hqmcjaxbgbon8ydw93z_ir4bet.png";
+			const { title, content, tags , banner } = req.body;
+			
+			const data = await PostModel.create({ title, content, tags, userId: req.userId, banner: banner || defaultBanner});
 			res.status(201).json({ mess: 'successfully added new post' });
 		} catch (error) {
 			next(error);
@@ -85,7 +86,7 @@ const userCtrl = {
 		try {
 			const data = await UserModel.find({ _id: req.userId }, { postsSaved: 1 }).populate({
 				path: 'postsSaved',
-				select: ['title', 'updatedAt', 'tags'],
+				select: ['title', 'updatedAt', 'tags', 'slug'],
 				populate: {
 					path: 'userId',
 					select: ['userName', 'avatar', 'fullName'],
