@@ -7,7 +7,7 @@ const FAQ = () => {
 	return (
 		<FooterLayout>
 			<div className="w-full-screen h-auto bg-white-smoke mt-14 md:px-2 md:py-2 lg:px-48 lg:py-4">
-				<div className="w-full h-full bg-white pl-3 py-4 md:border-2 md:border-gray-200 md:rounded-lg md:p-12 lg:px-16">
+				<div className="w-full h-full bg-white pl-3 py-4 md:border-[1px] md:border-gray-200 md:rounded-lg md:p-12 lg:px-16">
 					<div className="my-4">
 						<h1 className="font-semibold text-3xl mb-3">Frequently Asked Questions 🤔</h1>
 						<em>

@@ -34,7 +34,7 @@ const CommentParent = ({ comment  , setVisible}) => {
 			<div className="w-full h-full flex">
 				<div className="mr-2">
 					<img
-						className="w-[30px] h-[30px] mt-3 md:w-[37px] md:h-[37px] rounded-full object-contain border-2 border-gray-200"
+						className="w-[30px] h-[30px] mt-3 md:w-[37px] md:h-[37px] rounded-full object-contain border-[1px] border-gray-200"
 						src={comment.userId.avatar}
 						alt="avt"
 					></img>
@@ -42,7 +42,7 @@ const CommentParent = ({ comment  , setVisible}) => {
 				<div className="flex-1 mb-1 relative">
 					<div>
 						<div className=" border-[2px] border-gray-200 shadow-sm rounded-lg">
-							<div className="px-3 py-4 md:px-5 bg-white">
+							<div className="px-3 py-4 md:px-5 bg-white  border-inherit">
 								<div className="flex items-center">
 									<span className="text-[#3d3d3d] font-semibold text-[14px] md:text-base w-[75px] md:w-auto truncate">
 										{comment.userId?.userName}

@@ -3,6 +3,7 @@ import postModel from '../models/PostModel.js';
 import commentModel from '../models/CommentModel.js';
 import followModel from '../models/FollowModel.js';
 import { ConvertDate, RecentTimes } from '../Utils/ConvertDate.js';
+
 const postController = {
 	getLatest: async (req, res, next) => {
 		try {
@@ -20,7 +21,46 @@ const postController = {
 			next(error);
 		}
 	},
-
+	getPopulate: async (req, res, next) => {
+		try {
+			const data = await postModel
+				.find({
+					createdAt: {
+						$lte: new Date(),
+						$gte: new Date(new Date().setDate(new Date().getDate() - 5)),
+					},
+				})
+				.populate('userId', 'userName avatar')
+				.sort({ createdAt: -1 });
+			res.json(data);
+		} catch (error) {
+			next(error);
+		}
+	},
+	getSearch: async (req, res, next) => {
+		try {
+			const { q } = req.query;
+			const { type } = req.params;
+			let result = null;
+			switch (type) {
+				case 'posts':
+					result = await postModel.find({ $or: [
+						{ tags: { $in: [q] } }
+						, { title: { $regex: q ,  $options: 'i'}}
+					] });
+					break;
+				case 'tags':
+					break;
+				case 'comments':
+					break;
+				case 'myposts':
+					break;
+			}
+			res.json(result);
+		} catch (error) {
+			next(error);
+		}
+	},
 	getRelevant: async (req, res, next) => {
 		try {
 			const followerArr = [];
@@ -158,8 +198,27 @@ const postController = {
 	unlikePost: async (req, res, next) => {
 		try {
 			const { id } = req.params;
-			const data = await postModel.updateOne({ _id: id }, { $pull: { likes: req.userId } });
+			await postModel.updateOne({ _id: id }, { $pull: { likes: req.userId } });
 			res.status(201).json({ mess: 'unlike' });
+		} catch (error) {
+			next(error);
+		}
+	},
+	likeComment: async (req, res, next) => {
+		try {
+			const { id, idc } = req.params;
+			await commentModel.updateOne({ postId: id, _id: idc }, { $addToSet: { likes: req.userId } });
+			res.status(201).json({ mess: 'like comment' });
+		} catch (error) {
+			next(error);
+		}
+	},
+
+	unlikeComment: async (req, res, next) => {
+		try {
+			const { id, idc } = req.params;
+			await commentModel.updateOne({ postId: id, _id: idc }, { $pull: { likes: req.userId } });
+			res.status(201).json({ mess: 'unlike comment' });
 		} catch (error) {
 			next(error);
 		}

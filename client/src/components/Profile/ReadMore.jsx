@@ -3,7 +3,7 @@ import React from 'react';
 const ReadMore = (props) => {
 	const { postLength, commentLength, tagLength } = props.data;
 	return (
-		<div className="relative   bg-[#fafafa] border-2 border-gray-200 rounded-sm flex flex-col gap-y-6  py-4 my-4 md:my-1 w-full   px-3 md:p-2 md:px-1 lg:p-2 top-[40px]  text-black">
+		<div className="relative   bg-[#fafafa] border-[1px] border-gray-200 rounded-sm flex flex-col gap-y-6  py-4 my-4 md:my-1 w-full   px-3 md:p-2 md:px-1 lg:p-2 top-[40px]  text-black">
 			<div className="w-full flex items-center text-gray-500">
 				<div className='mr-3'>
 					<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

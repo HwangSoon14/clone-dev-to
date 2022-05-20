@@ -138,7 +138,7 @@ const ConfirmOTP = () => {
 	return (
 		<FooterLayout>
 			<div className="w-full-screen bg-white-smoke mt-14 md:px-2 md:py-2 lg:px-48 lg:py-4">
-				<div className="w-full h-full bg-white pl-3 pb-6  pt-16 md:border-2 md:border-gray-200 md:rounded-lg md:p-12 lg:px-16">
+				<div className="w-full h-full bg-white pl-3 pb-6  pt-16 md:border-[1px] md:border-gray-200 md:rounded-lg md:p-12 lg:px-16">
 					<h1 className="text-xl text-center font-semibold">Confirm your OTP</h1>
 					<p className="text-sm text-center font-medium mt-4">Your OTP has been send to email: </p>
 					{!!email ? (
@@ -155,7 +155,7 @@ const ConfirmOTP = () => {
 								min={0}
 								max={9}
 								autoComplete="off"
-								className="px-2 py-3 border-2 border-gray-200 rounded-lg w-[50px] h-[50px]"
+								className="px-2 py-3 border-[1px] border-gray-200 rounded-lg w-[50px] h-[50px]"
 								value={state.otp1}
 								// onKeyPress={this.keyPresse  w-[50px] h-[50px]d}
 								onChange={(e) => handleChange('otp1', e)}
@@ -169,7 +169,7 @@ const ConfirmOTP = () => {
 								min={0}
 								max={9}
 								autoComplete="off"
-								className="px-2 py-3 border-2 border-gray-200 rounded-lg  w-[50px] h-[50px]"
+								className="px-2 py-3 border-[1px] border-gray-200 rounded-lg  w-[50px] h-[50px]"
 								value={state.otp2}
 								onChange={(e) => handleChange('otp2', e)}
 								tabIndex="2"
@@ -182,7 +182,7 @@ const ConfirmOTP = () => {
 								max={9}
 								type="number"
 								autoComplete="off"
-								className="px-2 py-3 border-2  border-gray-200 rounded-lg  w-[50px] h-[50px]"
+								className="px-2 py-3 border-[1px]  border-gray-200 rounded-lg  w-[50px] h-[50px]"
 								value={state.otp3}
 								onChange={(e) => handleChange('otp3', e)}
 								tabIndex="3"
@@ -195,7 +195,7 @@ const ConfirmOTP = () => {
 								max={9}
 								type="number"
 								autoComplete="off"
-								className="px-2 py-3 border-2 border-gray-200 rounded-lg  w-[50px] h-[50px]"
+								className="px-2 py-3 border-[1px] border-gray-200 rounded-lg  w-[50px] h-[50px]"
 								value={state.otp4}
 								onChange={(e) => handleChange('otp4', e)}
 								tabIndex="4"
@@ -209,7 +209,7 @@ const ConfirmOTP = () => {
 								max={9}
 								type="number"
 								autoComplete="off"
-								className="px-2 py-3 border-2 border-gray-200 rounded-lg  w-[50px] h-[50px]"
+								className="px-2 py-3 border-[1px] border-gray-200 rounded-lg  w-[50px] h-[50px]"
 								value={state.otp5}
 								onChange={(e) => handleChange('otp5', e)}
 								tabIndex="5"
@@ -222,7 +222,7 @@ const ConfirmOTP = () => {
 								max={9}
 								type="number"
 								autoComplete="off"
-								className="px-2 py-3 border-2 border-gray-200 rounded-lg  w-[50px] h-[50px]"
+								className="px-2 py-3 border-[1px] border-gray-200 rounded-lg  w-[50px] h-[50px]"
 								value={state.otp6}
 								onChange={(e) => handleChange('otp6', e)}
 								tabIndex="6"

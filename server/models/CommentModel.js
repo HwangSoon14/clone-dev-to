@@ -11,7 +11,7 @@ const commentSchema = new mongoose.Schema(
 			type: mongoose.Types.ObjectId,
 		},
 		content: { type: String, required: true },
-		likes: { type: Number, default: 0 },
+		likes: { type: Array, ref: "Users" },
 	},
 	{
 		timestamps: true,	

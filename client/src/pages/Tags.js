@@ -31,7 +31,7 @@ export default function Tags() {
 
 	let EmptyComponent = () => (
 		<div className='w-full h-[20vh] mb-32'>
-			<div className='mx-auto h-full rounded-lg border-2 border-gray-200 bg-white flex items-center justify-center'>
+			<div className='mx-auto h-full rounded-lg border-[1px] border-gray-200 bg-white flex items-center justify-center'>
 				<p className='text-gray-500'>No results match that query</p>
 			</div>
 		</div>
@@ -48,7 +48,7 @@ export default function Tags() {
 							onChange={handleOnChange}
 							type="text"
 							placeholder="Search for tag"
-							className="py-2 placeholder:text-gray-700 border-2 rounded-md pl-2 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 "
+							className="py-2 placeholder:text-gray-700 border-[1px] rounded-md pl-2 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 "
 						/>
 						<div className="absolute right-2 top-2">
 							<svg

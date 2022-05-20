@@ -6,7 +6,7 @@ import TagList from './TagList';
 const TagSide = () => {
     return (
         <div className='hidden lg:block lg:w-[25%] lg:p-1 gap-y-2'>
-            <div className='py-4 px-3 bg-white border-2 border-gray-200 rounded-lg'>
+            <div className='py-4 px-3 bg-white border-[1px] border-gray-200 rounded-lg'>
                 <div className='w-full h-full rounded-lg overflow-hidden'>
                    <Link to="/">
                        <img  src={ForemImg} alt="forem-img"  className='w-full h-full object-cover'/>

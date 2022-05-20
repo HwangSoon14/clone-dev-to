@@ -14,7 +14,7 @@ export default function OtherPost({ post }) {
 							<img src={post.userId?.avatar} alt="" className="h-12 w-12 object-cover rounded-full" />
 							<h3 className="capitalize font-semibold text-base pb-1">{post.userId?.userName}</h3>
 						</div>
-						<button className="w-full text-center border-2 mt-8 p-2 rounded-md">Following</button>
+						<button className="w-full text-center border-[1px] mt-8 p-2 rounded-md">Following</button>
 						<h4 className="font-light text-sm my-4">{post.userId?.description}</h4>
 						<h4 className="font-medium text-sm">JOINED</h4>
 						<span className="font-light text-sm">{timeConvert(post.userId?.createdAt)}</span>

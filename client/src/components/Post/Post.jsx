@@ -12,7 +12,7 @@ const Post = ({ post, type }) => {
 
   <div className="relative">
    
-    <div className="w-full pb-4 drop-shadow-sm flex flex-col bg-white  border-2 border-gray-200 rounded-lg  ">
+    <div className="w-full pb-4 drop-shadow-sm flex flex-col bg-white  border-[1px] border-gray-200 rounded-lg  ">
       {
         type &&  <Link to={`/${post.userId.userName}/${post.slug}`}>
         <img src={post.banner} className ="rounded-t-md" alt="" />
@@ -31,7 +31,7 @@ const Post = ({ post, type }) => {
       <Link to={`/profile/${post.userId.userName}`} className="flex flex-1 px-5 pt-7 pb-2">
       <div className="flex items-center justify-center" onMouseEnter={() => setTooltipStatus(1)} onMouseLeave={() => setTooltipStatus(0)} >
           <img
-            className="inline-block border-2 border-gray-300 w-[35px] h-[35px] object-cover rounded-[50%]"
+            className="inline-block border-[1px] border-gray-300 w-[35px] h-[35px] object-cover rounded-[50%]"
             src={post.userId.avatar}
             alt="avatar"
           />
