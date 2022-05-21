@@ -12,8 +12,9 @@ router.get('/tags', postCtrl.getTags);
 router.get('/latest', postCtrl.getLatest);
 router.get('/relevant', postCtrl.getRelevant);
 router.get('/populate', postCtrl.getPopulate);
-router.get('/:slug', postCtrl.getPostBySlug);
+router.get('/top/:type', postCtrl.getTopPost);
 router.get('/search/:type', postCtrl.getSearch);
+router.get('/:slug', postCtrl.getPostBySlug);
 router.get('/:id/comments', postCtrl.getCommentsByPostId);
 
 // Middleware Check Permissions

@@ -2,6 +2,7 @@ import { QueryMethod } from '../Utils/QueryMethod.js';
 import postModel from '../models/PostModel.js';
 import commentModel from '../models/CommentModel.js';
 import followModel from '../models/FollowModel.js';
+import tagModel from '../models/TagModel.js';
 import { ConvertDate, RecentTimes } from '../Utils/ConvertDate.js';
 
 const postController = {
@@ -21,39 +22,58 @@ const postController = {
 			next(error);
 		}
 	},
+
 	getPopulate: async (req, res, next) => {
 		try {
-			const data = await postModel
+			const tags = ['webdev', 'beginners', 'javascript', 'react', 'css'];
+			const result = await postModel
 				.find({
+					tags: { $in: tags },
 					createdAt: {
 						$lte: new Date(),
 						$gte: new Date(new Date().setDate(new Date().getDate() - 5)),
 					},
 				})
-				.populate('userId', 'userName avatar')
-				.sort({ createdAt: -1 });
-			res.json(data);
+				.limit(5).lean();
+			const data = result.reduce((pre, val) => {
+				val.tags.map((tag) => {
+					pre[tag] = pre.hasOwnProperty(tag) ? [...pre[tag], val] : [val];
+				});
+				return pre;
+			}, {});
+			const sort = Object.keys(data).map((val) => {
+				return	{
+					[val]: data[val]
+				}
+			})
+			res.json(sort);
 		} catch (error) {
 			next(error);
 		}
 	},
+
 	getSearch: async (req, res, next) => {
 		try {
 			const { q } = req.query;
 			const { type } = req.params;
-			let result = null;
+			let result = [];
 			switch (type) {
 				case 'posts':
-					result = await postModel.find({ $or: [
-						{ tags: { $in: [q] } }
-						, { title: { $regex: q ,  $options: 'i'}}
-					] });
+					result = await postModel.find({ $or: [{ tags: { $in: [q] } }, { title: { $regex: q, $options: 'i' } }] });
 					break;
 				case 'tags':
+					result = await tagModel.find({ title: { $regex: q, $options: 'i' } });
 					break;
 				case 'comments':
+					result = await commentModel.find({ content: { $regex: q, $options: 'i' } });
 					break;
 				case 'myposts':
+					if (req.userId) {
+						result = await postModel.find({
+							userId: req.userId,
+							$or: [{ tags: { $in: [q] } }, { title: { $regex: q, $options: 'i' } }],
+						});
+					}
 					break;
 			}
 			res.json(result);
@@ -61,6 +81,7 @@ const postController = {
 			next(error);
 		}
 	},
+
 	getRelevant: async (req, res, next) => {
 		try {
 			const followerArr = [];
