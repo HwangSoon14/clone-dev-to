@@ -37,6 +37,16 @@ const postApi = {
    addComment(id,body) {
         const url = `${baseUrl}/${id}/comments`;
         return axiosClient.post(url, body);
+    },
+    search(type, q , sort) {
+       let url = ''
+        if(!sort)  url = `${baseUrl}/search/${type}?q=${q}`;
+        else  url = `${baseUrl}/search/${type}?q=${q}&sort=${sort}`;
+        return axiosClient.get(url);
+    },
+    getPopulate() {
+        const url = `${baseUrl}/populate`;
+        return axiosClient.get(url);
     }
 
 };
