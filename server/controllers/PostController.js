@@ -25,7 +25,7 @@ const postController = {
 
 	getPopulate: async (req, res, next) => {
 		try {
-			const tags = ['webdev', 'beginners', 'javascript', 'react', 'css'];
+			const tags = ['webdev', 'beginners', 'css', 'react', 'javascript'];
 			const result = await postModel
 				.find({
 					tags: { $in: tags },
@@ -33,20 +33,21 @@ const postController = {
 						$lte: new Date(),
 						$gte: new Date(new Date().setDate(new Date().getDate() - 5)),
 					},
-				})
-				.limit(5).lean();
-			const data = result.reduce((pre, val) => {
+				}).populate('userId', 'userName').limit(5).lean();
+			let data = result.reduce((pre, val) => {
 				val.tags.map((tag) => {
-					pre[tag] = pre.hasOwnProperty(tag) ? [...pre[tag], val] : [val];
+						if(tags.includes(tag)) {
+							pre[tag] = pre.hasOwnProperty(tag) ? [...pre[tag], val] : [val];
+						}
 				});
 				return pre;
 			}, {});
+			
 			const sort = Object.keys(data).map((val) => {
-				return	{
-					[val]: data[val]
-				}
+						return	{[val]: data[val]	}	
 			})
 			res.json(sort);
+
 		} catch (error) {
 			next(error);
 		}
@@ -54,28 +55,33 @@ const postController = {
 
 	getSearch: async (req, res, next) => {
 		try {
-			const { q } = req.query;
+			let findQuery = null;
+			const { q ,sort} = req.query;
 			const { type } = req.params;
 			let result = [];
 			switch (type) {
 				case 'posts':
-					result = await postModel.find({ $or: [{ tags: { $in: [q] } }, { title: { $regex: q, $options: 'i' } }] });
+					findQuery =  postModel.find({ $or: [{ tags: { $in: [q] } }, { title: { $regex: q, $options: 'i' } }] }).populate('userId', 'userName avatar');
 					break;
 				case 'tags':
-					result = await tagModel.find({ title: { $regex: q, $options: 'i' } });
+					findQuery = tagModel.find({ title: { $regex: q, $options: 'i' } });
 					break;
 				case 'comments':
-					result = await commentModel.find({ content: { $regex: q, $options: 'i' } });
+					findQuery =  commentModel.find({ content: { $regex: q, $options: 'i' } });
 					break;
 				case 'myposts':
 					if (req.userId) {
-						result = await postModel.find({
+						findQuery =  postModel.find({
 							userId: req.userId,
 							$or: [{ tags: { $in: [q] } }, { title: { $regex: q, $options: 'i' } }],
-						});
+						}).populate('userId', 'userName avatar');
 					}
 					break;
 			}
+			if(sort) {
+				result = await findQuery.sort({createdAt: sort})
+			}
+			else result = await findQuery;
 			res.json(result);
 		} catch (error) {
 			next(error);

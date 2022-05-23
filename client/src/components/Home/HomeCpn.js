@@ -10,6 +10,7 @@ const HomeCpn = () => {
 
     const [isActive , setIsActive] = useState("Relevant");
     const [isLoading  , setIsLoading] = useState(false)
+    const [rightSideData , setRightSideData] = useState([]);
     const [isActiveTop , setIsActiveTop] = useState("Week");
     const [listPostData , setListPostData] = useState([]);
     
@@ -19,13 +20,18 @@ const HomeCpn = () => {
     setIsLoading(true);
        (async() => {
         const res = await postApi.getAllPost(location.pathname);
-        console.log(res);
         setListPostData(res);
         setIsLoading(false);
        })()
    }, [location])
    
-
+   useEffect(() => {
+       (async () => {
+        const res = await postApi.getPopulate();
+        setRightSideData(res);
+        console.log(res)
+       })()
+   } , [])
 
     const activeButton = (text) => {
         setIsActive(text);
@@ -99,7 +105,7 @@ const HomeCpn = () => {
             </div>
              {isLoading ? <PostSkeletonList /> : <PostList data={listPostData}/>}
             </div>
-            <TagSide />
+            <TagSide data={rightSideData}/>
         </div>
     </div>
    </div>

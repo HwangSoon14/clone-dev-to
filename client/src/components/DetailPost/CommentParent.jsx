@@ -161,7 +161,7 @@ const CommentParent = ({ comment  , setVisible}) => {
 			</div>
 			{!isHide && commentsChild.length !== 0 && (
 				<span
-					className="inline-flex ml-12  mb-4 items-center gap-x-2 text-[14px] font-semibold text-main-color cursor-pointer px-4 py-2 rounded-lg bg-purple-100"
+					className="inline-flex ml-12  mb-4 items-center gap-x-2 text-[14px] font-semibold text-main-color cursor-pointer px-4 py-2 rounded-lg"
 					onClick={toggleChildComment}
 				>
 					{commentsChild.length} comments
@@ -185,7 +185,7 @@ const CommentParent = ({ comment  , setVisible}) => {
 						))}
 					</div>
 					<span
-						className="inline-flex ml-12  mb-4 items-center gap-x-2 text-[14px] text-black font-semibold cursor-pointer px-4 py-2 rounded-lg bg-red-200"
+						className="inline-flex ml-16  mb-4 items-center gap-x-2 text-[14px] text-red-500 font-semibold cursor-pointer px-4 py-2 rounded-lg "
 						onClick={toggleChildComment}
 					>
 						Hide comment

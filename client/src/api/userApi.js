@@ -10,8 +10,8 @@ const userApi = {
 		const url = `${baseUrl}/${userId}/posts`;
 		return axiosClient.get(url);
 	},
-	getSavedPostList() {
-		const url = `${baseUrl}/posts/saved`;
+	getSavedPostList(text) {
+		const url = !text ? `${baseUrl}/posts/saved` : `${baseUrl}/posts/saved?q=${text}`;
 		return axiosClient.get(url);
 	},
 	createPost(data){
@@ -25,7 +25,8 @@ const userApi = {
 	unsavePost(id) {
 		const url = `${baseUrl}/posts/${id}/unsave`;
 		return axiosClient.delete(url)
-	}
+	},
+
 
 };
 export default userApi;

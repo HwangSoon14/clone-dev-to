@@ -27,7 +27,7 @@ export class QueryMethod {
 	search(model) {
 		const {q} = this.query
 		if(q) {
-			this.method = model.find({title: {$regex: q}})
+			this.method = model.find({title: {$regex: q , $options: 'i' }})
 		}
 		return this
 	}

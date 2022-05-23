@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import userApi from '../api/userApi';
 import FooterLayout from '../components/Layout/FooterLayout';
 import EmptyPage from '../components/ReadingList/EmptyPage';
@@ -53,10 +53,11 @@ const renderTags = (tags) => (
 );
 
 const renderPostSaved = (postList) => (
+
 	<div className="w-full h-full">
 		{postList?.map((post, idx) => (
 			<Link to={`/${post.userId.userName}/${post.slug}`}  key={idx}>
-				<div className="flex items-stretch justify-between px-2 pt-4 pb-2 md:pl-6 bg-white">
+				<div className="flex items-stretch justify-between px-2 pt-4 pb-2 md:pl-6 bg-white md:border-2 md:border-gray-100 md:rounded-lg">
 					<div className="flex-1 flex items-stretch">
 						
 						<Link to={`/profile/${post.userId.userName}`}>
@@ -98,25 +99,43 @@ const renderPostSaved = (postList) => (
 );
 
 const ReadingList = () => {
+	
 	const [savePostList, setSavePostList] = useState([]);
 	const [tagList, setTagList] = useState([]);
+	const change = useRef();
+  const [searchParams, setSearchParams] = useSearchParams();
+ 
+ 
+
+
+	const handleOnChange = (e) => {
+		if (change.current) {
+			clearTimeout(change.current);
+			change.current = null;
+		}
+		change.current = setTimeout(async () => {
+      if(!e.target.value) return setSearchParams({})
+      setSearchParams({q: e.target.value})
+		}, 500);
+	};
+
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const res = await userApi.getSavedPostList();
+			const res = await userApi.getSavedPostList(searchParams.get("q"));
+			console.log(res)
 			setSavePostList(res);
-			const temp_tagList = res.reduce((prev, current) => {
+			const temp_tagList = res && res?.reduce((prev, current) => {
 				current['tags'].map((tag) => {
 					if (prev.includes(tag)) return null;
 					return prev.push(tag);
 				});
 				return prev;
 			}, []);
-			setTagList(temp_tagList);
-			console.log(res)
+			temp_tagList && setTagList(temp_tagList);
 		};
 		fetchData();
-	}, []);
+	}, [searchParams]);
 
 	return (
 		<FooterLayout>
@@ -137,6 +156,7 @@ const ReadingList = () => {
 									autoComplete="search"
 									className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
 									placeholder="Search..."
+									onChange={handleOnChange}
 								/>
 							</div>
 						</div>

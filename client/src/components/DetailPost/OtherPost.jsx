@@ -27,8 +27,8 @@ export default function OtherPost({ post }) {
 							{post.userId?.userName}
 						</Link>
 					</h1>
-					{post.otherPost?.map((val) => (
-						<Link to={`/${post.userId.userName}/${val.slug}`}>
+					{post.otherPost?.map((val,idx) => (
+						<Link to={`/${post.userId.userName}/${val.slug}`} key={idx}>
 							<div className="py-4 border-b-[1px] border-slate-100 last:border-0 hover:text-blue-500">
 								<h3 className="">{val.title}</h3>
 								<div className="flex gap-2 flex-wrap">
