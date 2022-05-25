@@ -186,6 +186,7 @@ function NewPosts() {
 					renderHTML={(text) => mdParser.render(text)}
 					onChange={handleEditorChange}
 					imageAccept=".jpg,.png"
+					className='custom-highlighter-syntax'
 				/>
 			</div>
 		</div>

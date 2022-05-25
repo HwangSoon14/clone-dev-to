@@ -29,7 +29,6 @@ export const authSlice = createSlice({
   reducers: {
     logout: (state) => {
             //clear current_user in storage
-
             localStorage.removeItem("current_user");
             state.current_user = {};
     },

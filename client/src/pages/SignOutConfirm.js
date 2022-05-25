@@ -16,11 +16,11 @@ const SignOutConfirm = () => {
 	const handleLogout = async () => {
 		setIsLoading(true);
 		try {
-			localStorage.removeItem('current_user');
 			navigate('/sign-in');
-			const message = await authApi.log_out();
+			localStorage.removeItem('current_user');
 			dispatch(logout());
-			toast.success(message);
+			const message = await authApi.log_out();
+			message && toast.success(message);
 			setIsLoading(false);
 		} catch (error) {
 			setIsLoading(false);
