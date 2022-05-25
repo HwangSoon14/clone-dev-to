@@ -14,7 +14,7 @@ const Comment = ({ comment }) => {
 				</div>
 				<div className="flex-1 mb-4 relative">
 					<div className=" border-[1px] border-gray-200 rounded-lg">
-						<div className="px-3 py-4 md:px-5 bg-white  border-inherit">
+						<div className="px-3 py-4 md:px-5 bg-white rounded-[inherit] ">
 							<div className="flex items-center">
 								<span className="text-[#3d3d3d] font-semibold text-[14px] max-w-[75px] truncate ">
 									{comment.userId?.userName}

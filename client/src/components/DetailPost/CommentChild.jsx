@@ -5,20 +5,20 @@ import { auth } from '../../Utils/auth';
 import { timeConvert } from '../../Utils/TimeConvert';
 import EmojiPicker from '../EmojiPicker/EmojiPicker';
 
-const Comment = ({ comment, parentId, setPostComment , setVisible }) => {
+const Comment = ({ comment, parentId, setPostComment, setVisible }) => {
 	const [isShowFrameChat, setShowFrameChat] = useState(false);
 	const contentComment = useRef();
-	const user = useSelector(state => state.auth.current_user)
-	const isLogin = useRef(auth(user))
+	const user = useSelector((state) => state.auth.current_user);
+	const isLogin = useRef(auth(user));
 
 	const addComment = async () => {
-			try {
-				await postApi.addComment(comment.postId, { content: contentComment.current.value, replyToId: parentId});
-				contentComment.current.value = '';
-				setShowFrameChat(false)
-				setPostComment(x=>!x);
-			} catch (error) {}
-	}
+		try {
+			await postApi.addComment(comment.postId, { content: contentComment.current.value, replyToId: parentId });
+			contentComment.current.value = '';
+			setShowFrameChat(false);
+			setPostComment((x) => !x);
+		} catch (error) {}
+	};
 
 	return (
 		<div className="my-2">
@@ -33,7 +33,7 @@ const Comment = ({ comment, parentId, setPostComment , setVisible }) => {
 				<div className="flex-1 mb-4 relative">
 					<div>
 						<div className=" border-[1px] border-gray-200 rounded-lg">
-							<div className="px-3 py-4 md:px-5 bg-white  border-inherit">
+							<div className="px-3 py-4 md:px-5 bg-white rounded-[inherit] ">
 								<div className="flex items-center">
 									<span className="text-[#3d3d3d] font-semibold text-[14px]  w-[75px] md:w-auto truncate ">
 										{comment.userId?.userName}
@@ -47,9 +47,14 @@ const Comment = ({ comment, parentId, setPostComment , setVisible }) => {
 							</div>
 						</div>
 						<div className="flex items-center gap-x-3 my-2 ml-2">
-							<button onClick={() => {
-								if(!isLogin.current) setVisible(true);
-							}} title="heart" aria-pressed="false" className="flex gap-x-2 items-center justify-center">
+							<button
+								onClick={() => {
+									if (!isLogin.current) setVisible(true);
+								}}
+								title="heart"
+								aria-pressed="false"
+								className="flex gap-x-2 items-center justify-center"
+							>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									width="24"
@@ -61,11 +66,15 @@ const Comment = ({ comment, parentId, setPostComment , setVisible }) => {
 								</svg>
 								<span className="text-gray-600">{comment.likes} like</span>
 							</button>
-							<button  className="flex gap-x-2 items-center justify-center" title="heart" aria-pressed="false" onClick={() => {
-								
-								if(!isLogin.current) setVisible(true);
-								else setShowFrameChat(true)
-							}}>
+							<button
+								className="flex gap-x-2 items-center justify-center"
+								title="heart"
+								aria-pressed="false"
+								onClick={() => {
+									if (!isLogin.current) setVisible(true);
+									else setShowFrameChat(true);
+								}}
+							>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									width="24"
@@ -76,8 +85,6 @@ const Comment = ({ comment, parentId, setPostComment , setVisible }) => {
 									<path d="M10.5 5h3a6 6 0 110 12v2.625c-3.75-1.5-9-3.75-9-8.625a6 6 0 016-6zM12 15.5h1.5a4.501 4.501 0 001.722-8.657A4.5 4.5 0 0013.5 6.5h-3A4.5 4.5 0 006 11c0 2.707 1.846 4.475 6 6.36V15.5z"></path>
 								</svg>
 								<span className="text-gray-600">reply</span>
-
-
 							</button>
 						</div>
 						<div className="absolute right-2 top-2">
@@ -95,32 +102,28 @@ const Comment = ({ comment, parentId, setPostComment , setVisible }) => {
 									d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
 								/>
 							</svg>
-							
 						</div>
 					</div>
 					{isShowFrameChat && (
 						<div className="flex-1">
-						<div className="relative">
-
-							<textarea
-								placeholder="What's on your mind now ? "
-								className="w-full border-[1px] rounded-lg min-h-[80px] pl-4 pt-3"
-								ref={contentComment}
-								onFocus={() => {
-									if(!isLogin.current) setVisible(true);
-								}}
-							></textarea>
-							<EmojiPicker textRef={contentComment}/>
-
-						</div>
+							<div className="relative">
+								<textarea
+									placeholder="What's on your mind now ? "
+									className="w-full border-[1px] rounded-lg min-h-[80px] pl-4 pt-3"
+									ref={contentComment}
+									onFocus={() => {
+										if (!isLogin.current) setVisible(true);
+									}}
+								></textarea>
+								<EmojiPicker textRef={contentComment} />
+							</div>
 
 							<button
 								className="px-3 py-2 mt-2 bg-blue-700 text-white  rounded-md"
-								onClick={ () => {
-
-									if(!isLogin.current) setVisible(true)
-									else addComment();				}
-								}
+								onClick={() => {
+									if (!isLogin.current) setVisible(true);
+									else addComment();
+								}}
 							>
 								Submit
 							</button>

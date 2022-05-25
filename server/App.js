@@ -6,10 +6,23 @@ const app = express();
 import cookieParser from 'cookie-parser';
 import { ErrorHandling } from './Utils/ErrorHandling.js';
 import ParentRoute from './routes/ParentRoute.js';
+import { Server } from 'socket.io';
+import { createServer } from 'http';
+const server = createServer(app);
+import socketIO from './SocketIO/SocketIO.js';
+
+const io = new Server(server, {
+	cors: {
+		origin: '*',
+		methods: ['GET', 'POST'],
+	},
+});
 
 app.use(express.json());
 app.use(cors({ origin: true, credentials: true }));
 app.use(cookieParser());
+
+socketIO(io);
 
 //Route configuration
 ParentRoute(app);
@@ -38,6 +51,6 @@ mongoose.connect(
 
 //listen to server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
 	console.log('server is running');
 });

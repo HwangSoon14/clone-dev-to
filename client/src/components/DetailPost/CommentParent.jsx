@@ -15,7 +15,6 @@ const CommentParent = ({ comment  , setVisible}) => {
 	const user = useSelector(state => state.auth.current_user);
 	const isLogin = useRef(auth(user));
 
-	console.log("render")
 	useEffect(() => {
 		const getData = async () => {
 			const data = await postApi.getCommentByPostId(comment.postId, "asc");
@@ -42,7 +41,7 @@ const CommentParent = ({ comment  , setVisible}) => {
 				<div className="flex-1 mb-1 relative">
 					<div>
 						<div className=" border-[2px] border-gray-200 shadow-sm rounded-lg">
-							<div className="px-3 py-4 md:px-5 bg-white  border-inherit">
+							<div className="px-3 py-4 md:px-5 bg-white rounded-[inherit] ">
 								<div className="flex items-center">
 									<span className="text-[#3d3d3d] font-semibold text-[14px] md:text-base w-[75px] md:w-auto truncate">
 										{comment.userId?.userName}
