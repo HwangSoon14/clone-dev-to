@@ -16,6 +16,8 @@ router.get('/posts/saved', userController.savedPost);
 
 // POST
 router.post('/posts', userController.addPost);
+router.post('/:userId/follow', userController.followUser);
+router.post('/:userId/unfollow', userController.unfollowUser);
 router.post('/posts/:id/save', userController.savePost);
 
 // DELETE

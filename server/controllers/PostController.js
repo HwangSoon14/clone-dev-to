@@ -31,7 +31,7 @@ const postController = {
 					tags: { $in: tags },
 					createdAt: {
 						$lte: new Date(),
-						$gte: new Date(new Date().setDate(new Date().getDate() - 5)),
+						$gte: new Date(new Date().setDate(new Date().getDate() - 10)),
 					},
 				}).populate('userId', 'userName').limit(5).lean();
 			let data = result.reduce((pre, val) => {

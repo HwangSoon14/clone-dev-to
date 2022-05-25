@@ -1,5 +1,7 @@
 import UserModel from '../models/UserModel.js';
 import PostModel from '../models/PostModel.js';
+import FollowModel from '../models/FollowModel.js';
+
 const userCtrl = {
 	getUserInfo: async (req, res, next) => {
 		try {
@@ -10,6 +12,7 @@ const userCtrl = {
 			next(error);
 		}
 	},
+
 	getUserPosts: async (req, res, next) => {
 		try {
 			const { userId } = req.params;
@@ -22,17 +25,26 @@ const userCtrl = {
 			next(error);
 		}
 	},
+
 	addPost: async (req, res, next) => {
 		try {
-			let defaultBanner = "https://res.cloudinary.com/tuy-n-beat/image/upload/v1652102581/default/6hqmcjaxbgbon8ydw93z_ir4bet.png";
-			const { title, content, tags , banner } = req.body;
-			
-			const data = await PostModel.create({ title, content, tags, userId: req.userId, banner: banner || defaultBanner});
+			let defaultBanner =
+				'https://res.cloudinary.com/tuy-n-beat/image/upload/v1652102581/default/6hqmcjaxbgbon8ydw93z_ir4bet.png';
+			const { title, content, tags, banner } = req.body;
+
+			const data = await PostModel.create({
+				title,
+				content,
+				tags,
+				userId: req.userId,
+				banner: banner || defaultBanner,
+			});
 			res.status(201).json({ mess: 'successfully added new post' });
 		} catch (error) {
 			next(error);
 		}
 	},
+
 	editPost: async (req, res, next) => {
 		try {
 			const { id } = req.params;
@@ -43,6 +55,7 @@ const userCtrl = {
 			next(error);
 		}
 	},
+
 	deletePost: async (req, res, next) => {
 		try {
 			const { id } = req.params;
@@ -52,6 +65,7 @@ const userCtrl = {
 			next(error);
 		}
 	},
+
 	editUser: async (req, res, next) => {
 		try {
 			const { id, email, password, ...value } = req.body;
@@ -61,6 +75,7 @@ const userCtrl = {
 			next(error);
 		}
 	},
+
 	savePost: async (req, res, next) => {
 		try {
 			const { id } = req.params;
@@ -71,6 +86,7 @@ const userCtrl = {
 			next(error);
 		}
 	},
+
 	unsavePost: async (req, res, next) => {
 		try {
 			const { id } = req.params;
@@ -93,6 +109,24 @@ const userCtrl = {
 				},
 			});
 			res.status(201).json(data[0]?.postsSaved);
+		} catch (error) {
+			next(error);
+		}
+	},
+	followUser: async (req, res, next) => {
+		try {
+			const {userId} = req.params
+			const data = await FollowModel.create({userId: req.userId, followerId: userId})
+			res.json(data)
+ 		} catch (error) {
+			next(error);
+		}
+	},
+	unfollowUser: async (req, res, next) => {
+		try {
+			const {userId} = req.params
+			const data = await FollowModel.findOneAndDelete({userId: req.userId, followerId: userId})
+			res.json(data)
 		} catch (error) {
 			next(error);
 		}

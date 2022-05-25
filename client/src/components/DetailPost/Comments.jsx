@@ -9,11 +9,10 @@ import { SocketContext } from '../../context/socket';
 import { io } from 'socket.io-client';
 
 export default function Comments({ post }) {
-	
+
 	const [commentsParent, setCommentsParent] = useState([]);
 	const [isPostComment, setPostComment] = useState(false);
 	const user = useSelector((state) => state.auth.current_user);
-	// const socket = useContext(SocketContext);
 	const countComment = useRef();
 	const contentComment = useRef();
 	const [visibleModal, setVisibleModal] = useState(false);
@@ -21,7 +20,7 @@ export default function Comments({ post }) {
 	const socket = useContext(SocketContext);
 
 	useEffect(() => {
-		socket.on('connect', () => {
+				socket.on('connect', () => {
 		});
 		return () => {
 			socket.on('disconnect', () => {
