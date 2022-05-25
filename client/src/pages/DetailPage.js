@@ -16,6 +16,7 @@ function DetailPage() {
 	useEffect(() => {
 		const callApi = async () => {
 			try {
+				setIsLoading(true)
 				const data = await postApi.getPostBySlug(params.slug);
 				setPost(data);
 				setIsLoading(false)
