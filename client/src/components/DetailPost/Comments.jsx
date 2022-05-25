@@ -1,17 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import postApi from '../../api/postApi';
-import Picker from 'emoji-picker-react';
 import CommentParent from './CommentParent';
-import { memo } from "react";
 import EmojiPicker from '../EmojiPicker/EmojiPicker';
 import AuthModal from '../AuthModal/AuthModal';
 import { auth } from '../../Utils/auth';
+import { SocketContext } from '../../context/socket'
+
 export default function Comments({ post }) {
 	const [commentsParent, setCommentsParent] = useState([]);
 	const [isPostComment, setPostComment] = useState(false);
 	const user = useSelector((state) => state.auth.current_user);
-	
+	const socket = useContext(SocketContext);
 	const countComment = useRef();
 	const contentComment = useRef();
 	const [visibleModal , setVisibleModal] = useState(false)
@@ -31,9 +31,10 @@ export default function Comments({ post }) {
 
 	const addComment = async () => {
 		try {
-				await postApi.addComment(post._id, { content: contentComment.current.value });
+			socket.emit("addComment", "heelu");
+				// await postApi.addComment(post._id, { content: contentComment.current.value });
 				contentComment.current.value = '';
-				setPostComment((x) => !x);
+				// setPostComment((x) => !x);
 		} catch (error) {
 			console.log(error);
 		}
