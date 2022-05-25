@@ -1,32 +1,51 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import postApi from '../../api/postApi';
 import { auth } from '../../Utils/auth';
 import { timeConvert } from '../../Utils/TimeConvert';
 import EmojiPicker from '../EmojiPicker/EmojiPicker';
 import Comment from './CommentChild';
-const CommentParent = ({ comment  , setVisible}) => {
-
+const CommentParent = ({ comment, setVisible, socket , postId }) => {
 	const [isShowFrameChat, setShowFrameChat] = useState(false);
 	const [commentsChild, setCommentsChild] = useState([]);
 	const [isPostComment, setPostComment] = useState(false);
-	const [isHide , setIsHide] = useState(false);
+	const [isHide, setIsHide] = useState(false);
 	const contentComment = useRef();
-	const user = useSelector(state => state.auth.current_user);
+	const user = useSelector((state) => state.auth.current_user);
 	const isLogin = useRef(auth(user));
 
 	useEffect(() => {
 		const getData = async () => {
-			const data = await postApi.getCommentByPostId(comment.postId, "asc");
+			const data = await postApi.getCommentByPostId(comment.postId, 'asc');
 			const Child = data.filter((val) => val.replyToId === comment._id);
 			setCommentsChild(Child);
 		};
 		getData();
-	}, [isPostComment , comment._id , comment.postId]);
+	}, [isPostComment, comment._id, comment.postId]);
 
 	const toggleChildComment = () => {
-		setIsHide(x => !x);
-	}
+		setIsHide((x) => !x);
+	};
+
+	useEffect(() => {
+		socket.on("parent_comment", (data) => {
+			if(data.postId === postId) {
+				setPostComment(x=> !x)
+			}
+		})
+	}, [socket , postId]);
+
+	const addComment = useCallback( async () => {
+			try {
+				await postApi.addComment(comment.postId, {
+					content: contentComment.current.value,
+					replyToId: comment._id,
+				});
+				socket.emit("parent_comment", {postId: postId,  content: contentComment.current.value })
+				contentComment.current.value = '';
+				setShowFrameChat(false);
+			} catch (error) {}
+	}, [comment._id , comment.postId , postId , socket]);
 
 	return (
 		<div parent={comment._id}>
@@ -59,7 +78,7 @@ const CommentParent = ({ comment  , setVisible}) => {
 								title="heart"
 								aria-pressed="false"
 								onClick={() => {
-									if(!isLogin.current) setVisible(true);
+									if (!isLogin.current) setVisible(true);
 								}}
 								className="flex gap-x-2 px-2 py-1 items-center hover:bg-gray-200 transition-all rounded-lg justify-center"
 							>
@@ -72,7 +91,7 @@ const CommentParent = ({ comment  , setVisible}) => {
 								>
 									<path d="M18.884 12.595l.01.011L12 19.5l-6.894-6.894.01-.01A4.875 4.875 0 0112 5.73a4.875 4.875 0 016.884 6.865zM6.431 7.037a3.375 3.375 0 000 4.773L12 17.38l5.569-5.569a3.375 3.375 0 10-4.773-4.773L9.613 10.22l-1.06-1.062 2.371-2.372a3.375 3.375 0 00-4.492.25v.001z"></path>
 								</svg>
-								<span  className="text-gray-600">{comment.likes} like</span>
+								<span className="text-gray-600">{comment.likes} like</span>
 							</button>
 							<button
 								title="heart"
@@ -91,7 +110,7 @@ const CommentParent = ({ comment  , setVisible}) => {
 								<span
 									className="text-gray-600"
 									onClick={() => {
-									if(!isLogin.current) setVisible(true);
+										if (!isLogin.current) setVisible(true);
 										else setShowFrameChat(true);
 									}}
 								>
@@ -118,31 +137,21 @@ const CommentParent = ({ comment  , setVisible}) => {
 					</div>
 					{isShowFrameChat && (
 						<div className="flex-1 my-2">
-						<div className="relative">
-							<textarea
-								placeholder="What's on your mind now ?"
-								className="w-full border-[1px] rounded-lg min-h-[80px] pl-4 pt-3"
-								ref={contentComment}
-								onFocus={() => {
-									if(!isLogin.current) setVisible(true);
-								}}
-							></textarea>
-							<EmojiPicker textRef={contentComment}/>
-						</div>
+							<div className="relative">
+								<textarea
+									placeholder="What's on your mind now ?"
+									className="w-full border-[1px] rounded-lg min-h-[80px] pl-4 pt-3"
+									ref={contentComment}
+									onFocus={() => {
+										if (!isLogin.current) setVisible(true);
+									}}
+								></textarea>
+								<EmojiPicker textRef={contentComment} />
+							</div>
 
 							<button
 								className="px-3 py-2 mt-2 bg-blue-700 text-white  rounded-md"
-								onClick={async () => {
-									try {
-										await postApi.addComment(comment.postId, {
-											content: contentComment.current.value,
-											replyToId: comment._id,
-										});
-										contentComment.current.value = '';
-										setShowFrameChat(false);
-										setPostComment((x) => !x);
-									} catch (error) {}
-								}}
+								onClick={addComment}
 							>
 								Submit
 							</button>
@@ -174,13 +183,19 @@ const CommentParent = ({ comment  , setVisible}) => {
 						<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 17l-4 4m0 0l-4-4m4 4V3"></path>
 					</svg>
 				</span>
-			) }
-			 
-		{ (isHide && commentsChild.length !== 0) && 
-		<>
-		<div className="ml-6 md:ml-10">
+			)}
+
+			{isHide && commentsChild.length !== 0 && (
+				<>
+					<div className="ml-6 md:ml-10">
 						{commentsChild.map((cmt) => (
-							<Comment key={cmt._id} comment={cmt} parentId={comment._id} setPostComment={setPostComment} setVisible={setVisible}/>
+							<Comment
+								key={cmt._id}
+								comment={cmt}
+								parentId={comment._id}
+								setPostComment={setPostComment}
+								setVisible={setVisible}
+							/>
 						))}
 					</div>
 					<span
@@ -195,18 +210,11 @@ const CommentParent = ({ comment  , setVisible}) => {
 							viewBox="0 0 24 24"
 							xmlns="http://www.w3.org/2000/svg"
 						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								strokeWidth="2"
-								d="M5 10l7-7m0 0l7 7m-7-7v18"
-							></path>
+							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
 						</svg>
 					</span>
-		</>
-
-		}
-							
+				</>
+			)}
 		</div>
 	);
 };

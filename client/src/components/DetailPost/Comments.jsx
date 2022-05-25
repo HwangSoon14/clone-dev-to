@@ -33,7 +33,7 @@ export default function Comments({ post }) {
 				setPostComment(x=> !x)
 			}
 		})
-	}, [socket]);
+	}, [socket , post._id]);
 
 	useEffect(() => {
 		const getData = async () => {
@@ -91,7 +91,7 @@ export default function Comments({ post }) {
 					</div>
 					<div className="w-full h-full">
 						{commentsParent?.map((comment, idx) => (
-							<CommentParent key={comment._id} comment={comment} setVisible={setVisibleModal} />
+							<CommentParent key={comment._id} comment={comment} setVisible={setVisibleModal} socket={socket} postId={post._id}/>
 						))}
 					</div>
 				</div>
