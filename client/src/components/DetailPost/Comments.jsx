@@ -6,7 +6,6 @@ import EmojiPicker from '../EmojiPicker/EmojiPicker';
 import AuthModal from '../AuthModal/AuthModal';
 import { auth } from '../../Utils/auth';
 import { SocketContext } from '../../context/socket';
-import { io } from 'socket.io-client';
 
 export default function Comments({ post }) {
 
