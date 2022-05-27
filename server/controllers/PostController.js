@@ -1,7 +1,7 @@
-import { QueryMethod } from '../Utils/QueryMethod.js';
+	import { QueryMethod } from '../Utils/QueryMethod.js';
 import postModel from '../models/PostModel.js';
 import commentModel from '../models/CommentModel.js';
-import followModel from '../models/FollowModel.js';
+import UserModel from '../models/UserModel.js';
 import tagModel from '../models/TagModel.js';
 import { ConvertDate, RecentTimes } from '../Utils/ConvertDate.js';
 
@@ -31,23 +31,25 @@ const postController = {
 					tags: { $in: tags },
 					createdAt: {
 						$lte: new Date(),
-						$gte: new Date(new Date().setDate(new Date().getDate() - 30)),
+						$gte: new Date(new Date().setDate(new Date().getDate() -30)),
 					},
-				}).populate('userId', 'userName').limit(5).lean();
+				})
+				.populate('userId', 'userName')
+				.limit(5)
+				.lean();
 			let data = result.reduce((pre, val) => {
 				val.tags.map((tag) => {
-						if(tags.includes(tag)) {
-							pre[tag] = pre.hasOwnProperty(tag) ? [...pre[tag], val] : [val];
-						}
+					if (tags.includes(tag)) {
+						pre[tag] = pre.hasOwnProperty(tag) ? [...pre[tag], val] : [val];
+					}
 				});
 				return pre;
 			}, {});
-			
-			const sort = Object.keys(data).map((val) => {
-						return	{[val]: data[val]	}	
-			})
-			res.json(sort);
 
+			const sort = Object.keys(data).map((val) => {
+				return { [val]: data[val] };
+			});
+			res.json(sort);
 		} catch (error) {
 			next(error);
 		}
@@ -56,32 +58,35 @@ const postController = {
 	getSearch: async (req, res, next) => {
 		try {
 			let findQuery = null;
-			const { q ,sort} = req.query;
+			const { q, sort } = req.query;
 			const { type } = req.params;
 			let result = [];
 			switch (type) {
 				case 'posts':
-					findQuery =  postModel.find({ $or: [{ tags: { $in: [q] } }, { title: { $regex: q, $options: 'i' } }] }).populate('userId', 'userName avatar');
+					findQuery = postModel
+						.find({ $or: [{ tags: { $in: [q] } }, { title: { $regex: q, $options: 'i' } }] })
+						.populate('userId', 'userName avatar');
 					break;
 				case 'tags':
 					findQuery = tagModel.find({ title: { $regex: q, $options: 'i' } });
 					break;
 				case 'comments':
-					findQuery =  commentModel.find({ content: { $regex: q, $options: 'i' } });
+					findQuery = commentModel.find({ content: { $regex: q, $options: 'i' } });
 					break;
 				case 'myposts':
 					if (req.userId) {
-						findQuery =  postModel.find({
-							userId: req.userId,
-							$or: [{ tags: { $in: [q] } }, { title: { $regex: q, $options: 'i' } }],
-						}).populate('userId', 'userName avatar');
+						findQuery = postModel
+							.find({
+								userId: req.userId,
+								$or: [{ tags: { $in: [q] } }, { title: { $regex: q, $options: 'i' } }],
+							})
+							.populate('userId', 'userName avatar');
 					}
 					break;
 			}
-			if(sort) {
-				result = await findQuery.sort({createdAt: sort})
-			}
-			else result = await findQuery;
+			if (sort) {
+				result = await findQuery.sort({ createdAt: sort });
+			} else result = await findQuery;
 			res.json(result);
 		} catch (error) {
 			next(error);
@@ -90,14 +95,12 @@ const postController = {
 
 	getRelevant: async (req, res, next) => {
 		try {
-			const followerArr = [];
-			const tagArr = [];
+			let followerArr = [];
+			let tagArr = [];
 			if (req.userId) {
-				const result = await followModel.find({ userId: req.userId }).lean();
-
-				result.map((val) => {
-					followerArr.push(val.followerId), tagArr.push(val.tagId);
-				});
+				const result = await UserModel.find({ _id: req.userId }).lean();
+				followerArr = result[0].followingUsers || [];
+				tagArr = result[0].followingTags || [];
 			}
 			let findQuery = null;
 			if (followerArr.length === 0) {
@@ -128,16 +131,20 @@ const postController = {
 			const { type } = req.params;
 			const { StartAndEndPoint } = ConvertDate;
 			const end = StartAndEndPoint(type);
-			const data = await postModel
-				.find({
+			const queryMethod = new QueryMethod(
+				req.query,
+				postModel.find({
 					createdAt: {
 						$lte: new Date(),
 						$gte: end,
 					},
-				})
+				}),
+			)
 				.populate('userId', 'userName avatar')
+				.pagination()
 				.lean();
 
+			const data = await queryMethod.method;
 			const scoreArr = data.map((val) => {
 				const time = Math.abs(new Date() - new Date(val.createdAt)) / 3600000;
 				const score = (val.likes.length - 1) / Math.pow(time + 2, 1.8);

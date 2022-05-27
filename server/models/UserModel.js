@@ -45,7 +45,9 @@ const userSchema = mongoose.Schema(
 		location: {
 			type: String,
 		},
-		postsSaved: [{ type: mongoose.Types.ObjectId, ref: 'Posts', default: [] }],
+		followers: [{ type: mongoose.Types.ObjectId, ref: 'Users', default: [] }],
+		followingUsers: [{ type: mongoose.Types.ObjectId, ref: 'Users', default: [] }],
+		followingTags: [{ type: mongoose.Types.ObjectId, ref: 'Tags', default: [] }],
 	},
 	{
 		timestamps: true,

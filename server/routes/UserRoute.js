@@ -16,11 +16,15 @@ router.get('/posts/saved', userController.savedPost);
 
 // POST
 router.post('/posts', userController.addPost);
+router.post('/notifications/add', userController.addNotification);
+router.post('/notifications/active/:type', userController.activeNotification);
+router.post('/:userId/follow', userController.followUser);
+router.post('/:userId/unfollow', userController.unfollowUser);
 router.post('/posts/:id/save', userController.savePost);
 
 // DELETE
-router.delete('/posts/:id/unsave', userController.unsavePost);
 router.delete('/posts/:id', userController.deletePost);
+router.delete('/posts/:id/unsave', userController.unsavePost);
 
 //PUT
 router.put('/').put(userController.editUser);

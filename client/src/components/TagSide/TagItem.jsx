@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 const TagItem = (props) => {
 
     const { post } = props;
-    console.log(post);
     return (
         <div className='px-2 py-4 bg-transparent hover:bg-white transition-all duration-200 ease-linear border-t-2 border-b-2 border-gray-100'>
             <p className='text-gray-600 font-normal text-sm leading-7 hover:text-purple-800'>

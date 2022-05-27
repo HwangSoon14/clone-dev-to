@@ -15,6 +15,9 @@ export default function socketIO(io) {
         socket.on("delete_comment_child", (data) => {
           io.emit("delete_comment", data)
         })
+        socket.on("follow_notification", (data) => {
+          
+        })
       });
       
 }

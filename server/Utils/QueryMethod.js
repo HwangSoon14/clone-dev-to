@@ -14,7 +14,7 @@ export class QueryMethod {
 	}
 	sort() {
 		const type = this.query.sort || '';
-	this.method = this.method.sort({ createdAt: type });
+		this.method = this.method.sort({ createdAt: type });
 		return this;
 	}
 	populate(path, select) {
@@ -25,11 +25,14 @@ export class QueryMethod {
 		return this;
 	}
 	search(model) {
-		const {q} = this.query
-		if(q) {
-			this.method = model.find({title: {$regex: q , $options: 'i' }})
+		const { q } = this.query;
+		if (q) {
+			this.method = model.find({ title: { $regex: q, $options: 'i' } });
 		}
-		return this
+		return this;
+	}
+	lean() {
+		this.method = this.method.lean();
+		return this;
 	}
 }
-

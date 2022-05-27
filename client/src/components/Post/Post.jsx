@@ -66,7 +66,7 @@ const Post = ({ post, type }) => {
          />
        </div>
        <div className="ml-2">
-         <span className="block font-bold text-[14px] text-gray-700 hover:bg-gray-100 px-2 rounded-md">
+         <span className="block font-bold text-[14px] text-gray-700 hover:bg-gray-100 px-2 rounded-md capitalize">
            {post.userId.userName}
          </span>
          <span className="block text-[12px] font-thin text-gray-500 px-2">
