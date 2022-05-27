@@ -26,6 +26,15 @@ const userApi = {
 		const url = `${baseUrl}/posts/${id}/unsave`;
 		return axiosClient.delete(url)
 	},
+	followUsers(userId) {
+		const url = `${baseUrl}/${userId}/follow`;
+		return axiosClient.post(url)
+	},
+	unfollowUsers(userId) {
+		const url = `${baseUrl}/${userId}/unfollow`;
+		return axiosClient.post(url)
+	},
+
 
 
 };

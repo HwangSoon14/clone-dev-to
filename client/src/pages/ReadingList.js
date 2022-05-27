@@ -123,7 +123,6 @@ const ReadingList = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			const res = await userApi.getSavedPostList(searchParams.get("q"));
-			console.log(res)
 			setSavePostList(res);
 			const temp_tagList = res && res?.reduce((prev, current) => {
 				current['tags'].map((tag) => {

@@ -2,10 +2,11 @@ import mongoose from 'mongoose';
 
 const notificationSchema = new mongoose.Schema(
 	{
-		type: {type: String},
         content: {type: String},
         userId: {type: mongoose.Types.ObjectId, ref: "Users"},
-        isWatched: {type: Boolean}
+		followerId: {type: mongoose.Types.ObjectId, ref: "Users"},
+		postId: {type: mongoose.Types.ObjectId, ref: "Posts"},
+        isWatched: {type: Boolean, default: false}
 	},
 	{
 		timestamps: true,

@@ -3,12 +3,12 @@ import axiosClient from "./axiosClient";
 const baseUrl = '/api/v1/posts';
 
 const postApi = {
-    getAllPost(urlString)
+    getAllPost(urlString, kaka)
     {   
         const arr = urlString.split("/");
         if(urlString === "/") arr[1] = "relevant";
 		const url = !arr[2] ? `${baseUrl}/${arr[1]}` : `${baseUrl}/${arr[1]}/${arr[2]}`;
-		return axiosClient.get(url);
+		return axiosClient.get(url +`?limit=${kaka}&page=1`);
     },
 
     getPostBySlug(slug)

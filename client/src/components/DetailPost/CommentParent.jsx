@@ -6,6 +6,7 @@ import { timeConvert } from '../../Utils/TimeConvert';
 import EmojiPicker from '../EmojiPicker/EmojiPicker';
 import Comment from './CommentChild';
 const CommentParent = ({ comment, setVisible, socket , postId }) => {
+	
 	const [isShowFrameChat, setShowFrameChat] = useState(false);
 	const [commentsChild, setCommentsChild] = useState([]);
 	const [isPostComment, setPostComment] = useState(false);

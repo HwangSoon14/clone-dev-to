@@ -5,6 +5,9 @@ export default function socketIO(io) {
         socket.on("parent_comment", (data) => {
           io.emit("parent_comment", data)
         })
+        socket.on("follow_notification", (data) => {
+          
+        })
       });
       
 }

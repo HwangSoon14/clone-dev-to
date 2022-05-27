@@ -1,6 +1,6 @@
 import UserModel from '../models/UserModel.js';
 import PostModel from '../models/PostModel.js';
-import FollowModel from '../models/FollowModel.js';
+import Notification from '../models/NotificationModel.js';
 
 const userCtrl = {
 	getUserInfo: async (req, res, next) => {
@@ -115,18 +115,39 @@ const userCtrl = {
 	},
 	followUser: async (req, res, next) => {
 		try {
-			const {userId} = req.params
-			const data = await FollowModel.create({userId: req.userId, followerId: userId})
-			res.json(data)
- 		} catch (error) {
+			const { userId } = req.params;
+			await UserModel.updateOne({ _id: req.userId }, { $addToSet: { followingUsers: userId } });
+			await UserModel.updateOne({ _id: userId }, { $addToSet: { followers: req.userId } });
+			res.json({ mess: 'follower Users' });
+		} catch (error) {
 			next(error);
 		}
 	},
 	unfollowUser: async (req, res, next) => {
 		try {
-			const {userId} = req.params
-			const data = await FollowModel.findOneAndDelete({userId: req.userId, followerId: userId})
-			res.json(data)
+			const { userId } = req.params;
+			await UserModel.updateOne({ _id: req.userId }, { $pull: { followingUsers: userId } });
+			await UserModel.updateOne({ _id: userId }, { $pull: { followers: req.userId } });
+			res.json({ mess: 'unfollow Users' });
+		} catch (error) {
+			next(error);
+		}
+	},
+	addNotification: async (req, res, next) => {
+		try {
+			const { type, content } = req.body;
+			await Notification.create({type, content});
+			res.json({ mess: 'add Notification' });
+		} catch (error) {
+			next(error);
+		}
+	},
+	activeNotification: async (req, res, next) => {
+		try {
+			const { userId } = req.params;
+			await UserModel.updateOne({ _id: req.userId }, { $pull: { followingUsers: userId } });
+			await UserModel.updateOne({ _id: userId }, { $pull: { followers: req.userId } });
+			res.json({ mess: 'unfollow Users' });
 		} catch (error) {
 			next(error);
 		}

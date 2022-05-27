@@ -27,7 +27,6 @@ const Search = () => {
 				let q = searchParams.get('q');
 				let sort = searchParams.get('sort');
 				const res = await postApi.search(type, q, sort);
-				console.log(res);
 				setData(res);
 			} catch (error) {
 				console.log(error);
