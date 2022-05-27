@@ -5,20 +5,33 @@ import { auth } from '../../Utils/auth';
 import { timeConvert } from '../../Utils/TimeConvert';
 import EmojiPicker from '../EmojiPicker/EmojiPicker';
 
-const Comment = ({ comment, parentId, setPostComment, setVisible }) => {
+const Comment = ({ comment, parentId, setPostComment, setVisible , socket , postId }) => {
 	const [isShowFrameChat, setShowFrameChat] = useState(false);
 	const contentComment = useRef();
 	const user = useSelector((state) => state.auth.current_user);
 	const isLogin = useRef(auth(user));
+	const [openAction, setOpenAction] = useState(false);
 
+	console.log("re-render in components child-comment");
 	const addComment = async () => {
 		try {
 			await postApi.addComment(comment.postId, { content: contentComment.current.value, replyToId: parentId });
+			socket.emit("reply_to_parent", {postId: comment.postId,  content: contentComment.current.value })
 			contentComment.current.value = '';
 			setShowFrameChat(false);
-			setPostComment((x) => !x);
 		} catch (error) {}
 	};
+
+	const deleteComment = async () => {
+		try {
+			const res = await postApi.deleteComment(postId , comment._id);
+			socket.emit('delete_comment_child', { postId: postId});
+			setOpenAction(false);
+			console.log(res);
+		} catch (error) {
+			console.log(error);
+		}
+	}
 
 	return (
 		<div className="my-2">
@@ -87,7 +100,10 @@ const Comment = ({ comment, parentId, setPostComment, setVisible }) => {
 								<span className="text-gray-600">reply</span>
 							</button>
 						</div>
-						<div className="absolute right-2 top-2">
+						{
+							comment.userId._id === user._id && <div className="absolute right-2 top-2" onClick={() => {
+									setOpenAction((x) => !x);
+								}}>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								className="h-5 w-5 cursor-pointer text-gray-500"
@@ -103,6 +119,47 @@ const Comment = ({ comment, parentId, setPostComment, setVisible }) => {
 								/>
 							</svg>
 						</div>
+						}
+						{openAction && (
+							<div className="absolute right-2 top-8 cursor-pointer">
+								<div className="w-[200px] h-auto rounded-lg shadow-sm flex flex-col gap-y-2 border-2 border-gray-200 px-3 py-4 bg-white z-50">
+									{/* <div className="flex items-center gap-x-2 ">
+										<svg
+											className="w-4 h-4 md:w-5 md:h-5 fill-[#8b78cb]"
+											fill="none"
+											stroke="currentColor"
+											viewBox="0 0 24 24"
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<path
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeWidth="2"
+												d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+											></path>
+										</svg>
+										<span className="inline-block font-medium text-main-color">Edit</span>
+									</div> */}
+									<div className="flex items-center gap-x-2" onClick={deleteComment}>
+										<svg
+											class="w-4 h-4 md:w-5 md:h-5 fill-[#f2004c]"
+											fill="none"
+											stroke="currentColor"
+											viewBox="0 0 24 24"
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<path
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeWidth="2"
+												d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+											></path>
+										</svg>
+										<span className="inline-block font-medium text-[#f2004c]">Delete</span>
+									</div>
+								</div>
+							</div>
+						)}
 					</div>
 					{isShowFrameChat && (
 						<div className="flex-1">

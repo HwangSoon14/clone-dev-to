@@ -38,6 +38,11 @@ const postApi = {
         const url = `${baseUrl}/${id}/comments`;
         return axiosClient.post(url, body);
     },
+    deleteComment(idPost, idComment) {
+        const url = `${baseUrl}/${idPost}/comments/${idComment}`;
+        return axiosClient.delete(url);
+
+    },
     search(type, q , sort) {
        let url = ''
         if(!sort)  url = `${baseUrl}/search/${type}?q=${q}`;
