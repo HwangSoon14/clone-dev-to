@@ -31,7 +31,7 @@ const postController = {
 					tags: { $in: tags },
 					createdAt: {
 						$lte: new Date(),
-						$gte: new Date(new Date().setDate(new Date().getDate() - 5)),
+						$gte: new Date(new Date().setDate(new Date().getDate() - 30)),
 					},
 				}).populate('userId', 'userName').limit(5).lean();
 			let data = result.reduce((pre, val) => {
@@ -283,6 +283,7 @@ const postController = {
 		try {
 			const { id, idc } = req.params;
 			await commentModel.deleteOne({ userId: req.userId, _id: idc });
+			await commentModel.deleteMany({replyToId: idc});
 			await postModel.updateOne({ _id: id, userId: req.userId }, { $pull: { comments: idc } });
 			res.status(201).json('delete comment');
 		} catch (error) {
