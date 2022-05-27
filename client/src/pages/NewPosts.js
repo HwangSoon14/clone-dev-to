@@ -94,7 +94,7 @@ function NewPosts() {
 						const form = new FormData();
 						form.append('image', e.target.files[0]);
 						setLoading(true);
-						axios.post('http://localhost:5000/api/v1/uploads/single', form).then((result) => {
+						axios.post('https://devvn-api.herokuapp.com/api/v1/uploads/single', form).then((result) => {
 							formData.current.banner = result.data.urlImage;
 							setLoading(false);
 							imgRef.current.src = result.data.urlImage;
