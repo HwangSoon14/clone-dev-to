@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import postApi from '../../api/postApi';
 import PostList from '../Post/PostList';
-import PostSkeletonList from '../Post/PostSkeletonList';
 import TabSide from '../Tab/TabSide';
 import TagSide from '../TagSide/TagSide';
 
