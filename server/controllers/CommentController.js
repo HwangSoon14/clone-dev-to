@@ -30,7 +30,9 @@ const commentController = {
 		try {
 			const { id } = req.params;
 			const data = await commentModel.findOneAndDelete({ _id: id, userId: req.userId });
-			if(!data) throw(new Error("No comments exist")) 
+			const data2 = await commentModel.deleteMany({replyToId: id});
+			console.log(data2);
+			if(!data) throw(new Error("No comments exist"));
 			res.status(200).json({ mess: 'delete comment success!' });
 		} catch (error) {
 			next(error);

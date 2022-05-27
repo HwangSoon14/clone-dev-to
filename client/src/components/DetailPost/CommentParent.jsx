@@ -12,8 +12,13 @@ const CommentParent = ({ comment, setVisible, socket , postId }) => {
 	const [isPostComment, setPostComment] = useState(false);
 	const [isHide, setIsHide] = useState(false);
 	const contentComment = useRef();
+	const [openAction, setOpenAction] = useState(false);
 	const user = useSelector((state) => state.auth.current_user);
 	const isLogin = useRef(auth(user));
+
+	// console.log("re-render in components parent--comment");
+	console.log('comment user id int cmt', comment.userId);
+	console.log('comment user id', user._id);
 
 	useEffect(() => {
 		const getData = async () => {
@@ -29,24 +34,44 @@ const CommentParent = ({ comment, setVisible, socket , postId }) => {
 	};
 
 	useEffect(() => {
-		socket.on("parent_comment", (data) => {
-			if(data.postId === postId) {
-				setPostComment(x=> !x)
+		socket.on('reply_to_parent', (data) => {
+			if (data.postId === postId) {
+				setPostComment((x) => !x);
 			}
-		})
-	}, [socket , postId]);
+		});
+	}, [socket, postId]);
+	useEffect(() => {
+		socket.on('delete_comment', (data) => {
+			if (data.postId === postId) {
+				setPostComment((x) => !x);
+			}
+		});
+	}, [socket, postId]);
 
-	const addComment = useCallback( async () => {
-			try {
-				await postApi.addComment(comment.postId, {
-					content: contentComment.current.value,
-					replyToId: comment._id,
-				});
-				socket.emit("parent_comment", {postId: postId,  content: contentComment.current.value })
-				contentComment.current.value = '';
-				setShowFrameChat(false);
-			} catch (error) {}
-	}, [comment._id , comment.postId , postId , socket]);
+	const addComment = useCallback(async () => {
+		try {
+			await postApi.addComment(comment.postId, {
+				content: contentComment.current.value,
+				replyToId: comment._id,
+			});
+			socket.emit('reply_to_parent', { postId: postId, content: contentComment.current.value });
+			contentComment.current.value = '';
+			setShowFrameChat(false);
+			setPostComment((x) => !x);
+		} catch (error) {}
+	}, [comment._id, comment.postId, postId, socket]);
+
+	const deleteComment = async () => {
+		try {
+			const res = await postApi.deleteComment(postId , comment._id);
+			socket.emit('delete_comment', { postId: postId});
+			setOpenAction(false);
+			console.log(res);
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
 
 	return (
 		<div parent={comment._id}>
@@ -119,22 +144,69 @@ const CommentParent = ({ comment, setVisible, socket , postId }) => {
 								</span>
 							</button>
 						</div>
-						<div className="absolute right-2 top-2 cursor-pointer">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								className="h-5 w-5 text-gray-500"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-								strokeWidth="2"
+						{comment.userId._id === user._id && (
+							<div
+								className="absolute right-2 top-2 cursor-pointer"
+								onClick={() => {
+									setOpenAction((x) => !x);
+								}}
 							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
-								/>
-							</svg>
-						</div>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									className="h-5 w-5 text-gray-500"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke="currentColor"
+									strokeWidth="2"
+								>
+									<path
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
+									/>
+								</svg>
+							</div>
+						)}
+						{openAction && (
+							<div className="absolute right-2 top-8 cursor-pointer">
+								<div className="w-[200px] h-auto rounded-lg shadow-sm flex flex-col gap-y-2 border-2 border-gray-200 px-3 py-4 bg-white z-50">
+									{/* <div className="flex items-center gap-x-2 ">
+										<svg
+											className="w-4 h-4 md:w-5 md:h-5 fill-[#8b78cb]"
+											fill="none"
+											stroke="currentColor"
+											viewBox="0 0 24 24"
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<path
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeWidth="2"
+												d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+											></path>
+										</svg>
+										<span className="inline-block font-medium text-main-color">Edit</span>
+									</div> */}
+									<div className="flex items-center gap-x-2" onClick={deleteComment}>
+										<svg
+											class="w-4 h-4 md:w-5 md:h-5 fill-[#f2004c]"
+											fill="none"
+											stroke="currentColor"
+											viewBox="0 0 24 24"
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<path
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeWidth="2"
+												d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+											></path>
+										</svg>
+										<span className="inline-block font-medium text-[#f2004c]">Delete</span>
+									</div>
+								</div>
+							</div>
+						)}
 					</div>
 					{isShowFrameChat && (
 						<div className="flex-1 my-2">
@@ -150,10 +222,7 @@ const CommentParent = ({ comment, setVisible, socket , postId }) => {
 								<EmojiPicker textRef={contentComment} />
 							</div>
 
-							<button
-								className="px-3 py-2 mt-2 bg-blue-700 text-white  rounded-md"
-								onClick={addComment}
-							>
+							<button className="px-3 py-2 mt-2 bg-blue-700 text-white  rounded-md" onClick={addComment}>
 								Submit
 							</button>
 							<button
@@ -191,6 +260,8 @@ const CommentParent = ({ comment, setVisible, socket , postId }) => {
 					<div className="ml-6 md:ml-10">
 						{commentsChild.map((cmt) => (
 							<Comment
+								postId={postId}
+								socket={socket}
 								key={cmt._id}
 								comment={cmt}
 								parentId={comment._id}

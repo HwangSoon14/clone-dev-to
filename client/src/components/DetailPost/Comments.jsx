@@ -18,6 +18,8 @@ export default function Comments({ post }) {
 	const isLogin = useRef(auth(user));
 	const socket = useContext(SocketContext);
 
+	console.log("re-render in components comment-s");
+
 	useEffect(() => {
 				socket.on('connect', () => {
 		});
@@ -28,11 +30,18 @@ export default function Comments({ post }) {
 	}, []);
 
 	useEffect(() => {
-		socket.on("parent_comment", (data) => {
+		socket.on("add_new_comment", (data) => {
 			if(data.postId === post._id) {
 				setPostComment(x=> !x)
 			}
 		})
+	}, [socket , post._id]);
+	useEffect(() => {
+		socket.on("delete_parent_comment", (data) => {
+			if(data.postId === post._id) {
+				setPostComment(x=> !x)
+			}
+		})	
 	}, [socket , post._id]);
 
 	useEffect(() => {
@@ -48,7 +57,7 @@ export default function Comments({ post }) {
 	const addComment = async () => {
 		try {
 			await postApi.addComment(post._id, { content: contentComment.current.value });
-			socket.emit("parent_comment", {postId: post._id,  content: contentComment.current.value })
+			socket.emit("add_new_comment", {postId: post._id,  content: contentComment.current.value })
 			contentComment.current.value = '';
 	
 		} catch (error) {

@@ -144,9 +144,7 @@ const userCtrl = {
 	},
 	activeNotification: async (req, res, next) => {
 		try {
-			const { userId } = req.params;
-			await UserModel.updateOne({ _id: req.userId }, { $pull: { followingUsers: userId } });
-			await UserModel.updateOne({ _id: userId }, { $pull: { followers: req.userId } });
+			await Notification.create({type, content});
 			res.json({ mess: 'unfollow Users' });
 		} catch (error) {
 			next(error);

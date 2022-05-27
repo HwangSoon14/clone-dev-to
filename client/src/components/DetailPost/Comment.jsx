@@ -2,6 +2,7 @@ import React from 'react';
 import { timeConvert } from '../../Utils/TimeConvert';
 
 const Comment = ({ comment }) => {
+
 	return (
 		<div className="my-2">
 			<div className="w-full h-full flex">

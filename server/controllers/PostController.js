@@ -1,4 +1,4 @@
-import { QueryMethod } from '../Utils/QueryMethod.js';
+	import { QueryMethod } from '../Utils/QueryMethod.js';
 import postModel from '../models/PostModel.js';
 import commentModel from '../models/CommentModel.js';
 import UserModel from '../models/UserModel.js';
@@ -31,7 +31,7 @@ const postController = {
 					tags: { $in: tags },
 					createdAt: {
 						$lte: new Date(),
-						$gte: new Date(new Date().setDate(new Date().getDate() - 10)),
+						$gte: new Date(new Date().setDate(new Date().getDate() -30)),
 					},
 				})
 				.populate('userId', 'userName')
@@ -290,6 +290,7 @@ const postController = {
 		try {
 			const { id, idc } = req.params;
 			await commentModel.deleteOne({ userId: req.userId, _id: idc });
+			await commentModel.deleteMany({replyToId: idc});
 			await postModel.updateOne({ _id: id, userId: req.userId }, { $pull: { comments: idc } });
 			res.status(201).json('delete comment');
 		} catch (error) {
