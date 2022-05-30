@@ -5,6 +5,7 @@ const baseUrl = '/api/v1/posts';
 const postApi = {
     getAllPost(urlString, kaka)
     {   
+        console.log("urlString", urlString);
         const arr = urlString.split("/");
         if(urlString === "/") arr[1] = "relevant";
 		const url = !arr[2] ? `${baseUrl}/${arr[1]}` : `${baseUrl}/${arr[1]}/${arr[2]}`;

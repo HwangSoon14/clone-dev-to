@@ -8,15 +8,15 @@ import { ConvertDate, RecentTimes } from '../Utils/ConvertDate.js';
 const postController = {
 	getLatest: async (req, res, next) => {
 		try {
-			const data = await postModel
-				.find({
+			const queryMethod = new QueryMethod(req.query , postModel.find({
 					createdAt: {
 						$lte: new Date(),
 						$gte: new Date(new Date().setDate(new Date().getDate() - 5)),
 					},
 				})
 				.populate('userId', 'userName avatar')
-				.sort({ createdAt: -1 });
+				.sort({ createdAt: -1 })).pagination().lean();
+				const data = await queryMethod.method;
 			res.json(data);
 		} catch (error) {
 			next(error);
@@ -119,7 +119,8 @@ const postController = {
 					},
 				});
 			}
-			const data = await findQuery.sort({ createdAt: -1 }).populate('userId', 'userName avatar');
+			const queryMethod = new QueryMethod(req.query , findQuery.sort({ createdAt: -1 }).populate('userId', 'userName avatar')).pagination().lean()
+			const data = await queryMethod.method;
 			res.json(data);
 		} catch (error) {
 			next(error);

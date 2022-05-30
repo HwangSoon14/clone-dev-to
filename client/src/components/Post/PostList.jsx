@@ -23,6 +23,8 @@ const PostList = () => {
 		currentLimit.current += 2;
 		const res = await postApi.getAllPost(location.pathname, currentLimit.current);
 		setListPostData(res);
+	console.log(res)
+
 	};
 
 	return isLoading ? (

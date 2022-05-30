@@ -10,7 +10,7 @@ export default function NotificationMoal() {
 			<div
 				to="/notifications"
 				onClick={() => {
-					setIsActive(true);
+					setIsActive(x => !x);
 				}}
 			>
 				<svg
