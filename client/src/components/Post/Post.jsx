@@ -41,7 +41,7 @@ const Post = ({ post, type }) => {
    <>
       <div className="relative">
    
-   <div className="w-full pb-4 drop-shadow-sm flex flex-col bg-white  border-[1px] border-gray-200 rounded-lg  ">
+   <div className="w-full pb-4 mb-3 drop-shadow-sm flex flex-col bg-white  border-[1px] border-gray-200 rounded-lg  ">
      {
        type &&  <Link to={`/${post.userId.userName}/${post.slug}`}>
        <img src={post.banner} className ="rounded-t-md" alt="" />

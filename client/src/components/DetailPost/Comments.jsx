@@ -18,7 +18,6 @@ export default function Comments({ post }) {
 	const isLogin = useRef(auth(user));
 	const socket = useContext(SocketContext);
 
-	console.log("re-render in components comment-s");
 
 	useEffect(() => {
 				socket.on('connect', () => {

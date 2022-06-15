@@ -9,7 +9,9 @@ const PostList = () => {
 	const location = useLocation();
 	const [isLoading, setIsLoading] = useState(false);
 	const [listPostData, setListPostData] = useState([]);
-	let currentLimit = useRef(2);
+	let currentLimit = useRef(5);
+	const [hasMore, setHasMore] = useState(true);
+
 	useEffect(() => {
 		setIsLoading(true);
 		(async () => {
@@ -19,19 +21,27 @@ const PostList = () => {
 		})();
 	}, [location]);
 
-	const fetchMoreData = async () => {
-		currentLimit.current += 2;
-		const res = await postApi.getAllPost(location.pathname, currentLimit.current);
-		setListPostData(res);
-	console.log(res)
+	useEffect(() => {
+		currentLimit.current = 5;
+	}, [location]);
 
+	const fetchMoreData = async () => {
+		currentLimit.current += 5;
+		const res = await postApi.getAllPost(location.pathname, currentLimit.current);
+		if (res.length < currentLimit.current) return setHasMore(false);
+		setListPostData(res);
 	};
 
 	return isLoading ? (
 		<PostSkeletonList />
 	) : (
 		<div className="flex flex-col gap-y-2">
-			<InfiniteScroll dataLength={listPostData.length} next={fetchMoreData} hasMore={true} loader={<h4>Loading...</h4>}>
+			<InfiniteScroll
+				dataLength={listPostData.length}
+				next={fetchMoreData}
+				hasMore={hasMore}
+				loader={(<h4>Loading...</h4>)}
+			>
 				{listPostData?.map((post, idx) =>
 					idx === 0 ? <Post key={idx} post={post} type /> : <Post key={idx} post={post} />,
 				)}

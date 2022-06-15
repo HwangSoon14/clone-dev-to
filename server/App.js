@@ -13,13 +13,13 @@ import socketIO from './SocketIO/SocketIO.js';
 
 const io = new Server(server, {
 	cors: {
-		origin: '*',
+		origin: 'http://localhost:3000',
 		methods: ['GET', 'POST'],
 	},
 });
 
 app.use(express.json());
-app.use(cors({ origin: true, credentials: true }));
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(cookieParser());
 
 socketIO(io);

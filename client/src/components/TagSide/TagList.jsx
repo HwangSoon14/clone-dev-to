@@ -6,7 +6,6 @@ const TagList = (props) => {
 
     const {data} = props;
 
-    console.log();
     return (
         <div className='bg-[#fafafa] border-[1px] text-black my-3 px-3 py-4 border-gray-200 drop-shadow-sm rounded-lg'>
             <div className='bg-white  pt-1 pb-3'>
