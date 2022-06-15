@@ -12,7 +12,6 @@ const Comment = ({ comment, parentId, setPostComment, setVisible , socket , post
 	const isLogin = useRef(auth(user));
 	const [openAction, setOpenAction] = useState(false);
 
-	console.log("re-render in components child-comment");
 	const addComment = async () => {
 		try {
 			await postApi.addComment(comment.postId, { content: contentComment.current.value, replyToId: parentId });
@@ -27,7 +26,6 @@ const Comment = ({ comment, parentId, setPostComment, setVisible , socket , post
 			const res = await postApi.deleteComment(postId , comment._id);
 			socket.emit('delete_comment_child', { postId: postId});
 			setOpenAction(false);
-			console.log(res);
 		} catch (error) {
 			console.log(error);
 		}

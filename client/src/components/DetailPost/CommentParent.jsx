@@ -16,9 +16,7 @@ const CommentParent = ({ comment, setVisible, socket , postId }) => {
 	const user = useSelector((state) => state.auth.current_user);
 	const isLogin = useRef(auth(user));
 
-	// console.log("re-render in components parent--comment");
-	console.log('comment user id int cmt', comment.userId);
-	console.log('comment user id', user._id);
+
 
 	useEffect(() => {
 		const getData = async () => {
@@ -66,7 +64,6 @@ const CommentParent = ({ comment, setVisible, socket , postId }) => {
 			const res = await postApi.deleteComment(postId , comment._id);
 			socket.emit('delete_comment', { postId: postId});
 			setOpenAction(false);
-			console.log(res);
 		} catch (error) {
 			console.log(error);
 		}

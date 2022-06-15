@@ -1,4 +1,4 @@
-	import { QueryMethod } from '../Utils/QueryMethod.js';
+import { QueryMethod } from '../Utils/QueryMethod.js';
 import postModel from '../models/PostModel.js';
 import commentModel from '../models/CommentModel.js';
 import UserModel from '../models/UserModel.js';
@@ -8,15 +8,21 @@ import { ConvertDate, RecentTimes } from '../Utils/ConvertDate.js';
 const postController = {
 	getLatest: async (req, res, next) => {
 		try {
-			const queryMethod = new QueryMethod(req.query , postModel.find({
-					createdAt: {
-						$lte: new Date(),
-						$gte: new Date(new Date().setDate(new Date().getDate() - 5)),
-					},
-				})
-				.populate('userId', 'userName avatar')
-				.sort({ createdAt: -1 })).pagination().lean();
-				const data = await queryMethod.method;
+			const queryMethod = new QueryMethod(
+				req.query,
+				postModel
+					.find({
+						createdAt: {
+							$lte: new Date(),
+							$gte: new Date(new Date().setDate(new Date().getDate() - 5)),
+						},
+					})
+					.populate('userId', 'userName avatar')
+					.sort({ createdAt: -1 }),
+			)
+				.pagination()
+				.lean();
+			const data = await queryMethod.method;
 			res.json(data);
 		} catch (error) {
 			next(error);
@@ -31,7 +37,7 @@ const postController = {
 					tags: { $in: tags },
 					createdAt: {
 						$lte: new Date(),
-						$gte: new Date(new Date().setDate(new Date().getDate() -30)),
+						$gte: new Date(new Date().setDate(new Date().getDate() - 30)),
 					},
 				})
 				.populate('userId', 'userName')
@@ -119,8 +125,17 @@ const postController = {
 					},
 				});
 			}
-			const queryMethod = new QueryMethod(req.query , findQuery.sort({ createdAt: -1 }).populate('userId', 'userName avatar')).pagination().lean()
+			const queryMethod = new QueryMethod(
+				req.query,
+				findQuery.sort({ createdAt: -1 }).populate('userId', 'userName avatar'),
+			)
+				.pagination()
+				.lean();
 			const data = await queryMethod.method;
+			if (data.length === 0) {
+				const data = await postModel.find({}).sort({ createdAt: 1 }).limit(5);
+				return res.json(data);
+			}
 			res.json(data);
 		} catch (error) {
 			next(error);
@@ -291,7 +306,7 @@ const postController = {
 		try {
 			const { id, idc } = req.params;
 			await commentModel.deleteOne({ userId: req.userId, _id: idc });
-			await commentModel.deleteMany({replyToId: idc});
+			await commentModel.deleteMany({ replyToId: idc });
 			await postModel.updateOne({ _id: id, userId: req.userId }, { $pull: { comments: idc } });
 			res.status(201).json('delete comment');
 		} catch (error) {
